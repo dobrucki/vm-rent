@@ -20,7 +20,9 @@ namespace Application.Infrastructure.InMemoryDataAccess
         
         public async Task CreateAsync(T entity)
         {
-            _context.TryAdd(Guid.NewGuid(), entity);
+            var id = Guid.NewGuid();
+            entity.Id = id;
+            _context.TryAdd(id, entity);
         }
 
         public async Task<IEnumerable<T>> GetAsync(Expression<Func<T, bool>> predicate)

@@ -33,6 +33,7 @@ namespace Application.Core.Services.VirtualMachineUseCases
                     (await _repository.GetAsync(e => true))
                     .Select(v => new VirtualMachineDto
                     {
+                        Id = v.Id,
                         Name = v.Name
                     })
                     .ToList();

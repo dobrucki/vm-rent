@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 
 namespace Application.Core.Ports
 {
-    public interface IRepository<T> : IDisposable where T : class
+    public interface IRepository<T>
     {
         Task CreateAsync(T entity);
         Task<IEnumerable<T>> GetAsync(Expression<Func<T, bool>> predicate);

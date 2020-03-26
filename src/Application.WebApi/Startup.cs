@@ -35,10 +35,11 @@ namespace Application.WebApi
                 .AddNewtonsoftJson();
 
             // Application.Infrastructure
-            services.AddScoped<IRepository<VirtualMachine>, Repository<VirtualMachine>>();
+            services.AddSingleton<IRepository<VirtualMachine>, Repository<VirtualMachine>>();
             
             // Services
             services.AddMediatR(typeof(CreateVirtualMachineHandler));
+            services.AddMediatR(typeof(ListAllVirtualMachinesHandler));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

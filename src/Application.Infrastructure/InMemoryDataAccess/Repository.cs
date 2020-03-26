@@ -20,16 +20,12 @@ namespace Application.Infrastructure.InMemoryDataAccess
         
         public async Task CreateAsync(T entity)
         {
-            _context.TryAdd(entity.Id, entity);
+            _context.TryAdd(Guid.NewGuid(), entity);
         }
 
         public async Task<IEnumerable<T>> GetAsync(Expression<Func<T, bool>> predicate)
         {
             return _context.Values.Where(predicate.Compile()).AsEnumerable();
-        }
-
-        public void Dispose()
-        {
         }
     }
 }

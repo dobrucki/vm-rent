@@ -7,7 +7,7 @@ namespace Application.Core.Dtos
     {
         public BaseResponseDto()
         {
-            
+            Errors = new List<string>();
         }
 
         public bool HasError => Errors.Any();

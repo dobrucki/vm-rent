@@ -1,7 +1,9 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Application.Core.Dtos;
 using Application.Core.Dtos.Requests;
+using Application.Core.Models;
 using Microsoft.AspNetCore.Mvc;
 using MediatR;
 
@@ -16,6 +18,19 @@ namespace Application.WebApi.Controllers
         public VirtualMachinesController(IMediator mediator)
         {
             _mediator = mediator;
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<List<VirtualMachineDto>>> ListAllVirtualMachines()
+        {
+            var createResponse = await _mediator.Send(new ListAllVirtualMachinesRequest());
+
+            if (createResponse.HasError)
+            {
+                return BadRequest(createResponse.Errors);
+            }
+
+            return Ok(createResponse.Data);
         }
 
         [HttpPost]

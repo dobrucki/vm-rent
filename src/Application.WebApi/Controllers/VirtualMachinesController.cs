@@ -23,29 +23,45 @@ namespace Application.WebApi.Controllers
         [HttpGet]
         public async Task<ActionResult<List<VirtualMachineDto>>> ListAllVirtualMachines()
         {
-            var createResponse = await _mediator.Send(new ListAllVirtualMachinesRequest());
+            var response = await _mediator.Send(new ListAllVirtualMachinesRequest());
 
-            if (createResponse.HasError)
+            if (response.HasError)
             {
-                return BadRequest(createResponse.Errors);
+                return BadRequest(response.Errors);
             }
 
-            return Ok(createResponse.Data);
+            return Ok(response.Data);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<VirtualMachineDto>> GetVirtualMachine(
+            [FromRoute] Guid id)
+        {
+            var response = await _mediator.Send(new GetVirtualMachineRequest{
+                Id = id
+            });
+
+            if (response.HasError)
+            {
+                return BadRequest(response.Errors);
+            }
+
+            return Ok(response.Data);
         }
 
         [HttpPost]
         public async Task<ActionResult<string>> CreateVirtualMachineAsync(
             [FromBody] CreateVirtualMachineRequest request)
         {
-            var createResponse = await _mediator.Send(request);
+            var response = await _mediator.Send(request);   
 
-            if (createResponse.Data)
+            if (response.Data)
             {
                 return Created("...", null);
             }
             else
             {
-                return BadRequest(createResponse.Errors);
+                return BadRequest(response.Errors);
             }
         }
     }

@@ -38,7 +38,7 @@ namespace Application.Infrastructure.InMemoryDataAccess
 
         public async Task<T> GetAsync(Guid id)
         {
-            throw new NotImplementedException();
+            return _context[id];
         }
 
         public async Task<IEnumerable<T>> GetAllAsync()

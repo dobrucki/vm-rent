@@ -18,11 +18,12 @@ namespace Application.Infrastructure.InMemoryDataAccess
             _context = new ConcurrentDictionary<Guid, T>();
         }
         
-        public async Task CreateAsync(T entity)
+        public async Task<T> CreateAsync(T entity)
         {
             var id = Guid.NewGuid();
             entity.Id = id;
             _context.TryAdd(id, entity);
+            return entity;
         }
 
         public async Task UpdateAsync(T entity)

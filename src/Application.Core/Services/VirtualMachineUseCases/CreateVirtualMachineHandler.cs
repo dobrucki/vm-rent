@@ -43,6 +43,7 @@ namespace Application.Core.Services.VirtualMachineUseCases
 
                 await _repository.CreateAsync(virtualMachine);
                 response.Data = true;
+                _logger.LogInformation($"Created virtual machine with id {virtualMachine.Id}. ");
             }
             catch (Exception ex)
             {

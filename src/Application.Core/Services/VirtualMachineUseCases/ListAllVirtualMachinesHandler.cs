@@ -41,7 +41,7 @@ namespace Application.Core.Services.VirtualMachineUseCases
                             Name = virtualMachine.Name
                         })
                     .ToList();
-
+                
                 response.Data = virtualMachines;
             }
             catch (Exception ex)

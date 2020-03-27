@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using Application.Core.Models;
 using Application.Core.Ports;
@@ -38,7 +39,6 @@ namespace Application.WebApi
             services.AddSingleton<IRepository<VirtualMachine>, Repository<VirtualMachine>>();
             
             // Services
-            services.AddMediatR(typeof(CreateVirtualMachineHandler));
             services.AddMediatR(typeof(ListAllVirtualMachinesHandler));
         }
 

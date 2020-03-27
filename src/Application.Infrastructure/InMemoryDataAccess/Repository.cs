@@ -42,7 +42,7 @@ namespace Application.Infrastructure.InMemoryDataAccess
 
         public async Task<IEnumerable<T>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            return _context.Values.AsEnumerable();
         }
 
         public async Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>> predicate)

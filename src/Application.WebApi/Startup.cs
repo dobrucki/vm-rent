@@ -32,7 +32,7 @@ namespace Application.WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc(options => options.EnableEndpointRouting = false)
+            services.AddControllers()
                 .AddNewtonsoftJson();
 
             // Application.Infrastructure
@@ -54,7 +54,9 @@ namespace Application.WebApi
                 app.UseHsts();
             }
 
-            app.UseMvc();
+            app.UseRouting();
+
+            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }
     }
 }

@@ -6,6 +6,7 @@ using Application.Core.Dtos.Requests;
 using Application.Core.Models;
 using Application.Core.Ports;
 using MediatR;
+using Microsoft.Extensions.Logging;
 
 
 namespace Application.Core.Services.VirtualMachineUseCases
@@ -14,14 +15,17 @@ namespace Application.Core.Services.VirtualMachineUseCases
         IRequestHandler<CreateVirtualMachineRequest, BaseResponseDto<bool>>
     {
         private readonly IRepository<VirtualMachine> _repository;
+        private readonly ILogger<CreateVirtualMachineHandler> _logger;
         private readonly IMediator _mediator;
 
         public CreateVirtualMachineHandler(
             IRepository<VirtualMachine> repository,
-            IMediator mediator)
+            IMediator mediator, 
+            ILogger<CreateVirtualMachineHandler> logger)
         {
             _repository = repository;
             _mediator = mediator;
+            _logger = logger;
         }
         
         public async Task<BaseResponseDto<bool>> Handle(
@@ -42,6 +46,7 @@ namespace Application.Core.Services.VirtualMachineUseCases
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, ex.Message);
                 response.Errors.Add("An error occurred while creating the virtual machine.");
             }
 

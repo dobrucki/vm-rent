@@ -25,7 +25,27 @@ namespace Application.Infrastructure.InMemoryDataAccess
             _context.TryAdd(id, entity);
         }
 
-        public async Task<IEnumerable<T>> GetAsync(Expression<Func<T, bool>> predicate)
+        public async Task UpdateAsync(T entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task DeleteAsync(T entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<T> GetAsync(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<IEnumerable<T>> GetAllAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>> predicate)
         {
             return _context.Values.Where(predicate.Compile()).AsEnumerable();
         }

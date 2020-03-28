@@ -12,7 +12,7 @@ using Microsoft.Extensions.Logging;
 namespace Application.Core.Services.VirtualMachineUseCases
 {
     public class CreateVirtualMachineHandler : 
-        IRequestHandler<CreateVirtualMachineRequest, BaseResponseDto<bool>>
+        IRequestHandler<CreateVirtualMachineRequest, BaseResponseDto<VirtualMachineDto>>
     {
         private readonly IRepository<VirtualMachine> _repository;
         private readonly ILogger<CreateVirtualMachineHandler> _logger;
@@ -28,11 +28,11 @@ namespace Application.Core.Services.VirtualMachineUseCases
             _logger = logger;
         }
         
-        public async Task<BaseResponseDto<bool>> Handle(
+        public async Task<BaseResponseDto<VirtualMachineDto>> Handle(
             CreateVirtualMachineRequest request, 
             CancellationToken cancellationToken)
         {
-            var response = new BaseResponseDto<bool>();
+            var response = new BaseResponseDto<VirtualMachineDto>();
 
             try
             {
@@ -43,7 +43,11 @@ namespace Application.Core.Services.VirtualMachineUseCases
                 };
 
                 await _repository.CreateAsync(virtualMachine);
-                response.Data = true;
+                response.Data = new VirtualMachineDto
+                {
+                    Id = virtualMachine.Id,
+                    Name = virtualMachine.Name
+                };
                 _logger.LogInformation($"Created virtual machine with id {virtualMachine.Id}. ");
             }
             catch (Exception ex)

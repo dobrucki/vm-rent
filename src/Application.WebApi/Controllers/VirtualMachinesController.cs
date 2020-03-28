@@ -6,6 +6,7 @@ using Application.Core.Dtos.Requests;
 using Application.Core.Models;
 using Microsoft.AspNetCore.Mvc;
 using MediatR;
+using Microsoft.Extensions.Logging;
 
 namespace Application.WebApi.Controllers
 {
@@ -14,14 +15,18 @@ namespace Application.WebApi.Controllers
     public class VirtualMachinesController : ControllerBase
     {
         private readonly IMediator _mediator;
+        private readonly ILogger<VirtualMachinesController> _logger;
 
-        public VirtualMachinesController(IMediator mediator)
+        public VirtualMachinesController(
+            IMediator mediator, 
+            ILogger<VirtualMachinesController> logger)
         {
             _mediator = mediator;
+            _logger = logger;
         }
 
-        [HttpGet]
-        public async Task<ActionResult<List<VirtualMachineDto>>> ListAllVirtualMachines()
+        [HttpGet(Name = "ListVirtualMachines")]
+        public async Task<ActionResult<List<VirtualMachineDto>>> ListAllVirtualMachinesAsync()
         {
             var response = await _mediator.Send(new ListAllVirtualMachinesRequest());
 
@@ -33,8 +38,8 @@ namespace Application.WebApi.Controllers
             return Ok(response.Data);
         }
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<VirtualMachineDto>> GetVirtualMachine(
+        [HttpGet("{id}", Name = "GetVirtualMachine")]
+        public async Task<ActionResult<VirtualMachineDto>> GetVirtualMachineAsync(
             [FromRoute] Guid id)
         {
             var response = await _mediator.Send(new GetVirtualMachineRequest{
@@ -49,23 +54,26 @@ namespace Application.WebApi.Controllers
             return Ok(response.Data);
         }
 
-        [HttpPost]
-        public async Task<ActionResult<string>> CreateVirtualMachineAsync(
+        [HttpPost(Name = "CreateVirtualMachine")]
+        public async Task<ActionResult<VirtualMachineDto>> CreateVirtualMachineAsync(
             [FromBody] CreateVirtualMachineRequest request)
         {
             var response = await _mediator.Send(request);   
 
-            if (response.Data)
-            {
-                return Created("...", null);
-            }
-            else
+            if (response.HasError)
             {
                 return BadRequest(response.Errors);
             }
+
+            var res = CreatedAtRoute(
+                "GetVirtualMachine", 
+                new {id = response.Data.Id}, 
+                response.Data);
+            
+            return res;
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("{id}", Name = "UpdateVirtualMachine")]
         public async Task<ActionResult> UpdateVirtualMachineAsync(
             [FromBody] UpdateVirtualMachineRequest request,
             [FromRoute] Guid id)
@@ -81,7 +89,7 @@ namespace Application.WebApi.Controllers
             return Ok();
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("{id}", Name = "DeleteVirtualMachine")]
         public async Task<ActionResult> DeleteVirtualMachineAsync(
             [FromRoute] Guid id)
         {

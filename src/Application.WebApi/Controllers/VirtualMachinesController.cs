@@ -80,5 +80,22 @@ namespace Application.WebApi.Controllers
 
             return Ok();
         }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteVirtualMachineAsync(
+            [FromRoute] Guid id)
+        {
+            var response = await _mediator.Send(new DeleteVirtualMachineRequest
+            {
+                Id = id
+            });
+
+            if (response.HasError)
+            {
+                return NotFound();
+            }
+
+            return Ok();
+        }
     }
 }

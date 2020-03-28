@@ -62,9 +62,9 @@ namespace Application.Infrastructure.InMemoryDataAccess
             await Task.Run(() => { entity.Name = virtualMachine.Name; });
         }
 
-        public async Task DeleteAsync(VirtualMachine virtualMachine)
+        public async Task DeleteAsync(Guid id)
         {
-            await Task.Run(() => _context.VirtualMachines.Remove(virtualMachine.Id));
+            await Task.Run(() => _context.VirtualMachines.Remove(id));
         }
     }
 }

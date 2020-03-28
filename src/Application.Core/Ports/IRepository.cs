@@ -14,7 +14,7 @@ namespace Application.Core.Ports
         Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>> predicate);
         Task CreateAsync(T virtualMachine);
         Task UpdateAsync(T virtualMachine);
-        Task DeleteAsync(T entity);
+        Task DeleteAsync(Guid id);
 
     }
 }

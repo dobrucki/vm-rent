@@ -64,5 +64,21 @@ namespace Application.WebApi.Controllers
                 return BadRequest(response.Errors);
             }
         }
+
+        [HttpPut("{id}")]
+        public async Task<ActionResult> UpdateVirtualMachineAsync(
+            [FromBody] UpdateVirtualMachineRequest request,
+            [FromRoute] Guid id)
+        {
+            request.Id = id;
+            var response = await _mediator.Send(request);
+
+            if (response.HasError)
+            {
+                return BadRequest(response.Errors);
+            }
+
+            return Ok();
+        }
     }
 }

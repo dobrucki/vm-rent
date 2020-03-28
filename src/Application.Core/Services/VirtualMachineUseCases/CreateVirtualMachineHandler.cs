@@ -38,6 +38,7 @@ namespace Application.Core.Services.VirtualMachineUseCases
             {
                 var virtualMachine = new VirtualMachine
                 {
+                    Id = Guid.NewGuid(),
                     Name = request.Name
                 };
 

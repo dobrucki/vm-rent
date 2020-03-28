@@ -36,7 +36,7 @@ namespace Application.WebApi
                 .AddNewtonsoftJson();
 
             // Application.Infrastructure
-            services.AddSingleton<IRepository<VirtualMachine>, Repository<VirtualMachine>>();
+            services.AddSingleton<IRepository<VirtualMachine>, VirtualMachineRepository>();
             
             // Services
             services.AddMediatR(typeof(ListAllVirtualMachinesHandler));

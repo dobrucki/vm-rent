@@ -13,15 +13,15 @@ namespace Application.Core.Services.VirtualMachineUseCases
     public class DeleteVirtualMachineHandler :
         IRequestHandler<DeleteVirtualMachineRequest, BaseResponseDto<bool>>
     {
-        private IRepository<VirtualMachine> _repository;
         private ILogger<DeleteVirtualMachineHandler> _logger;
+        private IUnitOfWork _unitOfWork;
 
         public DeleteVirtualMachineHandler(
-            IRepository<VirtualMachine> repository, 
-            ILogger<DeleteVirtualMachineHandler> logger)
+            ILogger<DeleteVirtualMachineHandler> logger, 
+            IUnitOfWork unitOfWork)
         {
-            _repository = repository;
             _logger = logger;
+            _unitOfWork = unitOfWork;
         }
         
         public async Task<BaseResponseDto<bool>> Handle(
@@ -32,7 +32,13 @@ namespace Application.Core.Services.VirtualMachineUseCases
 
             try
             {
-                await _repository.DeleteAsync(request.Id);
+                await using (_unitOfWork)
+                {
+                    var virtualMachine = await _unitOfWork.VirtualMachines.GetAsync(request.Id);
+                    await _unitOfWork.VirtualMachines.RemoveAsync(virtualMachine);
+                    await _unitOfWork.Complete();
+                    _logger.LogInformation($"Removed virtual machine with id {request.Id}");
+                }
             }
             catch (Exception ex)
             {

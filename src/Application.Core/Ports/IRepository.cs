@@ -11,10 +11,14 @@ namespace Application.Core.Ports
     { 
         Task<T> GetAsync(Guid id);
         Task<IEnumerable<T>> GetAllAsync();
-        Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>> predicate);
-        Task CreateAsync(T virtualMachine);
-        Task UpdateAsync(T virtualMachine);
-        Task DeleteAsync(Guid id);
+        Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> predicate);
+        
+        Task AddAsync(T virtualMachine);
+        Task AddRangeAsync(IEnumerable<T> entities);
+
+        Task RemoveAsync(T entity);
+        Task RemoveRangeAsync(IEnumerable<T> entities);
+
 
     }
 }

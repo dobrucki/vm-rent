@@ -13,15 +13,15 @@ namespace Application.Core.Services.VirtualMachineUseCases
     public class UpdateVirtualMachineHandler :
         IRequestHandler<UpdateVirtualMachineRequest, BaseResponseDto<bool>>
     {
-        private IRepository<VirtualMachine> _repository;
         private ILogger<UpdateVirtualMachineHandler> _logger;
+        private IUnitOfWork _unitOfWork;
 
         public UpdateVirtualMachineHandler(
-            IRepository<VirtualMachine> repository, 
-            ILogger<UpdateVirtualMachineHandler> logger)
+            ILogger<UpdateVirtualMachineHandler> logger, 
+            IUnitOfWork unitOfWork)
         {
-            _repository = repository;
             _logger = logger;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<BaseResponseDto<bool>> Handle(
@@ -32,12 +32,13 @@ namespace Application.Core.Services.VirtualMachineUseCases
 
             try
             {
-                var virtualMachine = new VirtualMachine
+                await using (_unitOfWork)
                 {
-                    Id = request.Id,
-                    Name = request.Name
-                };
-                await _repository.UpdateAsync(virtualMachine);
+                    var virtualMachine = await _unitOfWork.VirtualMachines.GetAsync(request.Id);
+                    virtualMachine.Name = request.Name;
+                    await _unitOfWork.Complete();
+                    _logger.LogInformation($"Updated virtual machine with id {request.Id}");
+                }
             }
             catch (Exception ex)
             {

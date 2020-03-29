@@ -15,7 +15,6 @@ namespace Application.Core.Services.VirtualMachineUseCases
     public class GetVirtualMachineHandler :
         IRequestHandler<GetVirtualMachineRequest, BaseResponseDto<VirtualMachineDto>>
     {
-        private readonly IRepository<VirtualMachine> _repository;
         private readonly ILogger<GetVirtualMachineHandler> _logger;
         private readonly IUnitOfWork _unitOfWork;
 

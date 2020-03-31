@@ -17,7 +17,6 @@ namespace Application.WebApi
         public static void Main(string[] args)
         {
             var host = CreateHostBuilder(args).Build();
-            CreateDbIfNotExist(host);
             host.Run();
         }
 
@@ -30,26 +29,14 @@ namespace Application.WebApi
                     logging.AddDebug();
                     logging.AddConsole();
                 })
-                .ConfigureWebHostDefaults(webBuilder =>
+                .ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup<Startup>(); })
+                .ConfigureAppConfiguration(config =>
                 {
-                    webBuilder.UseStartup<Startup>();
+                    config
+                        .AddJsonFile("appsettings.json", 
+                            optional: true, reloadOnChange: true)
+                        .AddJsonFile("appsettings.{env.EnvironmentName}.json",
+                            optional: true, reloadOnChange: true);
                 });
-
-        public static void CreateDbIfNotExist(IHost host)
-        {
-            using var scope = host.Services.CreateScope();
-            var services = scope.ServiceProvider;
-
-            try
-            {
-                var context = services.GetRequiredService<PostgresContext>();
-                context.Database.EnsureCreated();
-            }
-            catch (Exception ex)
-            {
-                var logger = services.GetRequiredService<ILogger<Program>>();
-                logger.LogError(ex, "An error occurred creating the DB.");
-            }
-        }
     }
 }   

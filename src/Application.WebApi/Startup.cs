@@ -36,17 +36,7 @@ namespace Application.WebApi
             services.AddControllers()
                 .AddNewtonsoftJson();
             
-
             // Application.Infrastructure
-            //services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
-//            services.AddDbContext<PostgresContext>(options =>
-//            {
-//                options.UseNpgsql(Configuration.GetConnectionString("PostgresContext"));
-//            });
-//            services.AddTransient<IUnitOfWork>(unitOfWork => new UnitOfWork(new PostgresContext()));
-//            
-//            // Application.Infrastructure.EFDataAccess
-//            services.AddDbContext<PostgresContext>();
             services.AddPostgres(Configuration.GetConnectionString("PostgresContext"));
             
             // Services

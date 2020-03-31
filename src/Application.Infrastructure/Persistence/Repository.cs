@@ -7,7 +7,7 @@ using Application.Core.Models;
 using Application.Core.Ports;
 using Microsoft.EntityFrameworkCore;
 
-namespace Application.Infrastructure.EFDataAccess
+namespace Application.Infrastructure.Persistence
 {
     public class Repository<TEntity> : IRepository<TEntity>
         where TEntity : ModelBase

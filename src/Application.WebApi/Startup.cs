@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Application.Core.Models;
 using Application.Core.Ports;
 using Application.Core.Services.VirtualMachineUseCases;
-using Application.Infrastructure.EFDataAccess;
+using Application.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;

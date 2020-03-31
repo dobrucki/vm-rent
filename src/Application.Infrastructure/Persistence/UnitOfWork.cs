@@ -2,7 +2,7 @@ using System.Threading.Tasks;
 using Application.Core.Models;
 using Application.Core.Ports;
 
-namespace Application.Infrastructure.EFDataAccess
+namespace Application.Infrastructure.Persistence
 {
     public class UnitOfWork : IUnitOfWork
     {

@@ -75,37 +75,37 @@ namespace Application.WebApi.Controllers
         return res;
     }
 
-//    [HttpPut("{id}", Name = "UpdateVirtualMachine")]
-//    public async Task<ActionResult> UpdateVirtualMachineAsync(
-//        [FromBody] UpdateVirtualMachineRequest request,
-//        [FromRoute] Guid id)
-//    {
-//        request.Id = id;
-//        var response = await _mediator.Send(request);
-//
-//        if (response.HasError)
-//        {
-//            return BadRequest(response.Errors);
-//        }
-//
-//        return Ok();
-//    }
+    [HttpPut("{id}", Name = "UpdateUser")]
+    public async Task<ActionResult> UpdateUserAsync(
+        [FromBody] UpdateUserRequest request,
+        [FromRoute] Guid id)
+    {
+        request.Id = id;
+        var response = await _mediator.Send(request);
 
-//    [HttpDelete("{id}", Name = "DeleteVirtualMachine")]
-//    public async Task<ActionResult> DeleteVirtualMachineAsync(
-//        [FromRoute] Guid id)
-//    {
-//        var response = await _mediator.Send(new DeleteVirtualMachineRequest
-//        {
-//            Id = id
-//        });
-//
-//        if (response.HasError)
-//        {
-//            return NotFound();
-//        }
-//
-//        return Ok();
-//    }
+        if (response.HasError)
+        {
+            return BadRequest(response.Errors);
+        }
+
+        return Ok();
+    }
+
+    [HttpDelete("{id}", Name = "DeleteUser")]
+    public async Task<ActionResult> DeleteUserAsync(
+        [FromRoute] Guid id)
+    {
+        var response = await _mediator.Send(new DeleteUserRequest
+        {
+            Id = id
+        });
+
+        if (response.HasError)
+        {
+            return NotFound();
+        }
+
+        return Ok();
+    }
     }
 }

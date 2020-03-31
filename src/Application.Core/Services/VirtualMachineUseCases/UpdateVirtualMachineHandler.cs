@@ -13,8 +13,8 @@ namespace Application.Core.Services.VirtualMachineUseCases
     public class UpdateVirtualMachineHandler :
         IRequestHandler<UpdateVirtualMachineRequest, BaseResponseDto<bool>>
     {
-        private ILogger<UpdateVirtualMachineHandler> _logger;
-        private IUnitOfWork _unitOfWork;
+        private readonly ILogger<UpdateVirtualMachineHandler> _logger;
+        private readonly IUnitOfWork _unitOfWork;
 
         public UpdateVirtualMachineHandler(
             ILogger<UpdateVirtualMachineHandler> logger, 

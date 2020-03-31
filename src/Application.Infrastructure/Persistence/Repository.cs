@@ -12,48 +12,55 @@ namespace Application.Infrastructure.Persistence
     public class Repository<TEntity> : IRepository<TEntity>
         where TEntity : ModelBase
     {
-        protected readonly PostgresContext Context;
+        protected PostgresContext Context;
+        protected DbSet<TEntity> DbSet;
 
-        public Repository(DbContext context)
+        public Repository(PostgresContext context)
         {
-            Context = context as PostgresContext;
+            Context = context;
+            DbSet = Context.Set<TEntity>();
         }
 
-        public async Task<TEntity> GetAsync(Guid id)
+        public async Task<TEntity> GetByIdAsync(Guid id)
         {
-            return await Context.Set<TEntity>().FindAsync(id);
+            return await DbSet.SingleOrDefaultAsync(u => u.Id.Equals(id));
         }
 
         public async Task<IEnumerable<TEntity>> GetAllAsync()
         {
-            return await Context.Set<TEntity>().ToListAsync();
+            return await DbSet.ToListAsync();
         }
 
-        public async Task<IEnumerable<TEntity>> FindAsync(Expression<Func<TEntity, bool>> predicate)
+        public async Task<IEnumerable<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> predicate)
         {
-            return await Context.Set<TEntity>().Where(predicate).ToListAsync();
+            return await DbSet.Where(predicate).ToListAsync();
         }
 
-        public async Task AddAsync(TEntity entity)
+        public async Task InsertAsync(TEntity entity)
         {
-            await Context.Set<TEntity>().AddAsync(entity);
+            await DbSet.AddAsync(entity);
         }
 
-        public async Task AddRangeAsync(IEnumerable<TEntity> entities)
+        public async Task UpdateAsync(TEntity entity)
         {
-            await Context.Set<TEntity>().AddRangeAsync(entities);
+            await Task.Run(() => DbSet.Attach(entity));
+            Context.Entry(entity).State = EntityState.Modified;
         }
 
-        public Task RemoveAsync(TEntity entity)
+        public async Task DeleteAsync(TEntity entity)
         {
-            var task = new Task(() => Context.Set<TEntity>().Remove(entity));
-            return task;
+            if (Context.Entry(entity).State == EntityState.Detached)
+            {
+                await Task.Run(() => DbSet.Attach(entity));
+            }
+
+            DbSet.Remove(entity);
         }
 
-        public Task RemoveRangeAsync(IEnumerable<TEntity> entities)
+        public async Task DeleteAsync(Guid id)
         {
-            var task = new Task(() => Context.Set<TEntity>().RemoveRange(entities));
-            return task;
+            var entity = await DbSet.FindAsync(id);
+            await DeleteAsync(entity);
         }
     }
 }

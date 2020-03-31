@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using Application.Core.Models;
 using Application.Core.Ports;
@@ -7,23 +8,36 @@ namespace Application.Infrastructure.Persistence
     public class UnitOfWork : IUnitOfWork
     {
         private readonly PostgresContext _context;
+        private IRepository<VirtualMachine> _virtualMachineRepository;
 
         public UnitOfWork(PostgresContext context)
         {
             _context = context;
-            VirtualMachines = new Repository<VirtualMachine>(_context);
         }
-        
-        public IRepository<VirtualMachine> VirtualMachines { get; }
 
-        public async Task<int> Complete()
+        public IRepository<VirtualMachine> VirtualMachines => 
+            _virtualMachineRepository ??= new Repository<VirtualMachine>(_context);
+
+        public void Complete()
         {
-            return await _context.SaveChangesAsync();
+            _context.SaveChanges();
+        }
+
+        private bool disposed = false;
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposed) return;
+            if (disposing)
+            {
+                _context.Dispose();
+            }
         }
         
-        public async ValueTask DisposeAsync()
+        public void Dispose()
         {
-            await _context.DisposeAsync();
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
     }
 }

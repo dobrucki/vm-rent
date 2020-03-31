@@ -4,10 +4,10 @@ using Application.Core.Models;
 
 namespace Application.Core.Ports
 {
-    public interface IUnitOfWork : IAsyncDisposable
+    public interface IUnitOfWork : IDisposable
     {
         IRepository<VirtualMachine> VirtualMachines { get; }
 
-        Task<int> Complete();
+        void Complete();
     }
 }

@@ -9,16 +9,13 @@ namespace Application.Core.Ports
 {
     public interface IRepository<T> where T : ModelBase
     { 
-        Task<T> GetAsync(Guid id);
+        Task<T> GetByIdAsync(Guid id);
         Task<IEnumerable<T>> GetAllAsync();
-        Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> predicate);
+        Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>> predicate);
         
-        Task AddAsync(T virtualMachine);
-        Task AddRangeAsync(IEnumerable<T> entities);
-
-        Task RemoveAsync(T entity);
-        Task RemoveRangeAsync(IEnumerable<T> entities);
-
-
+        Task InsertAsync(T entity);
+        Task UpdateAsync(T entity);
+        Task DeleteAsync(T entity);
+        Task DeleteAsync(Guid id);
     }
 }

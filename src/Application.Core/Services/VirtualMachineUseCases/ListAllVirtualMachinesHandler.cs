@@ -34,7 +34,7 @@ namespace Application.Core.Services.VirtualMachineUseCases
 
             try
             {
-                await using (_unitOfWork)
+                using (_unitOfWork)
                 {
                     var virtualMachines = (await _unitOfWork.VirtualMachines.GetAllAsync())
                         .Select(e => new VirtualMachineDto
@@ -43,7 +43,7 @@ namespace Application.Core.Services.VirtualMachineUseCases
                             Id = e.Id
                         }).ToList();
                     response.Data = virtualMachines;
-                    await _unitOfWork.Complete();
+                    _unitOfWork.Complete();
                 }
             }
             catch (Exception ex)

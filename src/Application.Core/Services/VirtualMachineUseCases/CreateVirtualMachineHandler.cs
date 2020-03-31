@@ -33,20 +33,20 @@ namespace Application.Core.Services.VirtualMachineUseCases
 
             try
             {
-                await using (_unitOfWork)
+                using (_unitOfWork)
                 {
                     var virtualMachine = new VirtualMachine
                     {
                         Id = Guid.NewGuid(),
                         Name = request.Name
                     };
-                    await _unitOfWork.VirtualMachines.AddAsync(virtualMachine);
+                    await _unitOfWork.VirtualMachines.InsertAsync(virtualMachine);
                     response.Data = new VirtualMachineDto
                     {
                         Id = virtualMachine.Id,
                         Name = virtualMachine.Name
                     };
-                    await _unitOfWork.Complete();
+                    _unitOfWork.Complete();
                     _logger.LogInformation($"Created virtual machine with id {virtualMachine.Id}");
                 }
             }

@@ -16,7 +16,6 @@ namespace Application.Infrastructure.Persistence
             });
             services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
             services.AddTransient<IUnitOfWork, UnitOfWork>();
-            //services.AddScoped<IUserStore<User>, UserStore>();
             services.AddIdentityCore<User>()
                 .AddUserStore<UserStore>();
 

@@ -34,15 +34,15 @@ namespace Application.Core.Services.VirtualMachineUseCases
 
             try
             {
-                await using (_unitOfWork)
+                using (_unitOfWork)
                 {
-                    var virtualMachine = await _unitOfWork.VirtualMachines.GetAsync(request.Id);
+                    var virtualMachine = await _unitOfWork.VirtualMachines.GetByIdAsync(request.Id);
                     response.Data = new VirtualMachineDto
                     {
                         Id = virtualMachine.Id,
                         Name = virtualMachine.Name
                     };
-                    await _unitOfWork.Complete();
+                    _unitOfWork.Complete();
                     _logger.LogInformation($"Updated virtual machine with id {request.Id}");
                 }
             }

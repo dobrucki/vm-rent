@@ -32,11 +32,10 @@ namespace Application.Core.Services.VirtualMachineUseCases
 
             try
             {
-                await using (_unitOfWork)
+                using (_unitOfWork)
                 {
-                    var virtualMachine = await _unitOfWork.VirtualMachines.GetAsync(request.Id);
-                    await _unitOfWork.VirtualMachines.RemoveAsync(virtualMachine);
-                    await _unitOfWork.Complete();
+                    await _unitOfWork.VirtualMachines.DeleteAsync(request.Id);
+                    _unitOfWork.Complete();
                     _logger.LogInformation($"Removed virtual machine with id {request.Id}");
                 }
             }

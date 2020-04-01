@@ -3,7 +3,7 @@ using MediatR;
 
 namespace Application.Core.Dtos.Requests
 {
-    public class CreateReservationRequest : 
+    public class CreateReservationRequest :
         IRequest<BaseResponseDto<ReservationDto>>
     {
         public Guid UserId { get; set; }

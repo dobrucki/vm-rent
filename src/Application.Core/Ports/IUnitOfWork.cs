@@ -7,6 +7,7 @@ namespace Application.Core.Ports
     public interface IUnitOfWork : IDisposable
     {
         IRepository<VirtualMachine> VirtualMachines { get; }
+        IRepository<Reservation> Reservations { get; }
 
         void Complete();
     }

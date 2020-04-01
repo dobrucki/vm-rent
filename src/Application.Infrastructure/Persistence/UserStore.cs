@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -10,7 +11,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Application.Infrastructure.Persistence
 {
     public class UserStore : 
-        IQueryableUserStore<User>, IUserEmailStore<User>, IUserPasswordStore<User>
+        IQueryableUserStore<User>, IUserEmailStore<User>, IUserPasswordStore<User>, IUserRoleStore<User>
     {
         private readonly PostgresContext _context;
 
@@ -112,7 +113,7 @@ namespace Application.Infrastructure.Persistence
             cancellationToken.ThrowIfCancellationRequested();
             return await _context.Users
                 .SingleOrDefaultAsync(u => 
-                    u.Username.Equals(normalizedUserName.ToLower()), cancellationToken);
+                    u.Username.ToUpper().Equals(normalizedUserName), cancellationToken);
         }
 
         public Task SetPasswordHashAsync(
@@ -175,7 +176,7 @@ namespace Application.Infrastructure.Persistence
             cancellationToken.ThrowIfCancellationRequested();
             return await _context.Users
                 .SingleOrDefaultAsync(u => 
-                    u.Username.Equals(normalizedEmail.ToLower()), cancellationToken);
+                    u.Username.Equals(normalizedEmail.ToUpper()), cancellationToken);
         }
 
         public Task<string> GetNormalizedEmailAsync(
@@ -193,5 +194,56 @@ namespace Application.Infrastructure.Persistence
         }
 
         public IQueryable<User> Users => _context.Users.AsQueryable();
+        public async Task AddToRoleAsync(User user, string roleName, CancellationToken cancellationToken)
+        {
+            var role = _context.Roles.SingleOrDefault(e => e.Name.Equals(roleName));
+            if (role == null)
+            {
+                throw new InvalidOperationException("Role not found");
+            }
+
+            var userRole = new UserRole
+            {
+                Role = role,
+                User = user
+            };
+            _context.Add(userRole);
+            await _context.SaveChangesAsync(cancellationToken);
+        }
+
+        public async Task RemoveFromRoleAsync(User user, string roleName, CancellationToken cancellationToken)
+        {
+            var entity = _context.UserRoles
+                .Where(e => e.User.Id.Equals(user.Id))
+                .SingleOrDefault(e => e.Role.Name.Equals(roleName));
+            _context.Remove(entity);
+            await _context.SaveChangesAsync(cancellationToken);
+        }
+
+        public async Task<IList<string>> GetRolesAsync(User user, CancellationToken cancellationToken)
+        {
+            var roles = _context.UserRoles
+                .Where(e => e.User.Id.Equals(user.Id))
+                .Select(e => e.Role.Name)
+                .ToList();
+            return roles;
+        }
+
+        public Task<bool> IsInRoleAsync(User user, string roleName, CancellationToken cancellationToken)
+        {
+            var result = _context.UserRoles
+                .Where(e => e.User.Id.Equals(user.Id))
+                .Any(e => e.Role.Name.Equals(roleName));
+            return Task.FromResult(result);
+        }
+
+        public async Task<IList<User>> GetUsersInRoleAsync(string roleName, CancellationToken cancellationToken)
+        {
+            var result = _context.UserRoles
+                .Where(e => e.Role.Name.Equals(roleName))
+                .Select(e => e.User)
+                .ToList();
+            return result;
+        }
     }
 }

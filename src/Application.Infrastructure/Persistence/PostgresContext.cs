@@ -7,6 +7,8 @@ namespace Application.Infrastructure.Persistence
     {
         public DbSet<VirtualMachine> VirtualMachines { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<Role> Roles { get; set; }
+        public DbSet<UserRole> UserRoles { get; set; }
 
         public PostgresContext(DbContextOptions<PostgresContext> options) : base(options)
         {

@@ -9,6 +9,7 @@ namespace Application.Infrastructure.Persistence
     {
         private readonly PostgresContext _context;
         private IRepository<VirtualMachine> _virtualMachineRepository;
+        private IRepository<Reservation> _reservationRepository;
 
         public UnitOfWork(PostgresContext context)
         {
@@ -17,6 +18,9 @@ namespace Application.Infrastructure.Persistence
 
         public IRepository<VirtualMachine> VirtualMachines => 
             _virtualMachineRepository ??= new Repository<VirtualMachine>(_context);
+
+        public IRepository<Reservation> Reservations =>
+            _reservationRepository ??= new Repository<Reservation>(_context);
 
         public void Complete()
         {

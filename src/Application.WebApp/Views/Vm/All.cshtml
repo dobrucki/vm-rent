@@ -1,0 +1,75 @@
+@using System.Collections.Immutable
+@using Application.Core.Models
+@using Microsoft.AspNetCore.Identity
+@model Application.WebApp.ViewModels.ListVmViewModel
+
+@inject UserManager<User> UserManager
+
+@{
+    ViewBag.Title = "Virtual machines";
+}
+
+<div class="container-fluid mt-2">
+    <div class="row mx-2 justify-content-between">
+        <h2>Virtual machines</h2>
+            
+        <div class="col-sm-3">
+            <form class="input-group" asp-controller="Vm" asp-action="All" method="get">
+                <input type="text" name="name" class="form-control" placeholder="Search by name">
+                <div class="input-group-append">
+                    <button class="btn btn-secondary" type="submit">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <table class="table table-hover">
+        <thead>
+        <th>Name</th>
+        <th>Comment</th>
+        <th>Type</th>
+        <th></th>
+        </thead>
+        <tbody>
+        @foreach (var vm in Model.Vms)
+        {
+            <tr>
+                <td>@vm.Name</td>
+                <td>
+                    @{ var text = "-";}
+                    @text
+                </td>
+                <td>
+                    @{ var type = "Virtual machine"; }
+                    @type
+                </td>
+                
+                <td>
+                    @Html.ActionLink("Details", "Details", "Vm", new {id = vm.Id}) |
+                    @* @Html.ActionLink("Reserve", "CreateReservation", "Reservation", new {id = vm.Id}) *@
+                    @if (UserManager.IsInRoleAsync(UserManager.GetUserAsync(User).Result, "Administrator").Result
+                        || UserManager.IsInRoleAsync(UserManager.GetUserAsync(User).Result, "Employee").Result)
+                    {
+                        <span> 
+                            | @Html.ActionLink("Edit", "Edit", "Vm", new {id = vm.Id}) | 
+                            @Html.ActionLink("Delete", "Delete", "Vm", new {id = vm.Id})
+                        </span>
+                    }
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+    @if (UserManager.IsInRoleAsync(UserManager.GetUserAsync(User).Result, "Administrator").Result
+        || UserManager.IsInRoleAsync(UserManager.GetUserAsync(User).Result, "Employee").Result)
+    {
+        <div class="btn-group" role="group">
+            <a asp-action="Create" asp-controller="Vm"
+               type="button" class="btn btn-primary" role="button">Create new Vm</a>
+        </div>
+    }
+    
+</div>
+

@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Application.Infrastructure.Migrations
 {
     [DbContext(typeof(PostgresContext))]
-    [Migration("20200401134136_UserRoleMigration")]
-    partial class UserRoleMigration
+    [Migration("20200401165834_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,6 +20,33 @@ namespace Application.Infrastructure.Migrations
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn)
                 .HasAnnotation("ProductVersion", "3.0.1")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
+
+            modelBuilder.Entity("Application.Core.Models.Reservation", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("EndTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<DateTime>("StartTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<Guid?>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("VirtualMachineId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.HasIndex("VirtualMachineId");
+
+                    b.ToTable("Reservations");
+                });
 
             modelBuilder.Entity("Application.Core.Models.Role", b =>
                 {
@@ -85,6 +112,17 @@ namespace Application.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("VirtualMachines");
+                });
+
+            modelBuilder.Entity("Application.Core.Models.Reservation", b =>
+                {
+                    b.HasOne("Application.Core.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.HasOne("Application.Core.Models.VirtualMachine", "VirtualMachine")
+                        .WithMany()
+                        .HasForeignKey("VirtualMachineId");
                 });
 
             modelBuilder.Entity("Application.Core.Models.UserRole", b =>

@@ -19,6 +19,33 @@ namespace Application.Infrastructure.Migrations
                 .HasAnnotation("ProductVersion", "3.0.1")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
+            modelBuilder.Entity("Application.Core.Models.Reservation", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("EndTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<DateTime>("StartTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<Guid?>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("VirtualMachineId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.HasIndex("VirtualMachineId");
+
+                    b.ToTable("Reservations");
+                });
+
             modelBuilder.Entity("Application.Core.Models.Role", b =>
                 {
                     b.Property<Guid>("Id")
@@ -83,6 +110,17 @@ namespace Application.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("VirtualMachines");
+                });
+
+            modelBuilder.Entity("Application.Core.Models.Reservation", b =>
+                {
+                    b.HasOne("Application.Core.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.HasOne("Application.Core.Models.VirtualMachine", "VirtualMachine")
+                        .WithMany()
+                        .HasForeignKey("VirtualMachineId");
                 });
 
             modelBuilder.Entity("Application.Core.Models.UserRole", b =>

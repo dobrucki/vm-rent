@@ -20,8 +20,21 @@ namespace Application.Infrastructure.Persistence
             _context = context;
         }
 
+        private bool disposed = false;
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposed) return;
+            if (disposing)
+            {
+                _context.Dispose();
+            }
+        }
+        
         public void Dispose()
         {
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
 
         public Task<string> GetUserIdAsync(

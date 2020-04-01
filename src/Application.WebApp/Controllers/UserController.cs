@@ -75,7 +75,7 @@ namespace Application.WebApp.Controllers
 //                IsActive = user.Active
 //            });
 //        }
-//
+
 //        [HttpPost]
 //        public async Task<IActionResult> Edit(EditUserViewModel viewModel)
 //        {
@@ -90,58 +90,58 @@ namespace Application.WebApp.Controllers
 //            await _userManager.UpdateAsync(user);
 //            return RedirectToAction("All");
 //        }
-//
-//        [HttpGet]
-//        public async Task<IActionResult> AddToRole(string id)
-//        {
-//            var user = await _userManager.FindByIdAsync(id);
-//            if (user is null) return NotFound();
-//            return View(new ModifyUserRolesViewModel
-//            {
-//                UserId = user.Id,
-//                UserRoles = await _userManager.GetRolesAsync(user)
-//            });
-//        }
-//
-//        [HttpPost]
-//        public async Task<IActionResult> AddToRole(ModifyUserRolesViewModel viewModel)
-//        {
-//            if (!ModelState.IsValid) return View(viewModel);
-//            var user = await _userManager.FindByIdAsync(viewModel.UserId);
-//            if (user is null) return NotFound();
-//            await _userManager.AddToRoleAsync(user, viewModel.Role);
-//            return RedirectToAction("All");
-//        }
-//
-//        [HttpGet]
-//        public async Task<IActionResult> RemoveFromRole(string id)
-//        {
-//            var user = await _userManager.FindByIdAsync(id);
-//            if (user is null) return NotFound();
-//            return View(new ModifyUserRolesViewModel
-//            {
-//                UserId = user.Id,
-//                UserRoles = await _userManager.GetRolesAsync(user)
-//            });
-//        }
-//
-//        [HttpPost]
-//        public async Task<IActionResult> RemoveFromRole(ModifyUserRolesViewModel viewModel)
-//        {
-//            if (!ModelState.IsValid) return View(viewModel);
-//            var user = await _userManager.FindByIdAsync(viewModel.UserId);
-//            if (user is null) return NotFound();
-//            await _userManager.RemoveFromRoleAsync(user, viewModel.Role);
-//            return RedirectToAction("All");
-//        }
-//
-//        [HttpGet]
-//        [AllowAnonymous]
-//        JsonResult IsUsernameInUse(string UserName)
-//        {
-//            return Json(!_userManager.Users
-//                .Any(u => string.Equals(u.UserName, UserName, StringComparison.CurrentCultureIgnoreCase)));
-//        }
+
+        [HttpGet]
+        public async Task<IActionResult> AddToRole(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+            if (user is null) return NotFound();
+            return View(new ModifyUserRolesViewModel
+            {
+                UserId = user.Id.ToString(),
+                UserRoles = await _userManager.GetRolesAsync(user)
+            });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddToRole(ModifyUserRolesViewModel viewModel)
+        {
+            if (!ModelState.IsValid) return View(viewModel);
+            var user = await _userManager.FindByIdAsync(viewModel.UserId);
+            if (user is null) return NotFound();
+            await _userManager.AddToRoleAsync(user, viewModel.Role);
+            return RedirectToAction("All");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> RemoveFromRole(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+            if (user is null) return NotFound();
+            return View(new ModifyUserRolesViewModel
+            {
+                UserId = user.Id.ToString(),
+                UserRoles = await _userManager.GetRolesAsync(user)
+            });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> RemoveFromRole(ModifyUserRolesViewModel viewModel)
+        {
+            if (!ModelState.IsValid) return View(viewModel);
+            var user = await _userManager.FindByIdAsync(viewModel.UserId);
+            if (user is null) return NotFound();
+            await _userManager.RemoveFromRoleAsync(user, viewModel.Role);
+            return RedirectToAction("All");
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        JsonResult IsUsernameInUse(string username)
+        {
+            return Json(!_userManager.Users
+                .Any(u => string.Equals(u.Username, username, StringComparison.CurrentCultureIgnoreCase)));
+        }
     }
 }
 

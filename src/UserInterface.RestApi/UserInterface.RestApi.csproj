@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <TargetFramework>netcoreapp3.0</TargetFramework>
-        <RootNamespace>Application.WebApi</RootNamespace>
+        <RootNamespace>UserInterface.RestApi</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>

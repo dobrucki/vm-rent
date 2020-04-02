@@ -20,7 +20,7 @@ namespace Application.WebApi.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet(Name = "ListVirtualMachines")]
+        [HttpGet(Name = "GetAllVirtualMachines")]
         public async Task<ActionResult<List<VirtualMachineDto>>> GetAsync()
         {
             var response = await _mediator.Send(new GetAllVirtualMachinesQuery());

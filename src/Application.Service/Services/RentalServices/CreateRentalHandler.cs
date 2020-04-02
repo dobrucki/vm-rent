@@ -106,7 +106,7 @@ namespace Application.Service.Services.RentalServices
             catch (Exception ex)
             {
                 _logger.LogError(ex, ex.Message);
-                response.Errors.Add(ex.Message);
+                //response.Errors.Add(ex.Message);
             }
             
             return response;

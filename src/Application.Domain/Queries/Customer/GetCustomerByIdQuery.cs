@@ -4,7 +4,7 @@ using Application.Domain.Dtos;
 
 namespace Application.Domain.Queries.Customer
 {
-    public class GetCustomerQuery : QueryBase<BaseResponseDto<CustomerDto>>
+    public class GetCustomerByIdQuery : QueryBase<BaseResponseDto<CustomerDto>>
     {
         public Guid CustomerId { get; set; }
     }

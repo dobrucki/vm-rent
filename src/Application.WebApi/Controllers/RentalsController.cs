@@ -1,28 +1,28 @@
 using System;
 using System.Threading.Tasks;
 using Application.Domain.Commands.Customer;
+using Application.Domain.Commands.Rental;
 using Application.Domain.Dtos;
-using Application.Domain.Queries.Customer;
+using Application.Domain.Queries.Rental;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Application.WebApi.Controllers
 {
-    
     [Route("api/[controller]")]
     [ApiController]
-    public class CustomersController : ControllerBase
+    public class RentalsController : ControllerBase
     {
         private readonly IMediator _mediator;
 
-        public CustomersController(IMediator mediator)
+        public RentalsController(IMediator mediator)
         {
             _mediator = mediator;
         }
-        
-        [HttpPost(Name = "AddCustomer")]
+
+        [HttpPost(Name = "AddRental")]
         public async Task<ActionResult<CustomerDto>> PostAsync(
-            [FromBody] CreateCustomerCommand request)
+            [FromBody] CreateRentalCommand request)
         {
             var response = await _mediator.Send(request);   
 
@@ -32,21 +32,20 @@ namespace Application.WebApi.Controllers
             }
 
             var result = CreatedAtRoute(
-                "GetCustomer", 
+                "GetRental", 
                 new {id = response.Data.Id}, 
                 response.Data);
 
             return result;
         }
-        
-        [HttpGet("{id}", Name = "GetCustomer")]
-        public async Task<ActionResult<CustomerDto>> GetAsync(
-            [FromRoute] Guid id)
-        {
-            var response = await _mediator.Send(new GetCustomerByIdQuery {
-                CustomerId = id
-            });
 
+        [HttpGet(Name = "GetRental")]
+        public async Task<ActionResult<RentalDto>> GetAsync(
+            [FromBody] GetRentalByIdQuery request,
+            [FromRoute] Guid rentalId)
+        {
+            request.Id = rentalId;
+            var response = await _mediator.Send(request);
             if (response.HasError)
             {
                 return BadRequest(response.Errors);

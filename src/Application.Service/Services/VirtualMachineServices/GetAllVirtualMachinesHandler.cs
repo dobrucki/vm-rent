@@ -4,14 +4,13 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Application.Domain.Dtos;
+using Application.Domain.Queries.VirtualMachine;
 using Application.Service.Interfaces;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
-namespace Application.Service.Services.VirtualMachine
+namespace Application.Service.Services.VirtualMachineServices
 {
-    using Domain.Queries.VirtualMachine;
-    
     public class GetAllVirtualMachinesHandler :
         IRequestHandler<GetAllVirtualMachinesQuery, BaseResponseDto<IEnumerable<VirtualMachineDto>>>
     {

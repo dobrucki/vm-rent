@@ -2,12 +2,13 @@
 
     <PropertyGroup>
         <TargetFramework>netcoreapp3.0</TargetFramework>
+        <RootNamespace>Application.WebApi</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Application.Service\Application.Service.csproj" />
-      <ProjectReference Include="..\Application.Domain\Application.Domain.csproj" />
-      <ProjectReference Include="..\Application.Persistence\Application.Persistence.csproj" />
+      <ProjectReference Include="..\Core.Application\Core.Application.csproj" />
+      <ProjectReference Include="..\Core.Domain\Core.Domain.csproj" />
+      <ProjectReference Include="..\Infrastructure.Persistence\Infrastructure.Persistence.csproj" />
     </ItemGroup>
 
     <ItemGroup>

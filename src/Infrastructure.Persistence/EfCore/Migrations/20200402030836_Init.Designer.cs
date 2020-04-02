@@ -21,7 +21,7 @@ namespace Application.Infrastructure.Migrations
                 .HasAnnotation("ProductVersion", "3.0.1")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
-            modelBuilder.Entity("Application.Domain.Models.Customer", b =>
+            modelBuilder.Entity("Core.Domain.Models.Customer", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -47,7 +47,7 @@ namespace Application.Infrastructure.Migrations
                     b.ToTable("Customers");
                 });
 
-            modelBuilder.Entity("Application.Domain.Models.Rental", b =>
+            modelBuilder.Entity("Core.Domain.Models.Rental", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -80,7 +80,7 @@ namespace Application.Infrastructure.Migrations
                     b.ToTable("Rentals");
                 });
 
-            modelBuilder.Entity("Application.Domain.Models.VirtualMachine", b =>
+            modelBuilder.Entity("Core.Domain.Models.VirtualMachine", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -100,13 +100,13 @@ namespace Application.Infrastructure.Migrations
                     b.ToTable("VirtualMachines");
                 });
 
-            modelBuilder.Entity("Application.Domain.Models.Rental", b =>
+            modelBuilder.Entity("Core.Domain.Models.Rental", b =>
                 {
-                    b.HasOne("Application.Domain.Models.Customer", "Customer")
+                    b.HasOne("Core.Domain.Models.Customer", "Customer")
                         .WithMany()
                         .HasForeignKey("CustomerId");
 
-                    b.HasOne("Application.Domain.Models.VirtualMachine", "VirtualMachine")
+                    b.HasOne("Core.Domain.Models.VirtualMachine", "VirtualMachine")
                         .WithMany()
                         .HasForeignKey("VirtualMachineId");
                 });

@@ -1,12 +1,12 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application.Persistence", "src\Application.Persistence\Application.Persistence.csproj", "{F6BC006B-B2D8-4CC7-8249-3F036F4990CA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure.Persistence", "src\Infrastructure.Persistence\Infrastructure.Persistence.csproj", "{F6BC006B-B2D8-4CC7-8249-3F036F4990CA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application.WebApi", "src\Application.WebApi\Application.WebApi.csproj", "{08FF95C8-4F09-4712-8803-990DD89C28E6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserInterface.RestApi", "src\UserInterface.RestApi\UserInterface.RestApi.csproj", "{08FF95C8-4F09-4712-8803-990DD89C28E6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application.Domain", "src\Application.Domain\Application.Domain.csproj", "{0799440E-3135-4024-8602-49D5F50E4317}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.Domain", "src\Core.Domain\Core.Domain.csproj", "{0799440E-3135-4024-8602-49D5F50E4317}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application.Service", "src\Application.Service\Application.Service.csproj", "{2F1A36F7-7213-4CA9-BDE3-C2B2F30B5E83}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.Application", "src\Core.Application\Core.Application.csproj", "{2F1A36F7-7213-4CA9-BDE3-C2B2F30B5E83}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

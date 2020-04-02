@@ -23,7 +23,7 @@ namespace Application.WebApi
             services.AddControllers()
                 .AddNewtonsoftJson();
             
-            // Application.Persistence
+            // Infrastructure.Persistence
             services.AddPostgres(Configuration.GetConnectionString("PostgresContext"));
             
             // Services

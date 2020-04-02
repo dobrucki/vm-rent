@@ -5,8 +5,9 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Application.Core\Application.Core.csproj" />
-      <ProjectReference Include="..\Application.Infrastructure\Application.Infrastructure.csproj" />
+      <ProjectReference Include="..\Application.Service\Application.Service.csproj" />
+      <ProjectReference Include="..\Application.Domain\Application.Domain.csproj" />
+      <ProjectReference Include="..\Application.Persistence\Application.Persistence.csproj" />
     </ItemGroup>
 
     <ItemGroup>

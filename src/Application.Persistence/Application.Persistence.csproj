@@ -2,10 +2,12 @@
 
     <PropertyGroup>
         <TargetFramework>netcoreapp3.0</TargetFramework>
+        <RootNamespace>Application.Infrastructure</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Application.Core\Application.Core.csproj" />
+      <ProjectReference Include="..\Application.Domain\Application.Domain.csproj" />
+      <ProjectReference Include="..\Application.Service\Application.Service.csproj" />
     </ItemGroup>
 
     <ItemGroup>

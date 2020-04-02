@@ -1,24 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Threading.Tasks;
-using Application.Core.Models;
-using Application.Core.Ports;
-using Application.Core.Services.VirtualMachineUseCases;
-using Application.Infrastructure.Persistence;
+using Application.Infrastructure.EfCore;
+using Application.Service;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using MediatR;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.EntityFrameworkCore;
-using Newtonsoft;
 
 namespace Application.WebApi
 {
@@ -37,11 +23,11 @@ namespace Application.WebApi
             services.AddControllers()
                 .AddNewtonsoftJson();
             
-            // Application.Infrastructure
+            // Application.Persistence
             services.AddPostgres(Configuration.GetConnectionString("PostgresContext"));
             
             // Services
-            services.AddMediatR(typeof(DeleteVirtualMachineHandler));
+            services.AddApplicationServices();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

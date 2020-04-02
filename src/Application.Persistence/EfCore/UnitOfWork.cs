@@ -1,26 +1,26 @@
 using System;
-using System.Threading.Tasks;
-using Application.Core.Models;
-using Application.Core.Ports;
 
-namespace Application.Infrastructure.Persistence
+namespace Application.Infrastructure.EfCore
 {
+    using Domain.Models;
+    using Service.Interfaces;
     public class UnitOfWork : IUnitOfWork
     {
         private readonly PostgresContext _context;
-        private IRepository<VirtualMachine> _virtualMachineRepository;
-        private IRepository<Reservation> _reservationRepository;
+
+        public IRepository<VirtualMachine> VirtualMachines =>
+            _virtualMachines ??= new Repository<VirtualMachine>(_context);
+
+        public IRepository<Customer> Customers => 
+            _customers ??= new Repository<Customer>(_context);
+
+        public IRepository<Rental> Rentals => 
+            _rentals ??= new Repository<Rental>(_context);
 
         public UnitOfWork(PostgresContext context)
-        {
+        {   
             _context = context;
         }
-
-        public IRepository<VirtualMachine> VirtualMachines => 
-            _virtualMachineRepository ??= new Repository<VirtualMachine>(_context);
-
-        public IRepository<Reservation> Reservations =>
-            _reservationRepository ??= new Repository<Reservation>(_context);
 
         public void Complete()
         {
@@ -28,6 +28,9 @@ namespace Application.Infrastructure.Persistence
         }
 
         private bool disposed = false;
+        private IRepository<VirtualMachine> _virtualMachines;
+        private IRepository<Customer> _customers;
+        private IRepository<Rental> _rentals;
 
         protected virtual void Dispose(bool disposing)
         {

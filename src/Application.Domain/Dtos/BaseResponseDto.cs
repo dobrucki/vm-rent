@@ -5,16 +5,19 @@ namespace Application.Domain.Dtos
 {
     using Models;
     
-    public class BaseResponseDto<TData> where TData : ModelBase
+    public class BaseResponseDto<TData> : BaseResponseDto where TData : class
     {
-        public BaseResponseDto(TData data)
+        public TData Data { get; set; }
+    }
+
+    public class BaseResponseDto
+    {
+        public BaseResponseDto()
         {
             Errors = new List<string>();
-            Data = data;
         }
 
         public ICollection<string> Errors { get; }
-        public bool HasErrors => Errors.Any();
-        public TData Data { get; }
+        public bool HasError => Errors.Any();
     }
 }

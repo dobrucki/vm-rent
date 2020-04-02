@@ -3,63 +3,64 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using Application.Core.Models;
-using Application.Core.Ports;
 using Microsoft.EntityFrameworkCore;
 
-namespace Application.Infrastructure.Persistence
+namespace Application.Infrastructure.EfCore
 {
+    using Domain.Models;
+    using Service.Interfaces;
+    
     public class Repository<TEntity> : IRepository<TEntity>
         where TEntity : ModelBase
     {
-        protected PostgresContext Context;
-        protected DbSet<TEntity> DbSet;
+        private readonly PostgresContext _context;
+        private readonly DbSet<TEntity> _dbSet;
 
         public Repository(PostgresContext context)
         {
-            Context = context;
-            DbSet = Context.Set<TEntity>();
+            _context = context;
+            _dbSet = _context.Set<TEntity>();
         }
 
         public async Task<TEntity> GetByIdAsync(Guid id)
         {
-            return await DbSet.SingleOrDefaultAsync(u => u.Id.Equals(id));
+            return await _dbSet.SingleOrDefaultAsync(u => u.Id.Equals(id));
         }
 
         public async Task<IEnumerable<TEntity>> GetAllAsync()
         {
-            return await DbSet.ToListAsync();
+            return await _dbSet.ToListAsync();
         }
 
         public async Task<IEnumerable<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> predicate)
         {
-            return await DbSet.Where(predicate).ToListAsync();
+            return await _dbSet.Where(predicate).ToListAsync();
         }
 
         public async Task InsertAsync(TEntity entity)
         {
-            await DbSet.AddAsync(entity);
+            await _dbSet.AddAsync(entity);
         }
 
         public async Task UpdateAsync(TEntity entity)
         {
-            await Task.Run(() => DbSet.Attach(entity));
-            Context.Entry(entity).State = EntityState.Modified;
+            await Task.Run(() => _dbSet.Attach(entity));
+            _context.Entry(entity).State = EntityState.Modified;
         }
 
         public async Task DeleteAsync(TEntity entity)
         {
-            if (Context.Entry(entity).State == EntityState.Detached)
+            if (_context.Entry(entity).State == EntityState.Detached)
             {
-                await Task.Run(() => DbSet.Attach(entity));
+                await Task.Run(() => _dbSet.Attach(entity));
             }
 
-            DbSet.Remove(entity);
+            _dbSet.Remove(entity);
         }
 
         public async Task DeleteAsync(Guid id)
         {
-            var entity = await DbSet.FindAsync(id);
+            var entity = await _dbSet.FindAsync(id);
             await DeleteAsync(entity);
         }
     }

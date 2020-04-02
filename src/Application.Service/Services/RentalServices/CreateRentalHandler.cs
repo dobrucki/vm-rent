@@ -35,9 +35,22 @@ namespace Application.Service.Services.RentalServices
             var response = new BaseResponseDto<RentalDto>();
             try
             {
+                if (request.StartTime < DateTime.UtcNow)
+                {
+                    response.Errors
+                        .Add($"Start time can not be from the past.");
+                }
+
+                if (request.EndTime < DateTime.UtcNow)
+                {
+                    response.Errors
+                        .Add($"End time can not be from the past.");
+                }
+
                 if (request.StartTime > request.EndTime)
                 {
-//                    response.Errors.Add();
+                    response.Errors
+                        .Add($"Start time can not be later than end time.");
                 }
                 
                 Rental rental;
@@ -46,16 +59,20 @@ namespace Application.Service.Services.RentalServices
                     var customer = await _unitOfWork.Customers.GetByIdAsync(request.CustomerId);
                     if (customer == null)
                     {
-                        throw new ArgumentException(
-                            $"Customer with id {request.CustomerId} does not exist.",
-                            nameof(request.CustomerId));
+                        response.Errors
+                            .Add($"Customer with id {request.CustomerId} does not exist.");
                     }
                     var virtualMachine = await _unitOfWork.VirtualMachines.GetByIdAsync(request.VirtualMachineId);
                     if (virtualMachine == null)
                     {
-                        throw new ArgumentException(
-                            $"VirtualMachine with id {request.VirtualMachineId} does not exist.",
-                            nameof(request.VirtualMachineId));
+                        response.Errors
+                            .Add($"VirtualMachine with id {request.VirtualMachineId} does not exist.");
+
+                    }
+                    if (response.HasError || customer == null || virtualMachine == null)
+                    {
+                        throw new ApplicationException(
+                            "Could not create rental because some errors occurred.");
                     }
                     rental = new Rental
                     {

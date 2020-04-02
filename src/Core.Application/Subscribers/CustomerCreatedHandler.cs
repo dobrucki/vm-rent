@@ -1,12 +1,12 @@
 using System.Threading;
 using System.Threading.Tasks;
+using Application.Domain.Events.CustomerEvents;
 using Application.Service.Interfaces;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
 namespace Application.Service.Subscribers
 {
-    using Domain.Events.Customer;
     using Domain.Models;
     
     public class CustomerCreatedHandler : 

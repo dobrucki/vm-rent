@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Application.Domain.Dtos;
-using Application.Domain.Queries.VirtualMachine;
+using Application.Domain.Queries.VirtualMachineQueries;
 using Application.Service.Interfaces;
 using MediatR;
 using Microsoft.Extensions.Logging;

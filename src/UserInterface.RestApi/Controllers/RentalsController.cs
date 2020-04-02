@@ -1,9 +1,8 @@
 using System;
 using System.Threading.Tasks;
-using Application.Domain.Commands.Customer;
-using Application.Domain.Commands.Rental;
+using Application.Domain.Commands.RentalCommands;
 using Application.Domain.Dtos;
-using Application.Domain.Queries.Rental;
+using Application.Domain.Queries.RentalQueries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

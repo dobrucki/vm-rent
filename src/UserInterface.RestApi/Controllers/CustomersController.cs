@@ -1,8 +1,8 @@
 using System;
 using System.Threading.Tasks;
-using Application.Domain.Commands.Customer;
+using Application.Domain.Commands.CustomerCommands;
 using Application.Domain.Dtos;
-using Application.Domain.Queries.Customer;
+using Application.Domain.Queries.CustomerQueries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

@@ -1,8 +1,7 @@
 using System;
-using Application.Domain.Commands;
 using Application.Domain.Dtos;
 
-namespace Application.Domain.Queries.Customer
+namespace Application.Domain.Queries.CustomerQueries
 {
     public class GetCustomerByIdQuery : QueryBase<BaseResponseDto<CustomerDto>>
     {

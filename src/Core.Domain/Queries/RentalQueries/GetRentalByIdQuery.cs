@@ -1,7 +1,7 @@
 using System;
 using Application.Domain.Dtos;
 
-namespace Application.Domain.Queries.Rental
+namespace Application.Domain.Queries.RentalQueries
 {
     public class GetRentalByIdQuery : QueryBase<BaseResponseDto<RentalDto>>
     {

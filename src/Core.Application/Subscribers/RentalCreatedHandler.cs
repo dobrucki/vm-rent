@@ -1,7 +1,6 @@
 using System.Threading;
 using System.Threading.Tasks;
-using Application.Domain.Events.Customer;
-using Application.Domain.Events.Rental;
+using Application.Domain.Events.RentalEvents;
 using Application.Domain.Models;
 using Application.Service.Interfaces;
 using MediatR;

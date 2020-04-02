@@ -1,6 +1,6 @@
 using System;
 
-namespace Application.Domain.Events.Customer
+namespace Application.Domain.Events.CustomerEvents
 {
     public class CustomerCreatedEvent : EventBase
     {

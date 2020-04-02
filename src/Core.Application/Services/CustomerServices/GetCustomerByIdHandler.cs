@@ -3,7 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Application.Domain.Dtos;
 using Application.Domain.Models;
-using Application.Domain.Queries.Customer;
+using Application.Domain.Queries.CustomerQueries;
 using Application.Service.Interfaces;
 using MediatR;
 using Microsoft.Extensions.Logging;

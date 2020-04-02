@@ -1,7 +1,7 @@
-namespace Application.Domain.Commands.Customer
+using Application.Domain.Dtos;
+
+namespace Application.Domain.Commands.CustomerCommands
 {
-    using Dtos;
-    
     public class CreateCustomerCommand : CommandBase<BaseResponseDto<CustomerDto>>
     {
         public string FirstName { get; set; }

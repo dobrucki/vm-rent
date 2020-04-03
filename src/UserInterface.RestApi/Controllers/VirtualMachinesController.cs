@@ -50,12 +50,8 @@ namespace UserInterface.RestApi.Controllers
 
         [HttpPost(Name = "CreateVirtualMachine")]
         public async Task<ActionResult<VirtualMachineDto>> CreateVirtualMachineAsync(
-            [FromBody] string virtualMachineName)
+            [FromBody] CreateVirtualMachineCommand request)
         {
-            var request = new CreateVirtualMachineCommand
-            {
-                Name = virtualMachineName
-            };
             var response = await _mediator.Send(request);   
 
             if (response.HasError)

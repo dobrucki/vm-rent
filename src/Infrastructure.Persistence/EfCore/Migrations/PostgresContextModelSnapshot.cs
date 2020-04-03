@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
-namespace Application.Infrastructure.EfCore.Migrations
+namespace Infrastructure.Persistence.EfCore.Migrations
 {
     [DbContext(typeof(PostgresContext))]
     partial class PostgresContextModelSnapshot : ModelSnapshot

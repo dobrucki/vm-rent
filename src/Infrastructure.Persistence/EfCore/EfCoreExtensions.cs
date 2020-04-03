@@ -2,7 +2,7 @@ using Application.Service.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Application.Infrastructure.EfCore
+namespace Infrastructure.Persistence.EfCore
 {
     public static class EfCoreExtensions
     {

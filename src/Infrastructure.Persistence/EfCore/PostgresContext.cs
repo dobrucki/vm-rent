@@ -1,7 +1,7 @@
 using Application.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace Application.Infrastructure.EfCore
+namespace Infrastructure.Persistence.EfCore
 {
     public class PostgresContext : DbContext
     {

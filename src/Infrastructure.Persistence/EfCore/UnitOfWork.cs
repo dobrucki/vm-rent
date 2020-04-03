@@ -1,9 +1,9 @@
 using System;
+using Application.Domain.Models;
+using Application.Service.Interfaces;
 
-namespace Application.Infrastructure.EfCore
+namespace Infrastructure.Persistence.EfCore
 {
-    using Domain.Models;
-    using Service.Interfaces;
     public class UnitOfWork : IUnitOfWork
     {
         private readonly PostgresContext _context;

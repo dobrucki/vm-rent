@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using Application.Domain.Models;
+using Application.Service.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
-namespace Application.Infrastructure.EfCore
+namespace Infrastructure.Persistence.EfCore
 {
-    using Domain.Models;
-    using Service.Interfaces;
-    
     public class Repository<TEntity> : IRepository<TEntity>
         where TEntity : ModelBase
     {

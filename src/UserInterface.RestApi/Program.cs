@@ -22,14 +22,6 @@ namespace UserInterface.RestApi
                     logging.AddDebug();
                     logging.AddConsole();
                 })
-                .ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup<Startup>(); })
-                .ConfigureAppConfiguration(config =>
-                {
-                    config
-                        .AddJsonFile("appsettings.json", 
-                            optional: true, reloadOnChange: true)
-                        .AddJsonFile("appsettings.{env.EnvironmentName}.json",
-                            optional: true, reloadOnChange: true);
-                });
+                .ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup<Startup>(); });
     }
 }   

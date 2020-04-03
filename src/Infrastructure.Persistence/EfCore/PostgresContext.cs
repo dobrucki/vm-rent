@@ -1,4 +1,5 @@
 using Core.Domain.Models;
+using Core.Domain.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Persistence.EfCore

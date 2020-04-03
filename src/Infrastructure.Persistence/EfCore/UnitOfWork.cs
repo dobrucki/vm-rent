@@ -1,6 +1,7 @@
 using System;
 using Core.Application.Interfaces;
 using Core.Domain.Models;
+using Core.Domain.Models.Entities;
 
 namespace Infrastructure.Persistence.EfCore
 {

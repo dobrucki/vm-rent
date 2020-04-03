@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Core.Application.Interfaces;
 using Core.Domain.Events.CustomerEvents;
 using Core.Domain.Models;
+using Core.Domain.Models.Entities;
 using MediatR;
 using Microsoft.Extensions.Logging;
 

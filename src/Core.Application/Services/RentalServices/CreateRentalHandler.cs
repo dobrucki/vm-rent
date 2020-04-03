@@ -6,6 +6,7 @@ using Core.Domain.Commands.RentalCommands;
 using Core.Domain.Dtos;
 using Core.Domain.Events.RentalEvents;
 using Core.Domain.Models;
+using Core.Domain.Models.Entities;
 using MediatR;
 using Microsoft.Extensions.Logging;
 

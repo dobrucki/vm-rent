@@ -8,6 +8,7 @@ using Core.Domain.Commands.CustomerCommands;
 using Core.Domain.Dtos;
 using Core.Domain.Events.CustomerEvents;
 using Core.Domain.Models;
+using Core.Domain.Models.Entities;
 using MediatR;
 using Microsoft.Extensions.Logging;
 

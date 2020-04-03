@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Core.Application.Interfaces;
 using Core.Domain.Dtos;
 using Core.Domain.Models;
+using Core.Domain.Models.Entities;
 using Core.Domain.Queries.CustomerQueries;
 using MediatR;
 using Microsoft.Extensions.Logging;

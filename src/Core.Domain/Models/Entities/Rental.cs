@@ -1,6 +1,6 @@
 using System;
 
-namespace Core.Domain.Models
+namespace Core.Domain.Models.Entities
 {
     public class Rental : ModelBase
     {

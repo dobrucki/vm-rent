@@ -1,6 +1,6 @@
 using MediatR;
 
-namespace Application.Domain.Queries
+namespace Core.Domain.Queries
 {
     public class QueryBase<T> : IRequest<T> where T : class
     {

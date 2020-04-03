@@ -1,4 +1,4 @@
-namespace Application.Domain.Models
+namespace Core.Domain.Models
 {
     public class Customer : ModelBase
     {

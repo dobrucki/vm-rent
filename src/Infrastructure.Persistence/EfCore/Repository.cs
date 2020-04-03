@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using Application.Domain.Models;
-using Application.Service.Interfaces;
+using Core.Application.Interfaces;
+using Core.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Persistence.EfCore

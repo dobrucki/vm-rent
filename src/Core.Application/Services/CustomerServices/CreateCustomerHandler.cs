@@ -3,15 +3,15 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
-using Application.Domain.Commands.CustomerCommands;
-using Application.Domain.Dtos;
-using Application.Domain.Events.CustomerEvents;
-using Application.Domain.Models;
-using Application.Service.Interfaces;
+using Core.Application.Interfaces;
+using Core.Domain.Commands.CustomerCommands;
+using Core.Domain.Dtos;
+using Core.Domain.Events.CustomerEvents;
+using Core.Domain.Models;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
-namespace Application.Service.Services.CustomerServices
+namespace Core.Application.Services.CustomerServices
 {
     public class CreateCustomerHandler : 
         IRequestHandler<CreateCustomerCommand, BaseResponseDto<CustomerDto>>

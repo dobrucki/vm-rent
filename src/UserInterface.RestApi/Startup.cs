@@ -1,4 +1,4 @@
-using Application.Service;
+using Core.Application;
 using Infrastructure.Persistence.EfCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -6,7 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace Application.WebApi
+namespace UserInterface.RestApi
 {
     public class Startup
     {

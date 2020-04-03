@@ -1,10 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Application.Domain.Dtos
+namespace Core.Domain.Dtos
 {
-    using Models;
-    
     public class BaseResponseDto<TData> : BaseResponseDto where TData : class
     {
         public TData Data { get; set; }

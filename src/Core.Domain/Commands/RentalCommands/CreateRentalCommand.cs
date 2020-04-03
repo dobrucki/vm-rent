@@ -1,7 +1,7 @@
 using System;
-using Application.Domain.Dtos;
+using Core.Domain.Dtos;
 
-namespace Application.Domain.Commands.RentalCommands
+namespace Core.Domain.Commands.RentalCommands
 {
     public class CreateRentalCommand : CommandBase<BaseResponseDto<RentalDto>>
     {

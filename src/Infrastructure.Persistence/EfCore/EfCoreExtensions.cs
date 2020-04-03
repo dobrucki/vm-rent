@@ -1,4 +1,4 @@
-using Application.Service.Interfaces;
+using Core.Application.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 

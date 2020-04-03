@@ -1,9 +1,8 @@
 using System;
+using Core.Domain.Models;
 
-namespace Application.Service.Interfaces
+namespace Core.Application.Interfaces
 {
-    using Domain.Models;
-    
     public interface IUnitOfWork : IDisposable
     {
         IRepository<Customer> Customers { get; }

@@ -1,14 +1,12 @@
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Application.Domain.Queries.VirtualMachineQueries;
-using Microsoft.AspNetCore.Mvc;
+using Core.Domain.Dtos;
+using Core.Domain.Queries.VirtualMachineQueries;
 using MediatR;
+using Microsoft.AspNetCore.Mvc;
 
-namespace Application.WebApi.Controllers
+namespace UserInterface.RestApi.Controllers
 {
-    using Domain.Dtos;
-    
     [Route("api/[controller]")]
     [ApiController]
     public class VirtualMachinesController : ControllerBase

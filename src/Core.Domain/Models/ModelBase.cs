@@ -1,6 +1,6 @@
 using System;
 
-namespace Application.Domain.Models
+namespace Core.Domain.Models
 {
     public abstract class ModelBase
     {

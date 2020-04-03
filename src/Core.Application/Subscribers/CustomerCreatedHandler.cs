@@ -1,14 +1,13 @@
 using System.Threading;
 using System.Threading.Tasks;
-using Application.Domain.Events.CustomerEvents;
-using Application.Service.Interfaces;
+using Core.Application.Interfaces;
+using Core.Domain.Events.CustomerEvents;
+using Core.Domain.Models;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
-namespace Application.Service.Subscribers
+namespace Core.Application.Subscribers
 {
-    using Domain.Models;
-    
     public class CustomerCreatedHandler : 
         INotificationHandler<CustomerCreatedEvent>
     {

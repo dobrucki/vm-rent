@@ -1,7 +1,7 @@
 using System;
-using Application.Domain.Dtos;
+using Core.Domain.Dtos;
 
-namespace Application.Domain.Queries.CustomerQueries
+namespace Core.Domain.Queries.CustomerQueries
 {
     public class GetCustomerByIdQuery : QueryBase<BaseResponseDto<CustomerDto>>
     {

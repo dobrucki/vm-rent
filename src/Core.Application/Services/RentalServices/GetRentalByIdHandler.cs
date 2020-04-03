@@ -1,17 +1,14 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Application.Domain.Dtos;
-using Application.Domain.Models;
-using Application.Domain.Queries.RentalQueries;
-using Application.Service.Interfaces;
-using Application.Service.Services.VirtualMachineServices;
+using Core.Application.Interfaces;
+using Core.Domain.Dtos;
+using Core.Domain.Models;
+using Core.Domain.Queries.RentalQueries;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
-namespace Application.Service.Services.RentalServices
+namespace Core.Application.Services.RentalServices
 {
     public class GetRentalByIdHandler :
         IRequestHandler<GetRentalByIdQuery, BaseResponseDto<RentalDto>>

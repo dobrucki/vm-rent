@@ -1,6 +1,6 @@
-using Application.Domain.Dtos;
+using Core.Domain.Dtos;
 
-namespace Application.Domain.Commands.CustomerCommands
+namespace Core.Domain.Commands.CustomerCommands
 {
     public class CreateCustomerCommand : CommandBase<BaseResponseDto<CustomerDto>>
     {

@@ -1,15 +1,15 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Application.Domain.Commands.RentalCommands;
-using Application.Domain.Dtos;
-using Application.Domain.Events.RentalEvents;
-using Application.Domain.Models;
-using Application.Service.Interfaces;
+using Core.Application.Interfaces;
+using Core.Domain.Commands.RentalCommands;
+using Core.Domain.Dtos;
+using Core.Domain.Events.RentalEvents;
+using Core.Domain.Models;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
-namespace Application.Service.Services.RentalServices
+namespace Core.Application.Services.RentalServices
 {
     public class CreateRentalHandler :
         IRequestHandler<CreateRentalCommand, BaseResponseDto<RentalDto>>

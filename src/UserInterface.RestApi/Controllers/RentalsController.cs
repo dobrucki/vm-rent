@@ -1,12 +1,12 @@
 using System;
 using System.Threading.Tasks;
-using Application.Domain.Commands.RentalCommands;
-using Application.Domain.Dtos;
-using Application.Domain.Queries.RentalQueries;
+using Core.Domain.Commands.RentalCommands;
+using Core.Domain.Dtos;
+using Core.Domain.Queries.RentalQueries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Application.WebApi.Controllers
+namespace UserInterface.RestApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

@@ -1,14 +1,14 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Application.Domain.Dtos;
-using Application.Domain.Models;
-using Application.Domain.Queries.CustomerQueries;
-using Application.Service.Interfaces;
+using Core.Application.Interfaces;
+using Core.Domain.Dtos;
+using Core.Domain.Models;
+using Core.Domain.Queries.CustomerQueries;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
-namespace Application.Service.Services.CustomerServices
+namespace Core.Application.Services.CustomerServices
 {
     public class GetCustomerByIdHandler :
         IRequestHandler<GetCustomerByIdQuery, BaseResponseDto<CustomerDto>>

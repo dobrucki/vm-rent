@@ -1,6 +1,6 @@
 using System;
 
-namespace Application.Domain.Events.RentalEvents
+namespace Core.Domain.Events.RentalEvents
 {
     public class RentalCreatedEvent : EventBase
     {

@@ -1,12 +1,12 @@
 using System;
 using System.Threading.Tasks;
-using Application.Domain.Commands.CustomerCommands;
-using Application.Domain.Dtos;
-using Application.Domain.Queries.CustomerQueries;
+using Core.Domain.Commands.CustomerCommands;
+using Core.Domain.Dtos;
+using Core.Domain.Queries.CustomerQueries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Application.WebApi.Controllers
+namespace UserInterface.RestApi.Controllers
 {
     
     [Route("api/[controller]")]

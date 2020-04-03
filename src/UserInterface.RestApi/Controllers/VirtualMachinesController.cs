@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Core.Domain.Commands.VirtualMachineCommands;
 using Core.Domain.Dtos;
 using Core.Domain.Queries.VirtualMachineQueries;
 using MediatR;
@@ -47,24 +48,29 @@ namespace UserInterface.RestApi.Controllers
 //            return Ok(response.Data);
 //        }
 
-//        [HttpPost(Name = "CreateVirtualMachine")]
-//        public async Task<ActionResult<VirtualMachineDto>> CreateVirtualMachineAsync(
-//            [FromBody] CreateVirtualMachineRequest request)
-//        {
-//            var response = await _mediator.Send(request);   
-//
-//            if (response.HasError)
-//            {
-//                return BadRequest(response.Errors);
-//            }
-//
-//            var res = CreatedAtRoute(
-//                "GetVirtualMachine", 
-//                new {id = response.Data.Id}, 
-//                response.Data);
-//            
-//            return res;
-//        }
+        [HttpPost(Name = "CreateVirtualMachine")]
+        public async Task<ActionResult<VirtualMachineDto>> CreateVirtualMachineAsync(
+            [FromBody] string virtualMachineName)
+        {
+            var request = new CreateVirtualMachineCommand
+            {
+                Name = virtualMachineName
+            };
+            var response = await _mediator.Send(request);   
+
+            if (response.HasError)
+            {
+                return BadRequest(response.Errors);
+            }
+
+            // var res = CreatedAtRoute(
+            //     "GetVirtualMachine", 
+            //     new {id = response.Data.Id}, 
+            //     response.Data);
+            var res = NoContent(); // Testing purpose
+            
+            return res;
+        }
 
 //        [HttpPut("{id}", Name = "UpdateVirtualMachine")]
 //        public async Task<ActionResult> UpdateVirtualMachineAsync(

@@ -1,33 +1,25 @@
-﻿version: '1'
+﻿version: '3.7'
 
 services:
-  vm-rent-api:
-    container_name: vm-rent-api
+  api:
     build:
       context: .
       dockerfile: Dockerfile
     depends_on:
-      - postgres
+      - db
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://*:5000
     ports:
       - 5000:5000
       - 5001:5001
-    networks:
-      - demo-cqrs
-  postgres:
-    container_name: postgres
+  db:
     image: postgres:latest
     environment:
-      POSTGRES_PASSWORD=postgres
-    ports:
-    - 5432:5432
-    networks:
-      - demo-cqrs
-
-networks:
-  demo-cqrs:
-    driver: bridge
+      - POSTGRES_DB=vm_rent
+      - POSTGRES_USER=vm_rent
+      - POSTGRES_PASSWORD=vm_rent
+    expose:
+      - 5432
     
     

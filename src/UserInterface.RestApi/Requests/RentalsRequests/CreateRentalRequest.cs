@@ -1,9 +1,8 @@
 using System;
-using Core.Application.Dtos;
 
-namespace Core.Application.Commands.RentalCommands
+namespace UserInterface.RestApi.Requests.RentalsRequests
 {
-    public class CreateRentalCommand : CommandBase<Result<RentalDto>>
+    public class CreateRentalRequest
     {
         public Guid CustomerId { get; set; }
         public Guid VirtualMachineId { get; set; }

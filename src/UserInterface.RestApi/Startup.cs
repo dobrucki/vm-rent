@@ -1,4 +1,5 @@
 using Core.Application;
+using Core.Application.SharedKernel;
 using Infrastructure.Persistence.EfCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;

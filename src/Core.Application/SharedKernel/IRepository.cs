@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Core.Domain.Models;
 
-namespace Core.Application.Interfaces
+namespace Core.Application.SharedKernel
 {
     public interface IRepository<T> where T : ModelBase
     { 

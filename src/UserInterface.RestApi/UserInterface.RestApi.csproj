@@ -21,8 +21,4 @@
       <_ContentIncludedByDefault Remove="Properties\launchSettings.json" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Requests" />
-    </ItemGroup>
-
 </Project>

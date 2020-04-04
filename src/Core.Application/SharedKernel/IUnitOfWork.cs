@@ -1,8 +1,7 @@
 using System;
-using Core.Domain.Models;
 using Core.Domain.Models.Entities;
 
-namespace Core.Application.Interfaces
+namespace Core.Application.SharedKernel
 {
     public interface IUnitOfWork : IDisposable
     {

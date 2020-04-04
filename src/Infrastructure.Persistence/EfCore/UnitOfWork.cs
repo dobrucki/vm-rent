@@ -1,5 +1,5 @@
 using System;
-using Core.Application.Interfaces;
+using Core.Application.SharedKernel;
 using Core.Domain.Models;
 using Core.Domain.Models.Entities;
 

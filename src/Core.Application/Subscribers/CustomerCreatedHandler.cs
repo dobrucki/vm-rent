@@ -6,6 +6,7 @@ using Core.Domain.Models;
 using Core.Domain.Models.Entities;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using CustomerCreatedEvent = Core.Application.Events.CustomerEvents.CustomerCreatedEvent;
 
 namespace Core.Application.Subscribers
 {

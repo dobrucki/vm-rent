@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Core.Application.Dtos;
 using Core.Domain.Commands.VirtualMachineCommands;
-using Core.Domain.Dtos;
 using Core.Domain.Queries.VirtualMachineQueries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;

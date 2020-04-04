@@ -1,6 +1,6 @@
 using System;
 
-namespace Core.Domain.Dtos
+namespace Core.Application.Dtos
 {
     public class RentalDto : ModelBaseDto
     {

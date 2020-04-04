@@ -1,17 +1,18 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Core.Application.Dtos;
 using Core.Application.Interfaces;
 using Core.Domain.Commands.VirtualMachineCommands;
-using Core.Domain.Dtos;
 using Core.Domain.Models.Entities;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using CreateVirtualMachineCommand = Core.Application.Commands.VirtualMachineCommands.CreateVirtualMachineCommand;
 
 namespace Core.Application.Services.VirtualMachineServices
 {
     public class CreateVirtualMachineHandler :
-        IRequestHandler<CreateVirtualMachineCommand, BaseResponseDto<VirtualMachineDto>>
+        IRequestHandler<CreateVirtualMachineCommand, Result<VirtualMachineDto>>
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly ILogger<CreateVirtualMachineHandler> _logger;
@@ -23,10 +24,10 @@ namespace Core.Application.Services.VirtualMachineServices
             _logger = logger;
         }
 
-        public async Task<BaseResponseDto<VirtualMachineDto>> Handle(
+        public async Task<Result<VirtualMachineDto>> Handle(
             CreateVirtualMachineCommand request, CancellationToken cancellationToken = default)
         {
-            var response = new BaseResponseDto<VirtualMachineDto>();
+            var response = new Result<VirtualMachineDto>();
             try
             {
                 if (string.IsNullOrWhiteSpace(request.Name))

@@ -3,19 +3,18 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
+using Core.Application.Dtos;
 using Core.Application.Interfaces;
-using Core.Domain.Commands.CustomerCommands;
-using Core.Domain.Dtos;
-using Core.Domain.Events.CustomerEvents;
-using Core.Domain.Models;
 using Core.Domain.Models.Entities;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using CreateCustomerCommand = Core.Application.Commands.CustomerCommands.CreateCustomerCommand;
+using CustomerCreatedEvent = Core.Application.Events.CustomerEvents.CustomerCreatedEvent;
 
 namespace Core.Application.Services.CustomerServices
 {
     public class CreateCustomerHandler : 
-        IRequestHandler<CreateCustomerCommand, BaseResponseDto<CustomerDto>>
+        IRequestHandler<CreateCustomerCommand, Result<CustomerDto>>
     {
         private readonly ILogger<CreateCustomerHandler> _logger;
         private readonly IMediator _mediator;
@@ -31,10 +30,10 @@ namespace Core.Application.Services.CustomerServices
             _mediator = mediator;
         }
 
-        public async Task<BaseResponseDto<CustomerDto>> Handle(
+        public async Task<Result<CustomerDto>> Handle(
             CreateCustomerCommand request, CancellationToken cancellationToken = default)
         {
-            var response = new BaseResponseDto<CustomerDto>();
+            var response = new Result<CustomerDto>();
             try
             {
                 Expression<Func<Customer, bool>> predicate = x =>

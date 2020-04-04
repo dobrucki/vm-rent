@@ -3,16 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Core.Application.Dtos;
 using Core.Application.Interfaces;
-using Core.Domain.Dtos;
 using Core.Domain.Queries.VirtualMachineQueries;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using GetAllVirtualMachinesQuery = Core.Application.Queries.VirtualMachineQueries.GetAllVirtualMachinesQuery;
 
 namespace Core.Application.Services.VirtualMachineServices
 {
     public class GetAllVirtualMachinesHandler :
-        IRequestHandler<GetAllVirtualMachinesQuery, BaseResponseDto<IEnumerable<VirtualMachineDto>>>
+        IRequestHandler<GetAllVirtualMachinesQuery, Result<IEnumerable<VirtualMachineDto>>>
     {
         private readonly ILogger<GetAllVirtualMachinesHandler> _logger;
         private readonly IMediator _mediator;
@@ -28,10 +29,10 @@ namespace Core.Application.Services.VirtualMachineServices
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<BaseResponseDto<IEnumerable<VirtualMachineDto>>> Handle(
+        public async Task<Result<IEnumerable<VirtualMachineDto>>> Handle(
             GetAllVirtualMachinesQuery request, CancellationToken cancellationToken = default)
         {
-            var response = new BaseResponseDto<IEnumerable<VirtualMachineDto>>();
+            var response = new Result<IEnumerable<VirtualMachineDto>>();
             try
             {
                 using (_unitOfWork)

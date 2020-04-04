@@ -1,18 +1,19 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Core.Application.Dtos;
 using Core.Application.Interfaces;
-using Core.Domain.Dtos;
 using Core.Domain.Models;
 using Core.Domain.Models.Entities;
 using Core.Domain.Queries.RentalQueries;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using GetRentalByIdQuery = Core.Application.Queries.RentalQueries.GetRentalByIdQuery;
 
 namespace Core.Application.Services.RentalServices
 {
     public class GetRentalByIdHandler :
-        IRequestHandler<GetRentalByIdQuery, BaseResponseDto<RentalDto>>
+        IRequestHandler<GetRentalByIdQuery, Result<RentalDto>>
     {
         private readonly ILogger<GetRentalByIdHandler> _logger;
         private readonly IMediator _mediator;
@@ -28,10 +29,10 @@ namespace Core.Application.Services.RentalServices
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<BaseResponseDto<RentalDto>> Handle(
+        public async Task<Result<RentalDto>> Handle(
             GetRentalByIdQuery request, CancellationToken cancellationToken = default)
         {
-            var response = new BaseResponseDto<RentalDto>();
+            var response = new Result<RentalDto>();
             try
             {
                 Rental rental;

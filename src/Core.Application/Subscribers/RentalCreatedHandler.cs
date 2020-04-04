@@ -6,6 +6,7 @@ using Core.Domain.Models;
 using Core.Domain.Models.Entities;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using RentalCreatedEvent = Core.Application.Events.RentalEvents.RentalCreatedEvent;
 
 namespace Core.Application.Subscribers
 {

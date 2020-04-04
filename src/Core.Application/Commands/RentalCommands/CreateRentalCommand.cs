@@ -1,9 +1,9 @@
 using System;
-using Core.Domain.Dtos;
+using Core.Application.Dtos;
 
-namespace Core.Domain.Commands.RentalCommands
+namespace Core.Application.Commands.RentalCommands
 {
-    public class CreateRentalCommand : CommandBase<BaseResponseDto<RentalDto>>
+    public class CreateRentalCommand : CommandBase<Result<RentalDto>>
     {
         public Guid CustomerId { get; set; }
         public Guid VirtualMachineId { get; set; }

@@ -1,18 +1,19 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Core.Application.Dtos;
 using Core.Application.Interfaces;
-using Core.Domain.Dtos;
 using Core.Domain.Models;
 using Core.Domain.Models.Entities;
 using Core.Domain.Queries.CustomerQueries;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using GetCustomerByIdQuery = Core.Application.Queries.CustomerQueries.GetCustomerByIdQuery;
 
 namespace Core.Application.Services.CustomerServices
 {
     public class GetCustomerByIdHandler :
-        IRequestHandler<GetCustomerByIdQuery, BaseResponseDto<CustomerDto>>
+        IRequestHandler<GetCustomerByIdQuery, Result<CustomerDto>>
     {
         
         private readonly ILogger<GetCustomerByIdHandler> _logger;
@@ -29,10 +30,10 @@ namespace Core.Application.Services.CustomerServices
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<BaseResponseDto<CustomerDto>> Handle(
+        public async Task<Result<CustomerDto>> Handle(
             GetCustomerByIdQuery request, CancellationToken cancellationToken = default)
         {
-            var response = new BaseResponseDto<CustomerDto>();
+            var response = new Result<CustomerDto>();
             try
             {
                 Customer customer;

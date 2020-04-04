@@ -1,19 +1,21 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Core.Application.Dtos;
 using Core.Application.Interfaces;
 using Core.Domain.Commands.RentalCommands;
-using Core.Domain.Dtos;
 using Core.Domain.Events.RentalEvents;
 using Core.Domain.Models;
 using Core.Domain.Models.Entities;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using CreateRentalCommand = Core.Application.Commands.RentalCommands.CreateRentalCommand;
+using RentalCreatedEvent = Core.Application.Events.RentalEvents.RentalCreatedEvent;
 
 namespace Core.Application.Services.RentalServices
 {
     public class CreateRentalHandler :
-        IRequestHandler<CreateRentalCommand, BaseResponseDto<RentalDto>>
+        IRequestHandler<CreateRentalCommand, Result<RentalDto>>
     {
         private readonly ILogger<CreateRentalHandler> _logger;
         private readonly IMediator _mediator;
@@ -29,10 +31,10 @@ namespace Core.Application.Services.RentalServices
             _mediator = mediator;
         }
         
-        public async Task<BaseResponseDto<RentalDto>> Handle(
+        public async Task<Result<RentalDto>> Handle(
             CreateRentalCommand request, CancellationToken cancellationToken = default)
         {
-            var response = new BaseResponseDto<RentalDto>();
+            var response = new Result<RentalDto>();
             try
             {
                 if (request.StartTime < DateTime.UtcNow)

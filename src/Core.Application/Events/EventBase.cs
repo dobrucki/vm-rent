@@ -1,6 +1,6 @@
 using MediatR;
 
-namespace Core.Domain.Events
+namespace Core.Application.Events
 {
     public class EventBase : INotification
     {

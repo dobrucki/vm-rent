@@ -5,23 +5,17 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace UserInterface.RestApi.SharedKernel
 {
-    public class RequestValidationProblemDetails : ProblemDetails
+    public class InvalidRequestProblemDetails : ProblemDetails
     {
-        public IEnumerable<object> Errors { get; set; }
-        
-        public static RequestValidationProblemDetails Create(
-            RequestValidationException exception, HttpContext context)
+        public IEnumerable<Error> Errors { get; }
+
+        public InvalidRequestProblemDetails(InvalidRequestException exception)
         {
-            var problem = new RequestValidationProblemDetails
-            {
-                Detail = exception.Message,
-                Status = StatusCodes.Status400BadRequest,
-                Title = "request-validation-error",
-                Instance = context.Request.Path.Value,
-                Type = "about:blank",
-                Errors = exception.Errors
-            };
-            return problem;
+            Title = "validation-error";
+            Status = StatusCodes.Status400BadRequest;
+            Detail = exception.Message;
+            Errors = exception.Errors;
+            Type = "http://localhost/errors/validation-error";
         }
     }
-}
+}    

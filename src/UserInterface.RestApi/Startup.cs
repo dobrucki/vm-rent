@@ -1,5 +1,5 @@
-using Core.Application;
 using Core.Application.SharedKernel;
+using Hellang.Middleware.ProblemDetails;
 using Infrastructure.Persistence.EfCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
+using UserInterface.RestApi.SharedKernel;
 
 namespace UserInterface.RestApi
 {
@@ -28,6 +29,11 @@ namespace UserInterface.RestApi
             services.AddPostgres(Configuration.GetConnectionString("PostgresContext"));
             
             services.AddApplicationServices();
+
+            services.AddProblemDetails(options =>
+            {
+                options.Map<InvalidRequestException>(exception => new InvalidRequestProblemDetails(exception));
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -35,16 +41,18 @@ namespace UserInterface.RestApi
         {
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
+                
+                //app.UseDeveloperExceptionPage();
+                app.UseProblemDetails();
             }
-            // else
-            // // {
-            // //     app.UseHsts();
-            // // }
+            else
+            {
+                app.UseHsts();
+                app.UseProblemDetails();
+            }
 
             //app.UseHttpsRedirection();
             context.Database.Migrate();
-
             app.UseRouting();
 
             app.UseEndpoints(endpoints =>

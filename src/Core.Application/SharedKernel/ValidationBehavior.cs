@@ -40,14 +40,13 @@ namespace Core.Application.SharedKernel
             }
             _logger.LogDebug("Validation process failed! Throwing an exception...");
 
-            var errors = new List<object>();
-            validationFailures.ForEach(x => errors.Add(new
-            {
-                Name = x.PropertyName,
-                Reason = x.ErrorMessage
-            }));
+            var errors = new List<Error>();
+            validationFailures
+                .ForEach(x => 
+                    errors.Add(new ValidationError(x.PropertyName, x.ErrorMessage)));
+            
 
-            throw new RequestValidationException("Request did not pass validation process.", errors);
+            throw new InvalidRequestException("Request did not pass validation process.", errors);
         }
     }
 }

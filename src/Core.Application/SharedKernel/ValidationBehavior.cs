@@ -38,7 +38,7 @@ namespace Core.Application.SharedKernel
                 _logger.LogDebug("Validation process passed.");
                 return await next();
             }
-            _logger.LogDebug("Validation process failed! Throwing an exception...");
+            _logger.LogDebug("Validation process failed.");
 
             var errors = new List<Error>();
             validationFailures

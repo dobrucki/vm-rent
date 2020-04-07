@@ -22,7 +22,6 @@ namespace Core.Application.Customers.GetCustomer
 
         public async Task<CustomerDto> Handle(GetCustomerQuery request, CancellationToken cancellationToken)
         {
-            _logger.LogDebug("Handling request....");
             using (_unitOfWork)
             {
                 var customer = await _unitOfWork.Customers.GetByIdAsync(request.CustomerId);
@@ -31,7 +30,6 @@ namespace Core.Application.Customers.GetCustomer
                     return null;
                 }
 
-                _logger.LogDebug("Request handled.");
                 var customerDto = new CustomerDto
                 {
                     CustomerId = customer.Id,

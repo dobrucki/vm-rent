@@ -47,6 +47,7 @@ namespace Core.Application.Customers.CreateCustomer
                     new []{new PersistenceError(exception.ToString(), exception.Message)});
             }
 
+            _logger.LogInformation($"Created customer with id {customer.Id}.");
             return new CustomerDto
             {
                 CustomerId = customer.Id,

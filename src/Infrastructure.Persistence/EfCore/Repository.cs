@@ -4,7 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Core.Application.SharedKernel;
-using Core.Domain.Models;
+using Core.Domain.SharedKernel;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Persistence.EfCore

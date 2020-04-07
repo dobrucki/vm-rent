@@ -1,6 +1,9 @@
 using System;
+using Core.Domain.Customers;
+using Core.Domain.SharedKernel;
+using Core.Domain.VirtualMachines;
 
-namespace Core.Domain.Models.Entities
+namespace Core.Domain.Rentals
 {
     public class Rental : ModelBase
     {

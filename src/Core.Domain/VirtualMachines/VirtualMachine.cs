@@ -1,4 +1,6 @@
-namespace Core.Domain.Models.Entities
+using Core.Domain.SharedKernel;
+
+namespace Core.Domain.VirtualMachines
 {
     public class VirtualMachine : ModelBase
     {

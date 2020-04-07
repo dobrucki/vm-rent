@@ -1,7 +1,8 @@
 using System;
 using Core.Application.SharedKernel;
-using Core.Domain.Models;
-using Core.Domain.Models.Entities;
+using Core.Domain.Customers;
+using Core.Domain.Rentals;
+using Core.Domain.VirtualMachines;
 
 namespace Infrastructure.Persistence.EfCore
 {

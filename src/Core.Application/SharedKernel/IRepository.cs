@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using Core.Domain.Models;
+using Core.Domain.SharedKernel;
 
 namespace Core.Application.SharedKernel
 {

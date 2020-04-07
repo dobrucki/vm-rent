@@ -1,5 +1,6 @@
-using Core.Domain.Models;
-using Core.Domain.Models.Entities;
+using Core.Domain.Customers;
+using Core.Domain.Rentals;
+using Core.Domain.VirtualMachines;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Persistence.EfCore

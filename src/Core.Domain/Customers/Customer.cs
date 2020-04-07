@@ -1,4 +1,6 @@
-namespace Core.Domain.Models.Entities
+using Core.Domain.SharedKernel;
+
+namespace Core.Domain.Customers
 {
     public class Customer : ModelBase
     {

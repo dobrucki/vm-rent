@@ -1,6 +1,6 @@
 using System;
 
-namespace Core.Domain.Models
+namespace Core.Domain.SharedKernel
 {
     public abstract class ModelBase
     {

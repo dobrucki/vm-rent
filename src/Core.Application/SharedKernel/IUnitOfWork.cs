@@ -1,5 +1,7 @@
 using System;
-using Core.Domain.Models.Entities;
+using Core.Domain.Customers;
+using Core.Domain.Rentals;
+using Core.Domain.VirtualMachines;
 
 namespace Core.Application.SharedKernel
 {

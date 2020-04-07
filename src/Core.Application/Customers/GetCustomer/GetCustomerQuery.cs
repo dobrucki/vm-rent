@@ -1,4 +1,5 @@
 using System;
+using Core.Application.SharedKernel;
 using MediatR;
 
 namespace Core.Application.Customers.GetCustomer

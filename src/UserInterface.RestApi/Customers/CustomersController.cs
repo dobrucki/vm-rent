@@ -1,12 +1,15 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Core.Application.Customers;
 using Core.Application.Customers.GetCustomer;
+using Core.Application.SharedKernel;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using UserInterface.RestApi.Requests.CustomerRequests;
+using UserInterface.RestApi.SharedKernel;
 
-namespace UserInterface.RestApi.Controllers
+namespace UserInterface.RestApi.Customers
 {
     
     [Route("api/[controller]")]
@@ -51,9 +54,15 @@ namespace UserInterface.RestApi.Controllers
             {
                 CustomerId = id
             };
-            var result = await _mediator.Send(query);
-
-            return Ok(result);
+            try
+            {
+                return Ok(await _mediator.Send(query));
+            }
+            
+            catch (RequestValidationException exception)
+            {
+                return BadRequest(RequestValidationProblemDetails.Create(exception, HttpContext));
+            }
         }
     }
 }

@@ -7,15 +7,15 @@ using Core.Application.SharedKernel;
 using Core.Domain.SharedKernel;
 using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructure.Persistence.EfCore
+namespace Infrastructure.Persistence
 {
     public class Repository<TEntity> : IRepository<TEntity>
         where TEntity : ModelBase
     {
-        private readonly PostgresContext _context;
+        private readonly ApplicationDbContext _context;
         private readonly DbSet<TEntity> _dbSet;
 
-        public Repository(PostgresContext context)
+        public Repository(ApplicationDbContext context)
         {
             _context = context;
             _dbSet = _context.Set<TEntity>();

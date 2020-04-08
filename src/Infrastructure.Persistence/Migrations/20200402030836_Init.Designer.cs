@@ -6,9 +6,9 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
-namespace Infrastructure.Persistence.EfCore.Migrations
+namespace Infrastructure.Persistence.Migrations
 {
-    [DbContext(typeof(PostgresContext))]
+    [DbContext(typeof(ApplicationDbContext))]
     [Migration("20200402030836_Init")]
     partial class Init
     {

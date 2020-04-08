@@ -3,15 +3,15 @@ using Core.Domain.Rentals;
 using Core.Domain.VirtualMachines;
 using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructure.Persistence.EfCore
+namespace Infrastructure.Persistence
 {
-    public class PostgresContext : DbContext
+    public class ApplicationDbContext : DbContext
     {
         public DbSet<VirtualMachine> VirtualMachines { get; }
         public DbSet<Customer> Customers { get; }
         public DbSet<Rental> Rentals { get; }
         
-        public PostgresContext(DbContextOptions<PostgresContext> options) : base(options)
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
             
         }

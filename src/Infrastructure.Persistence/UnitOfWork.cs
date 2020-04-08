@@ -4,11 +4,11 @@ using Core.Domain.Customers;
 using Core.Domain.Rentals;
 using Core.Domain.VirtualMachines;
 
-namespace Infrastructure.Persistence.EfCore
+namespace Infrastructure.Persistence
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private readonly PostgresContext _context;
+        private readonly ApplicationDbContext _context;
 
         public IRepository<VirtualMachine> VirtualMachines =>
             _virtualMachines ??= new Repository<VirtualMachine>(_context);
@@ -19,7 +19,7 @@ namespace Infrastructure.Persistence.EfCore
         public IRepository<Rental> Rentals => 
             _rentals ??= new Repository<Rental>(_context);
 
-        public UnitOfWork(PostgresContext context)
+        public UnitOfWork(ApplicationDbContext context)
         {   
             _context = context;
         }

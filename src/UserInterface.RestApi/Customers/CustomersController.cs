@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Core.Application.Customers;
 using Core.Application.Customers.CreateCustomer;
+using Core.Application.Customers.EditCustomerDetails;
 using Core.Application.Customers.GetCustomer;
 using Core.Application.SharedKernel;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using UserInterface.RestApi.Customers.CreateCustomer;
+using UserInterface.RestApi.Customers.EditCustomerDetails;
 using UserInterface.RestApi.SharedKernel;
 
 namespace UserInterface.RestApi.Customers
@@ -52,6 +54,22 @@ namespace UserInterface.RestApi.Customers
                 CustomerId = id
             };
             return Ok(await _mediator.Send(query));
+        }
+
+        [HttpPut("{id}", Name = "EditCustomerDetails")]
+        public async Task<ActionResult> PutAsync(
+            [FromRoute] Guid id,
+            [FromBody] EditCustomerDetailsRequest request)
+        {
+            var command = new EditCustomerDetailsCommand
+            {
+                CustomerId = id,
+                FirstName = request.FirstName,
+                LastName = request.LastName
+            };
+
+            await _mediator.Send(command);
+            return NoContent();
         }
     }
 }

@@ -1,5 +1,6 @@
 using Core.Application.Customers;
 using Core.Application.SharedKernel;
+using Core.Application.VirtualMachines;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -13,9 +14,8 @@ namespace Infrastructure.Persistence
             {
                 options.UseNpgsql(connectionString);
             });
-            services.AddTransient<IUnitOfWork, UnitOfWork>();
             services.AddTransient<ICustomersRepository, CustomersRepository>();
-
+            services.AddTransient<IVirtualMachinesRepository, VirtualMachinesRepository>();
             return services;
         }
     }

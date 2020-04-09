@@ -10,13 +10,13 @@ namespace Core.Application.Customers.CreateCustomer
 {
     public class CreateCustomerCommandHandler : IRequestHandler<CreateCustomerCommand, CustomerDto>
     {
-        private readonly IUnitOfWork _unitOfWork;
         private readonly ILogger<CreateCustomerCommandHandler> _logger;
+        private readonly ICustomersRepository _customers;
 
-        public CreateCustomerCommandHandler(IUnitOfWork unitOfWork, ILogger<CreateCustomerCommandHandler> logger)
+        public CreateCustomerCommandHandler(ILogger<CreateCustomerCommandHandler> logger, ICustomersRepository customers)
         {
-            _unitOfWork = unitOfWork;
             _logger = logger;
+            _customers = customers;
         }
 
         public async Task<CustomerDto> Handle(CreateCustomerCommand request, CancellationToken cancellationToken)
@@ -33,11 +33,7 @@ namespace Core.Application.Customers.CreateCustomer
             };
             try
             {
-                using (_unitOfWork)
-                {
-                    await _unitOfWork.Customers.InsertAsync(customer);
-                    _unitOfWork.Complete();
-                }
+                await _customers.InsertCustomerAsync(customer);
             }
             catch (Exception exception)
             {

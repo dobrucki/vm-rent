@@ -1,44 +1,31 @@
 using System.Threading;
 using System.Threading.Tasks;
-using Core.Application.SharedKernel;
 using MediatR;
-using Microsoft.Extensions.Logging;
 
 namespace Core.Application.Customers.GetCustomer
 {
     public class GetCustomerQueryHandler : IRequestHandler<GetCustomerQuery, CustomerDto>
     {
-        private readonly IMediator _mediator;
-        private readonly IUnitOfWork _unitOfWork;
-        private readonly ILogger<GetCustomerQueryHandler> _logger;
+        private readonly ICustomersRepository _customers;
 
-        public GetCustomerQueryHandler(IMediator mediator, IUnitOfWork unitOfWork, ILogger<GetCustomerQueryHandler> logger)
+        public GetCustomerQueryHandler(ICustomersRepository customers)
         {
-            _mediator = mediator;
-            _unitOfWork = unitOfWork;
-            _logger = logger;
+            _customers = customers;
         }
-
-
+        
         public async Task<CustomerDto> Handle(GetCustomerQuery request, CancellationToken cancellationToken)
         {
-            using (_unitOfWork)
-            {
-                var customer = await _unitOfWork.Customers.GetByIdAsync(request.CustomerId);
-                if (customer is null)
-                {
-                    return null;
-                }
+            var customer = await _customers.GetCustomerByIdAsync(request.CustomerId);
+            if (customer is null) return null;
 
-                var customerDto = new CustomerDto
-                {
-                    CustomerId = customer.Id,
-                    EmailAddress = customer.EmailAddress,
-                    FirstName = customer.FirstName,
-                    LastName = customer.LastName
-                };
-                return customerDto;
-            }
+            var customerDto = new CustomerDto
+            {
+                CustomerId = customer.Id,
+                EmailAddress = customer.EmailAddress,
+                FirstName = customer.FirstName,
+                LastName = customer.LastName
+            };
+            return customerDto;
         }
     }
 }

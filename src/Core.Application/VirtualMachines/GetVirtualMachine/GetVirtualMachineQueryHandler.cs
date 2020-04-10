@@ -18,7 +18,7 @@ namespace Core.Application.VirtualMachines.GetVirtualMachine
 
         public async Task<VirtualMachineDto> Handle(GetVirtualMachineQuery request, CancellationToken cancellationToken)
         {
-            var virtualMachine = await _virtualMachines.GetVirtualMachineById(request.VirtualMachineId);
+            var virtualMachine = await _virtualMachines.GetVirtualMachineByIdAsync(request.VirtualMachineId);
             if (virtualMachine is null)
             {
                 throw new InvalidRequestException($"Could not find virtual machine with id " +

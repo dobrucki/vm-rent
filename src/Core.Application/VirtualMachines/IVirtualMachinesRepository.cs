@@ -6,6 +6,9 @@ namespace Core.Application.VirtualMachines
 {
     public interface IVirtualMachinesRepository
     {
-        Task<VirtualMachine> GetVirtualMachineById(Guid virtualMachineId);
+        Task<VirtualMachine> GetVirtualMachineByIdAsync(Guid virtualMachineId);
+        Task UpdateVirtualMachineDetailsAsync(VirtualMachine virtualMachine);
+        Task InsertVirtualMachineAsync(VirtualMachine virtualMachine);
+        Task DeleteVirtualMachineAsync(VirtualMachine virtualMachine);
     }
-}
+}    

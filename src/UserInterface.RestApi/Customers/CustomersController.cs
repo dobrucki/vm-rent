@@ -69,7 +69,7 @@ namespace UserInterface.RestApi.Customers
             };
 
             await _mediator.Send(command);
-            return NoContent();
+            return Ok();
         }
     }
 }

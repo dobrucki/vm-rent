@@ -23,17 +23,27 @@ namespace Core.Application.Rentals.ListRentals
 
         public async Task<IEnumerable<RentalDto>> Handle(ListRentalsQuery request, CancellationToken cancellationToken)
         {
-            var rentals = (await _rentals
-                    .ListRentalsAsync(request.Limit, request.Offset))
-                .Select(rental => new RentalDto
-                {
-                    Id = rental.Id,
-                    CustomerId = rental.Customer.Id,
-                    VirtualMachineId = rental.VirtualMachine.Id,
-                    StartTime = rental.StartTime,
-                    EndTime = rental.EndTime
-                });
-            return rentals;
+            var rentals = await _rentals.ListRentalsAsync(request.Limit, request.Offset);
+            // // _logger.LogDebug(rentals.ToString());
+            // //rentals.ForEach(x => _logger.LogDebug(x.Customer.ToString()));
+            // List<RentalDto> rentalDtos = new List<RentalDto>();
+            // rentals.ForEach(x => rentalDtos.Add(new RentalDto
+            // {
+            //     Id = x.Id,
+            //     CustomerId = x.Customer.Id,
+            //     VirtualMachineId = x.VirtualMachine.Id,
+            //     StartTime = x.StartTime,
+            //     EndTime = x.EndTime
+            // }));
+            var result = rentals.Select(rental => new RentalDto
+            {
+                Id = rental.Id,
+                CustomerId = rental.CustomerId,
+                VirtualMachineId = rental.VirtualMachineId,
+                StartTime = rental.StartTime,
+                EndTime = rental.EndTime
+            });
+            return result;
         }
     }
 }

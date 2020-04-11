@@ -20,7 +20,7 @@ namespace Infrastructure.Persistence
 
         public async Task<VirtualMachine> GetVirtualMachineByIdAsync(Guid virtualMachineId)
         {
-            return await _virtualMachines.FindAsync(virtualMachineId);
+            return await _virtualMachines.SingleOrDefaultAsync(x => x.Id == virtualMachineId);
         }
 
         public async Task UpdateVirtualMachineDetailsAsync(VirtualMachine virtualMachine)

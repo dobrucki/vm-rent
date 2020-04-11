@@ -32,16 +32,14 @@ namespace Core.Application.Rentals.CreateRental
 
         public async Task<RentalDto> Handle(CreateRentalCommand request, CancellationToken cancellationToken)
         {
-            var customer = await _customers.GetCustomerByIdAsync(request.CustomerId);
-            var virtualMachine = await _virtualMachines.GetVirtualMachineByIdAsync(request.VirtualMachineId);
             var rental = new Rental
             {
                 Id = Guid.NewGuid(),
                 CreatedAt = DateTime.UtcNow,
-                Customer = customer,
+                CustomerId = request.CustomerId,
                 StartTime = request.StartTime,
                 EndTime = request.EndTime,
-                VirtualMachine = virtualMachine
+                VirtualMachineId = request.VirtualMachineId
             };
 
             try
@@ -59,8 +57,8 @@ namespace Core.Application.Rentals.CreateRental
             return new RentalDto
             {
                 Id = rental.Id,
-                CustomerId = rental.Customer.Id,
-                VirtualMachineId = rental.VirtualMachine.Id,
+                CustomerId = rental.CustomerId,
+                VirtualMachineId = rental.VirtualMachineId,
                 EndTime = rental.EndTime,
                 StartTime = rental.StartTime
             };

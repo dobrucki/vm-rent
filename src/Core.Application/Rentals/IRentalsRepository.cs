@@ -10,6 +10,6 @@ namespace Core.Application.Rentals
     {
         Task<Rental> GetRentalByIdAsync(Guid id);
         Task InsertRentalAsync(Rental rental);
-        Task<IEnumerable<Rental>> ListRentalsAsync(int limit, int offset);
+        Task<List<Rental>> ListRentalsAsync(int limit, int offset);
     }
 }

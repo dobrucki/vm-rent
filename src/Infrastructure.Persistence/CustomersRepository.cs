@@ -19,7 +19,7 @@ namespace Infrastructure.Persistence
 
         public async Task<Customer> GetCustomerByIdAsync(Guid customerId)
         {
-            return await _customers.FindAsync(customerId);
+            return await _customers.SingleOrDefaultAsync(x => x.Id == customerId);
         }
 
         public async Task UpdateCustomerDetailsAsync(Customer customer)

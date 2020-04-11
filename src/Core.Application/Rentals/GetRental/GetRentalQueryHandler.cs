@@ -20,8 +20,8 @@ namespace Core.Application.Rentals.GetRental
             var rentalDto = new RentalDto
             {
                 Id = rental.Id,
-                CustomerId = rental.Customer.Id,
-                VirtualMachineId = rental.VirtualMachine.Id,
+                CustomerId = rental.CustomerId,
+                VirtualMachineId = rental.VirtualMachineId,
                 StartTime = rental.StartTime,
                 EndTime = rental.EndTime
             };

@@ -39,6 +39,8 @@ namespace Infrastructure.Persistence
         public async Task<List<Rental>> ListRentalsAsync(int limit, int offset)
         {
             return await _rentals
+                .Skip(limit * offset)
+                .Take(limit)
                 .ToListAsync();
         }
     }

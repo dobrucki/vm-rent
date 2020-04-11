@@ -1,4 +1,5 @@
 using Core.Application.Customers;
+using Core.Application.Rentals;
 using Core.Application.SharedKernel;
 using Core.Application.VirtualMachines;
 using Microsoft.EntityFrameworkCore;
@@ -16,6 +17,7 @@ namespace Infrastructure.Persistence
             });
             services.AddTransient<ICustomersRepository, CustomersRepository>();
             services.AddTransient<IVirtualMachinesRepository, VirtualMachinesRepository>();
+            services.AddTransient<IRentalsRepository, RentalsRepository>();
             return services;
         }
     }

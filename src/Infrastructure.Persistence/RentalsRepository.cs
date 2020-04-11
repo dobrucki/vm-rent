@@ -1,4 +1,7 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Core.Application.Rentals;
 using Core.Domain.Rentals;
@@ -29,5 +32,9 @@ namespace Infrastructure.Persistence
             await _context.SaveChangesAsync();
         }
 
+        public async Task<IEnumerable<Rental>> ListRentalsAsync(int limit, int offset)
+        {
+            return await _rentals.Skip(limit * offset).Take(limit).ToListAsync();
+        }
     }
 }

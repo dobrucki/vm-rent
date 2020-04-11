@@ -3,6 +3,7 @@ using Core.Application.Customers.CreateCustomer;
 using Core.Application.Customers.EditCustomerDetails;
 using Core.Application.Customers.GetCustomer;
 using Core.Application.Rentals.CreateRental;
+using Core.Application.Rentals.ListRentals;
 using Core.Application.VirtualMachines.CreateVirtualMachine;
 using Core.Application.VirtualMachines.DeleteVirtualMachine;
 using FluentValidation;
@@ -38,6 +39,8 @@ namespace Core.Application.SharedKernel
                 typeof(DeleteVirtualMachineCommandValidator));
             services.AddTransient(typeof(IValidator<CreateRentalCommand>),
                 typeof(CreateRentalCommandValidator));
+            services.AddTransient(typeof(IValidator<ListRentalsQuery>),
+                typeof(ListRentalsQueryValidator));
             services.AddMediatR(Assembly.GetExecutingAssembly());
             
             return services;

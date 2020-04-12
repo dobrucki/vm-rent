@@ -43,5 +43,18 @@ namespace Infrastructure.Persistence
                 .Take(limit)
                 .ToListAsync();
         }
+
+        public Task<IEnumerable<Rental>> GetRentalsAsync(Expression<Func<Rental, bool>> filter)
+        {
+            return Task.FromResult(_rentals.Where(filter).AsEnumerable());
+        }
+
+        public Task UpdateRangeAsync(IEnumerable<Rental> rentals)
+        {
+            var rentalsList = rentals.ToList();
+            _rentals.AttachRange(rentalsList);
+            _context.SaveChangesAsync();
+            return Task.CompletedTask;
+        }
     }
 }

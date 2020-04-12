@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Core.Application.Customers;
@@ -15,23 +16,52 @@ namespace Core.Application.Rentals.CreateRental
     public class CreateRentalCommandHandler : IRequestHandler<CreateRentalCommand, RentalDto>
     {
         private readonly IRentalsRepository _rentals;
-        private readonly IVirtualMachinesRepository _virtualMachines;
-        private readonly ICustomersRepository _customers;
         private readonly ILogger<CreateRentalCommandHandler> _logger;
         private readonly IMediator _mediator;
 
         public CreateRentalCommandHandler(IRentalsRepository rentals, ILogger<CreateRentalCommandHandler> logger, 
-            IMediator mediator, IVirtualMachinesRepository virtualMachines, ICustomersRepository customers)
+            IMediator mediator)
         {
             _rentals = rentals;
             _logger = logger;
             _mediator = mediator;
-            _virtualMachines = virtualMachines;
-            _customers = customers;
         }
 
         public async Task<RentalDto> Handle(CreateRentalCommand request, CancellationToken cancellationToken)
         {
+            var customerQuery = new GetCustomerQuery
+            {
+                CustomerId = request.CustomerId
+            };
+            var virtualMachineQuery = new GetVirtualMachineQuery
+            {
+                VirtualMachineId = request.VirtualMachineId
+            };
+
+            var customer = await _mediator.Send(customerQuery, cancellationToken);
+            var virtualMachine = await _mediator.Send(virtualMachineQuery, cancellationToken);
+
+            if (customer is null || virtualMachine is null)
+            {
+                throw new InvalidRequestException(
+                    "Could not create rental.", 
+                    new []{new PersistenceError("xd", "xd")});
+            }
+
+            var count = (await _rentals
+                .GetRentalsAsync(x => 
+                    x.VirtualMachineId == request.VirtualMachineId
+                    && x.StartTime < request.EndTime
+                    && request.StartTime < x.EndTime))
+                .Count();
+            
+            if (count != 0)
+            {
+                throw new InvalidRequestException(
+                    "Could not create rental.", 
+                    new []{new PersistenceError("xd1", "xd1")});
+            }
+
             var rental = new Rental
             {
                 Id = Guid.NewGuid(),

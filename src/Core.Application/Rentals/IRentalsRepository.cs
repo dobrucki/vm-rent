@@ -11,5 +11,7 @@ namespace Core.Application.Rentals
         Task<Rental> GetRentalByIdAsync(Guid id);
         Task InsertRentalAsync(Rental rental);
         Task<List<Rental>> ListRentalsAsync(int limit, int offset);
+        Task<IEnumerable<Rental>> GetRentalsAsync(Expression<Func<Rental, bool>> filter);
+        Task UpdateRangeAsync(IEnumerable<Rental> rentals);
     }
 }

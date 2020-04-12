@@ -41,6 +41,7 @@ namespace Core.Application.SharedKernel
                 typeof(CreateRentalCommandValidator));
             services.AddTransient(typeof(IValidator<ListRentalsQuery>),
                 typeof(ListRentalsQueryValidator));
+            
             services.AddMediatR(Assembly.GetExecutingAssembly());
             
             return services;

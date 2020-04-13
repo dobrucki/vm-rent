@@ -38,18 +38,19 @@ namespace UserInterface.RestApi.Rentals
         {
             var command = new CreateRentalCommand
             {
+                Id = request.Id,
                 CustomerId = request.CustomerId,
                 VirtualMachineId = request.VirtualMachineId,
                 StartTime = request.StartTime,
                 EndTime = request.EndTime
             };
 
-            var rental = await _mediator.Send(command);
+            await _mediator.Send(command);
             // return CreatedAtRoute(
             //     "GetCustomer",
             //     new {id = rental.Id},
             //     rental);  
-            return Ok(rental);
+            return Ok();
         }
     }
 }

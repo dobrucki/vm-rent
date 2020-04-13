@@ -33,6 +33,7 @@ namespace UserInterface.RestApi.Customers
         {
             var command = new CreateCustomerCommand
             {
+                Id = request.Id,
                 FirstName = request.FirstName,
                 LastName = request.LastName,
                 EmailAddress = request.EmailAddress

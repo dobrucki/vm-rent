@@ -37,12 +37,9 @@ namespace UserInterface.RestApi.Customers
                 LastName = request.LastName,
                 EmailAddress = request.EmailAddress
             };
-            var result = await _mediator.Send(command);
+            await _mediator.Send(command);
             
-            return CreatedAtRoute(
-                "GetCustomer",
-                new {id = result.CustomerId},
-                result);   
+            return Ok();   
         }
 
         [HttpGet("{id}", Name = "GetCustomer")]

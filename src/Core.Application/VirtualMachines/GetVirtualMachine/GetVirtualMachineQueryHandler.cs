@@ -1,6 +1,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Core.Application.SharedKernel;
+using Core.Application.SharedKernel.Exceptions;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
@@ -21,8 +22,7 @@ namespace Core.Application.VirtualMachines.GetVirtualMachine
             var virtualMachine = await _virtualMachines.GetVirtualMachineByIdAsync(request.VirtualMachineId);
             if (virtualMachine is null)
             {
-                throw new InvalidRequestException($"Could not find virtual machine with id " +
-                                                  $"{request.VirtualMachineId}", null);
+                throw new NotFoundException("Virtual machine", request.VirtualMachineId);
             }
 
             return new VirtualMachineDto

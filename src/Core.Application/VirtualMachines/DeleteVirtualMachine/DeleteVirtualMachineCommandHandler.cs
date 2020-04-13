@@ -24,22 +24,13 @@ namespace Core.Application.VirtualMachines.DeleteVirtualMachine
 
         public async Task<Unit> Handle(DeleteVirtualMachineCommand request, CancellationToken cancellationToken)
         {
-            try
+            var virtualMachine = await _virtualMachines.GetVirtualMachineByIdAsync(request.Id);
+            await _virtualMachines.DeleteVirtualMachineAsync(virtualMachine);
+            await _mediator.Publish(new DeletedVirtualMachineEvent
             {
-                var virtualMachine = await _virtualMachines.GetVirtualMachineByIdAsync(request.Id);
-                await _virtualMachines.DeleteVirtualMachineAsync(virtualMachine);
-                await _mediator.Publish(new DeletedVirtualMachineEvent
-                {
-                    VirtualMachineId = request.Id
-                }, cancellationToken);
-            }
-            catch (Exception exception)
-            {
-                _logger.LogError(exception, exception.Message);
-                throw new InvalidRequestException(
-                    "Could not create virtual machine.", 
-                    new []{new PersistenceError(exception.ToString(), exception.Message)});
-            }
+                VirtualMachineId = request.Id
+            }, cancellationToken);
+            _logger.LogInformation($"Deleted virtual machine ({virtualMachine.Id}).");
             return Unit.Value;
         }
     }

@@ -1,10 +1,12 @@
 using System;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Core.Application.Customers;
 using Core.Application.Customers.GetCustomer;
 using Core.Application.SharedKernel;
+using Core.Application.SharedKernel.Exceptions;
 using Core.Application.VirtualMachines;
 using Core.Application.VirtualMachines.GetVirtualMachine;
 using Core.Domain.Rentals;
@@ -13,7 +15,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Core.Application.Rentals.CreateRental
 {
-    public class CreateRentalCommandHandler : IRequestHandler<CreateRentalCommand, RentalDto>
+    public class CreateRentalCommandHandler : IRequestHandler<CreateRentalCommand>
     {
         private readonly IRentalsRepository _rentals;
         private readonly ILogger<CreateRentalCommandHandler> _logger;
@@ -27,7 +29,7 @@ namespace Core.Application.Rentals.CreateRental
             _mediator = mediator;
         }
 
-        public async Task<RentalDto> Handle(CreateRentalCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(CreateRentalCommand request, CancellationToken cancellationToken)
         {
             var customerQuery = new GetCustomerQuery
             {
@@ -41,57 +43,34 @@ namespace Core.Application.Rentals.CreateRental
             var customer = await _mediator.Send(customerQuery, cancellationToken);
             var virtualMachine = await _mediator.Send(virtualMachineQuery, cancellationToken);
 
-            if (customer is null || virtualMachine is null)
-            {
-                throw new InvalidRequestException(
-                    "Could not create rental.", 
-                    new []{new PersistenceError("xd", "xd")});
-            }
+            Expression<Func<Rental, bool>> filter = x =>
+                x.VirtualMachineId == request.VirtualMachineId
+                && x.StartTime < request.EndTime
+                && request.StartTime < x.EndTime;
 
-            var count = (await _rentals
-                .GetRentalsAsync(x => 
-                    x.VirtualMachineId == request.VirtualMachineId
-                    && x.StartTime < request.EndTime
-                    && request.StartTime < x.EndTime))
-                .Count();
+            var rentals = await _rentals.GetRentalsAsync(filter);
             
-            if (count != 0)
+            if (rentals.Any())
             {
-                throw new InvalidRequestException(
-                    "Could not create rental.", 
-                    new []{new PersistenceError("xd1", "xd1")});
+                var message =
+                    $"Creating rental ({request.Id}) " +
+                    $"failed because virtual machine ({request.VirtualMachineId}) is already rented.";
+                throw new InvalidCommandException(message);
             }
 
             var rental = new Rental
             {
-                Id = Guid.NewGuid(),
-                CreatedAt = DateTime.UtcNow,
+                Id = request.CustomerId,
                 CustomerId = request.CustomerId,
                 StartTime = request.StartTime,
                 EndTime = request.EndTime,
                 VirtualMachineId = request.VirtualMachineId
             };
 
-            try
-            {
-                await _rentals.InsertRentalAsync(rental);
-            }
-            catch (Exception exception)
-            {
-                _logger.LogError(exception, exception.Message);
-                throw new InvalidRequestException(
-                    "Could not create rental.", 
-                    new []{new PersistenceError(exception.ToString(), exception.Message)});
-            }
-            _logger.LogInformation($"Created rental with id {rental.Id}");
-            return new RentalDto
-            {
-                Id = rental.Id,
-                CustomerId = rental.CustomerId,
-                VirtualMachineId = rental.VirtualMachineId,
-                EndTime = rental.EndTime,
-                StartTime = rental.StartTime
-            };
+            await _rentals.InsertRentalAsync(rental);
+            
+            _logger.LogInformation($"Created rental ({rental.Id})");
+            return Unit.Value;
         }
     }
 }

@@ -1,5 +1,6 @@
 using System.Threading;
 using System.Threading.Tasks;
+using Core.Application.SharedKernel.Exceptions;
 using MediatR;
 
 namespace Core.Application.Customers.GetCustomer
@@ -16,7 +17,10 @@ namespace Core.Application.Customers.GetCustomer
         public async Task<CustomerDto> Handle(GetCustomerQuery request, CancellationToken cancellationToken)
         {
             var customer = await _customers.GetCustomerByIdAsync(request.CustomerId);
-            if (customer is null) return null;
+            if (customer is null)
+            {
+                throw new NotFoundException("customer", request.CustomerId);
+            }
 
             var customerDto = new CustomerDto
             {

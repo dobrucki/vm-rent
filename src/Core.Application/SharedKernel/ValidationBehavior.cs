@@ -1,12 +1,11 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using ValidationException = Core.Application.SharedKernel.Exceptions.ValidationException;
 
 namespace Core.Application.SharedKernel
 {
@@ -33,20 +32,12 @@ namespace Core.Application.SharedKernel
                 .Where(error => error != null)
                 .ToList();
 
-            if (!validationFailures.Any())
+            if (validationFailures.Any())
             {
-                _logger.LogDebug("Validation process passed.");
-                return await next();
+                throw new ValidationException(validationFailures);
             }
-            _logger.LogDebug("Validation process failed.");
 
-            var errors = new List<Error>();
-            validationFailures
-                .ForEach(x => 
-                    errors.Add(new ValidationError(x.PropertyName, x.ErrorMessage)));
-            
-
-            throw new InvalidRequestException("Request did not pass validation process.", errors);
+            return await next();
         }
     }
 }

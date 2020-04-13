@@ -9,7 +9,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Core.Application.VirtualMachines.CreateVirtualMachine
 {
-    public class CreateVirtualMachineCommandHandler : IRequestHandler<CreateVirtualMachineCommand, VirtualMachineDto>
+    public class CreateVirtualMachineCommandHandler : IRequestHandler<CreateVirtualMachineCommand>
     {
         private readonly IVirtualMachinesRepository _virtualMachines;
         private readonly ILogger<CreateVirtualMachineCommandHandler> _logger;
@@ -21,34 +21,18 @@ namespace Core.Application.VirtualMachines.CreateVirtualMachine
             _logger = logger;
         }
 
-        public async Task<VirtualMachineDto> Handle(CreateVirtualMachineCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(CreateVirtualMachineCommand request, CancellationToken cancellationToken)
         {
             var virtualMachine = new VirtualMachine
             {
-                Id = Guid.NewGuid(),
-                CreatedAt = DateTime.UtcNow,
-                ModifiedAt = null,
-
+                Id = request.Id,
                 Name = request.Name
             };
-            try
-            {
-                await _virtualMachines.InsertVirtualMachineAsync(virtualMachine);
-            }
-            catch (Exception exception)
-            {
-                _logger.LogError(exception, exception.Message);
-                throw new InvalidRequestException(
-                    "Could not create virtual machine.", 
-                    new []{new PersistenceError(exception.ToString(), exception.Message)});
-            }
+            
+            await _virtualMachines.InsertVirtualMachineAsync(virtualMachine);
 
-            _logger.LogInformation($"Created virtual machine with id {virtualMachine.Id}.");
-            return new VirtualMachineDto
-            {
-                Id = virtualMachine.Id,
-                Name = virtualMachine.Name
-            };
+            _logger.LogInformation($"Created virtual machine ({virtualMachine.Id}).");
+            return Unit.Value;
         }
     }
 }

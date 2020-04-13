@@ -51,13 +51,11 @@ namespace UserInterface.RestApi.VirtualMachines
         {
             var command = new CreateVirtualMachineCommand
             {
+                Id = request.Id,
                 Name = request.Name
             };
-            var result = await _mediator.Send(command);
-            return CreatedAtRoute(
-                "GetVirtualMachine",
-                new {id = result.Id},
-                result);
+            await _mediator.Send(command);
+            return Ok();
         }
 
         [HttpDelete("{id}", Name = "DeleteVirtualMachine")]

@@ -1,4 +1,5 @@
 using Core.Application.SharedKernel;
+using Core.Application.SharedKernel.Exceptions;
 using Hellang.Middleware.ProblemDetails;
 using Infrastructure.Persistence;
 using Microsoft.AspNetCore.Builder;
@@ -29,10 +30,13 @@ namespace UserInterface.RestApi
             services.AddApplicationDatabase(Configuration.GetConnectionString("PostgresContext"));
             
             services.AddApplicationServices();
+            //DependencyInjection.RegisterApplication(_container);
 
             services.AddProblemDetails(options =>
             {
-                options.Map<InvalidRequestException>(exception => new InvalidRequestProblemDetails(exception));
+                options.Map<InvalidCommandException>(exception => new InvalidCommandProblemDetails(exception));
+                options.Map<NotFoundException>(exception => new NotFoundProblemDetails(exception));
+                options.Map<ValidationException>(exception => new ValidationProblemDetails(exception));
             });
         }
 

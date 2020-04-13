@@ -8,7 +8,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Core.Application.Customers.CreateCustomer
 {
-    public class CreateCustomerCommandHandler : IRequestHandler<CreateCustomerCommand, CustomerDto>
+    public class CreateCustomerCommandHandler : IRequestHandler<CreateCustomerCommand>
     {
         private readonly ILogger<CreateCustomerCommandHandler> _logger;
         private readonly ICustomersRepository _customers;
@@ -19,38 +19,20 @@ namespace Core.Application.Customers.CreateCustomer
             _customers = customers;
         }
 
-        public async Task<CustomerDto> Handle(CreateCustomerCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(CreateCustomerCommand request, CancellationToken cancellationToken)
         {
             var customer = new Customer
             {
-                Id = Guid.NewGuid(),
-                CreatedAt = DateTime.UtcNow,
-                ModifiedAt = null,
-
+                Id = request.Id,
                 FirstName = request.FirstName,
                 LastName = request.LastName,
                 EmailAddress = request.EmailAddress
             };
-            try
-            {
-                await _customers.InsertCustomerAsync(customer);
-            }
-            catch (Exception exception)
-            {
-                _logger.LogError(exception, exception.Message);
-                throw new InvalidRequestException(
-                    "Could not create customer.", 
-                    new []{new PersistenceError(exception.ToString(), exception.Message)});
-            }
+            await _customers.InsertCustomerAsync(customer);
 
-            _logger.LogInformation($"Created customer with id {customer.Id}.");
-            return new CustomerDto
-            {
-                CustomerId = customer.Id,
-                EmailAddress = customer.EmailAddress,
-                FirstName = customer.FirstName,
-                LastName = customer.LastName
-            };
+            _logger.LogInformation($"Created customer ({customer.Id}).");
+            
+            return Unit.Value;
         }
     }
 }

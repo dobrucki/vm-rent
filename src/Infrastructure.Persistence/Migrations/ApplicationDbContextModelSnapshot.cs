@@ -22,76 +22,68 @@ namespace Infrastructure.Persistence.Migrations
             modelBuilder.Entity("Core.Domain.Customers.Customer", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
+                        .HasColumnName("id")
                         .HasColumnType("uuid");
 
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp without time zone");
-
                     b.Property<string>("EmailAddress")
-                        .HasColumnType("text");
+                        .HasColumnName("email_address")
+                        .HasColumnType("character varying(60)")
+                        .HasMaxLength(60);
 
                     b.Property<string>("FirstName")
-                        .HasColumnType("text");
+                        .HasColumnName("first_name")
+                        .HasColumnType("character varying(40)")
+                        .HasMaxLength(40);
 
                     b.Property<string>("LastName")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime?>("ModifiedAt")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnName("last_name")
+                        .HasColumnType("character varying(40)")
+                        .HasMaxLength(40);
 
                     b.HasKey("Id");
 
-                    b.ToTable("Customers");
+                    b.ToTable("customer");
                 });
 
             modelBuilder.Entity("Core.Domain.Rentals.Rental", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
+                        .HasColumnName("id")
                         .HasColumnType("uuid");
 
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp without time zone");
-
                     b.Property<Guid>("CustomerId")
+                        .HasColumnName("id")
                         .HasColumnType("uuid");
 
                     b.Property<DateTime>("EndTime")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<DateTime?>("ModifiedAt")
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<DateTime>("StartTime")
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<Guid>("VirtualMachineId")
+                        .HasColumnName("id")
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Rentals");
+                    b.ToTable("rental");
                 });
 
             modelBuilder.Entity("Core.Domain.VirtualMachines.VirtualMachine", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
+                        .HasColumnName("id")
                         .HasColumnType("uuid");
 
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<DateTime?>("ModifiedAt")
-                        .HasColumnType("timestamp without time zone");
-
                     b.Property<string>("Name")
-                        .HasColumnType("text");
+                        .HasColumnName("name")
+                        .HasColumnType("character varying(50)")
+                        .HasMaxLength(50);
 
                     b.HasKey("Id");
 
-                    b.ToTable("VirtualMachines");
+                    b.ToTable("virtual_machine");
                 });
 #pragma warning restore 612, 618
         }

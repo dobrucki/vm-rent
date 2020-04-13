@@ -21,21 +21,11 @@ namespace Core.Application.VirtualMachines.EditVirtualMachineDetails
 
         public async Task<Unit> Handle(EditVirtualMachineDetailsCommand request, CancellationToken cancellationToken)
         {
-            try
-            {
-                var virtualMachine = await _virtualMachines.GetVirtualMachineByIdAsync(request.VirtualMachineId);
-                virtualMachine.Name = request.Name;
-                virtualMachine.ModifiedAt = DateTime.UtcNow;
-                await _virtualMachines.UpdateVirtualMachineDetailsAsync(virtualMachine);
-            }
-            catch (Exception exception)
-            {
-                _logger.LogError(exception, exception.Message);
-                throw new InvalidRequestException("Could not edit virtual machine.", new[]
-                {
-                    new PersistenceError(exception.ToString(), exception.Message)
-                });
-            }
+            var virtualMachine = await _virtualMachines.GetVirtualMachineByIdAsync(request.VirtualMachineId);
+            virtualMachine.Name = request.Name;
+            await _virtualMachines.UpdateVirtualMachineDetailsAsync(virtualMachine);
+            _logger.LogInformation($"Updated virtual machine ({virtualMachine.Id}).");
+            
             return Unit.Value;
         }
     }

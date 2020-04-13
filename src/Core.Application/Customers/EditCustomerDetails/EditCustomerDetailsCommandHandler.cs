@@ -22,22 +22,13 @@ namespace Core.Application.Customers.EditCustomerDetails
 
         public async Task<Unit> Handle(EditCustomerDetailsCommand request, CancellationToken cancellationToken)
         {
-            try
-            {
-                var customer = await _customers.GetCustomerByIdAsync(request.CustomerId);
-                customer.FirstName = request.FirstName;
-                customer.LastName = request.LastName;
-                customer.ModifiedAt = DateTime.UtcNow;
-                await _customers.UpdateCustomerDetailsAsync(customer);
-            }
-            catch (Exception exception)
-            {
-                _logger.LogError(exception, exception.Message);
-                throw new InvalidRequestException("Could not edit customer.", new[]
-                {
-                    new PersistenceError(exception.ToString(), exception.Message)
-                });
-            }
+            
+            var customer = await _customers.GetCustomerByIdAsync(request.CustomerId);
+            customer.FirstName = request.FirstName;
+            customer.LastName = request.LastName;
+            await _customers.UpdateCustomerDetailsAsync(customer);
+            _logger.LogInformation($"Updated customer ({customer.Id})");
+            
             return Unit.Value;
         }
     }

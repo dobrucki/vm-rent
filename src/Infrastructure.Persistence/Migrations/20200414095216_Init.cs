@@ -26,8 +26,10 @@ namespace Infrastructure.Persistence.Migrations
                 columns: table => new
                 {
                     id = table.Column<Guid>(nullable: false),
-                    StartTime = table.Column<DateTime>(nullable: false),
-                    EndTime = table.Column<DateTime>(nullable: false)
+                    customer_id = table.Column<Guid>(nullable: false),
+                    virtual_machine_id = table.Column<Guid>(nullable: false),
+                    start_time = table.Column<DateTime>(nullable: false),
+                    end_time = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {

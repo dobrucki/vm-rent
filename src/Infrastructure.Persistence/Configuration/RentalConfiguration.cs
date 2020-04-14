@@ -15,12 +15,18 @@ namespace Infrastructure.Persistence.Configuration
                 .ValueGeneratedNever();
             
             builder.Property(x => x.CustomerId)
-                .HasColumnName("id")
+                .HasColumnName("customer_id")
                 .ValueGeneratedNever();
             
             builder.Property(x => x.VirtualMachineId)
-                .HasColumnName("id")
+                .HasColumnName("virtual_machine_id")
                 .ValueGeneratedNever();
+
+            builder.Property(x => x.StartTime)
+                .HasColumnName("start_time");
+
+            builder.Property(x => x.EndTime)
+                .HasColumnName("end_time");
         }
     }
 }

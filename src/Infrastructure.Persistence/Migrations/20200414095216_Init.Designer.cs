@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200413021621_Init")]
+    [Migration("20200414095216_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -54,17 +54,19 @@ namespace Infrastructure.Persistence.Migrations
                         .HasColumnType("uuid");
 
                     b.Property<Guid>("CustomerId")
-                        .HasColumnName("id")
+                        .HasColumnName("customer_id")
                         .HasColumnType("uuid");
 
                     b.Property<DateTime>("EndTime")
+                        .HasColumnName("end_time")
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<DateTime>("StartTime")
+                        .HasColumnName("start_time")
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<Guid>("VirtualMachineId")
-                        .HasColumnName("id")
+                        .HasColumnName("virtual_machine_id")
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");

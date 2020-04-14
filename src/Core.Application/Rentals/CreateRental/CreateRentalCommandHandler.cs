@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Core.Application.Customers;
 using Core.Application.Customers.GetCustomer;
+using Core.Application.Rentals.GetRental;
 using Core.Application.SharedKernel;
 using Core.Application.SharedKernel.Exceptions;
 using Core.Application.VirtualMachines;

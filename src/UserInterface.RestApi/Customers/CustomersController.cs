@@ -39,8 +39,17 @@ namespace UserInterface.RestApi.Customers
                 EmailAddress = request.EmailAddress
             };
             await _mediator.Send(command);
-            
-            return Ok();   
+
+            var customerQuery = new GetCustomerQuery
+            {
+                CustomerId = request.Id
+            };
+            var customer = await _mediator.Send(customerQuery);
+
+            return CreatedAtRoute(
+                "GetCustomer",
+                new {id = customer.CustomerId},
+                customer);
         }
 
         [HttpGet("{id}", Name = "GetCustomer")]

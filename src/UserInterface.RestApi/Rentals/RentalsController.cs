@@ -1,7 +1,9 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Core.Application.Rentals;
 using Core.Application.Rentals.CreateRental;
+using Core.Application.Rentals.GetRental;
 using Core.Application.Rentals.ListRentals;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -33,6 +35,19 @@ namespace UserInterface.RestApi.Rentals
             return Ok(rentals);
         }
 
+        [HttpGet("{id}", Name = "GetRental")]
+        public async Task<ActionResult<RentalDto>> GetAsync([FromRoute] Guid id)
+        {
+            var query = new GetRentalQuery
+            {
+                RentalId = id
+            };
+
+            var rental = await _mediator.Send(query);
+            return Ok(rental);
+        }
+        
+
         [HttpPost(Name = "CreateRental")]
         public async Task<ActionResult<RentalDto>> PostAsync([FromBody] CreateRentalRequest request)
         {
@@ -46,11 +61,17 @@ namespace UserInterface.RestApi.Rentals
             };
 
             await _mediator.Send(command);
-            // return CreatedAtRoute(
-            //     "GetCustomer",
-            //     new {id = rental.Id},
-            //     rental);  
-            return Ok();
+            
+            var rentalQuery = new GetRentalQuery
+            {
+                RentalId = request.Id
+            };
+            var rental = await _mediator.Send(rentalQuery);
+
+            return CreatedAtRoute(
+                "GetRental",
+                new {id = rental.Id},
+                rental);
         }
     }
 }

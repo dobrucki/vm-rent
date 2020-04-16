@@ -5,6 +5,7 @@ using Core.Application.Customers;
 using Core.Application.Customers.CreateCustomer;
 using Core.Application.Customers.EditCustomerDetails;
 using Core.Application.Customers.GetCustomer;
+using Core.Application.Customers.ListCustomers;
 using Core.Application.Rentals.ListRentals;
 using Core.Application.SharedKernel;
 using MediatR;
@@ -54,7 +55,7 @@ namespace UserInterface.RestApi.Customers
                 customer);
         }
         
-        [HttpGet(Name = "ListRentals")]
+        [HttpGet(Name = "ListCustomers")]
         public async Task<ActionResult<IEnumerable<CustomerDto>>> GetAsync([FromQuery] ListCustomersRequest request)
         {
             var query = new ListCustomersQuery

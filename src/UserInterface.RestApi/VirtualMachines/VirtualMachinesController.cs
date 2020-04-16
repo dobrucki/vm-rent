@@ -1,14 +1,18 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using Core.Application.Rentals.ListRentals;
 using Core.Application.VirtualMachines;
 using Core.Application.VirtualMachines.CreateVirtualMachine;
 using Core.Application.VirtualMachines.DeleteVirtualMachine;
 using Core.Application.VirtualMachines.EditVirtualMachineDetails;
 using Core.Application.VirtualMachines.GetVirtualMachine;
+using Core.Application.VirtualMachines.ListVirtualMachines;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using UserInterface.RestApi.VirtualMachines.CreateVirtualMachine;
 using UserInterface.RestApi.VirtualMachines.EditVirtualMachineDetails;
+using UserInterface.RestApi.VirtualMachines.ListVirtualMachines;
 
 namespace UserInterface.RestApi.VirtualMachines
 {
@@ -32,6 +36,18 @@ namespace UserInterface.RestApi.VirtualMachines
                 VirtualMachineId = id
             };
             return Ok(await _mediator.Send(query));
+        }
+
+        public async Task<ActionResult<IEnumerable<VirtualMachineDto>>> GetAsync(
+            [FromQuery] ListVirtualMachinesRequest request)
+        {
+            var query = new ListVirtualMachinesQuery
+            {
+                Limit = request.Limit,
+                Offset = request.Offset
+            };
+            var virtualMachines = await _mediator.Send(query);
+            return Ok(virtualMachines);
         }
 
         [HttpPut("{id}", Name = "EditVirtualMachineDetails")]

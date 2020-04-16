@@ -5,12 +5,14 @@ using Core.Application.Customers;
 using Core.Application.Customers.CreateCustomer;
 using Core.Application.Customers.EditCustomerDetails;
 using Core.Application.Customers.GetCustomer;
+using Core.Application.Rentals.ListRentals;
 using Core.Application.SharedKernel;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using UserInterface.RestApi.Customers.CreateCustomer;
 using UserInterface.RestApi.Customers.EditCustomerDetails;
+using UserInterface.RestApi.Customers.ListCustomers;
 using UserInterface.RestApi.SharedKernel;
 
 namespace UserInterface.RestApi.Customers
@@ -50,6 +52,18 @@ namespace UserInterface.RestApi.Customers
                 "GetCustomer",
                 new {id = customer.CustomerId},
                 customer);
+        }
+        
+        [HttpGet(Name = "ListRentals")]
+        public async Task<ActionResult<IEnumerable<CustomerDto>>> GetAsync([FromQuery] ListCustomersRequest request)
+        {
+            var query = new ListCustomersQuery
+            {
+                Limit = request.Limit,
+                Offset = request.Offset
+            };
+            var rentals = await _mediator.Send(query);
+            return Ok(rentals);
         }
 
         [HttpGet("{id}", Name = "GetCustomer")]

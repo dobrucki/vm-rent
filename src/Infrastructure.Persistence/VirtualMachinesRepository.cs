@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Core.Application.VirtualMachines;
 using Core.Domain.VirtualMachines;
@@ -39,6 +41,14 @@ namespace Infrastructure.Persistence
         {
             _virtualMachines.Remove(virtualMachine);
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<IEnumerable<VirtualMachine>> ListVirtualMachinesAsync(int limit, int offset)
+        {
+            return await _virtualMachines
+                .Skip(limit * offset)
+                .Take(limit)
+                .ToListAsync();
         }
     }
 }

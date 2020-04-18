@@ -1,3 +1,4 @@
+using AutoMapper;
 using Core.Application.Customers;
 using Core.Application.Rentals;
 using Core.Application.SharedKernel;
@@ -19,6 +20,8 @@ namespace Infrastructure.Persistence
             services.AddTransient<ICustomersRepository, CustomersRepository>();
             services.AddTransient<IVirtualMachinesRepository, VirtualMachinesRepository>();
             services.AddTransient<IRentalsRepository, RentalsRepository>();
+
+            services.AddAutoMapper(typeof(EfCoreExtensions));
             return services;
         }
     }

@@ -1,15 +1,16 @@
 using Core.Domain.Customers;
 using Core.Domain.Rentals;
 using Core.Domain.VirtualMachines;
+using Infrastructure.Persistence.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Persistence
 {
     public class ApplicationDbContext : DbContext
     {
-        public DbSet<VirtualMachine> VirtualMachines { get; }
-        public DbSet<Customer> Customers { get; }
-        public DbSet<Rental> Rentals { get; }
+        public DbSet<VirtualMachineEntity> VirtualMachines { get; }
+        public DbSet<CustomerEntity> Customers { get; }
+        public DbSet<RentalEntity> Rentals { get; }
         
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {

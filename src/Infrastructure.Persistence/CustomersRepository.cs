@@ -2,8 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Core.Application.Customers;
 using Core.Domain.Customers;
+using Infrastructure.Persistence.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Persistence
@@ -11,28 +13,33 @@ namespace Infrastructure.Persistence
     public class CustomersRepository : ICustomersRepository
     {
         private readonly ApplicationDbContext _context;
-        private readonly DbSet<Customer> _customers;
+        private readonly DbSet<CustomerEntity> _customers;
+        private readonly IMapper _mapper;
 
-        public CustomersRepository(ApplicationDbContext context)
+        public CustomersRepository(ApplicationDbContext context, IMapper mapper)
         {
             _context = context;
-            _customers = context.Set<Customer>();
+            _mapper = mapper;
+            _customers = context.Set<CustomerEntity>();
         }
 
         public async Task<Customer> GetCustomerByIdAsync(Guid customerId)
         {
-            return await _customers.SingleOrDefaultAsync(x => x.Id == customerId);
+            var customerEntity =  await _customers.SingleOrDefaultAsync(x => x.Id == customerId);
+            return _mapper.Map<Customer>(customerEntity);
         }
 
         public async Task UpdateCustomerDetailsAsync(Customer customer)
         {
-            _customers.Attach(customer);
+            var customerEntity = _mapper.Map<CustomerEntity>(customer);
+            _customers.Attach(customerEntity);
             await _context.SaveChangesAsync();
         }
 
         public async Task InsertCustomerAsync(Customer customer)
         {
-            await _customers.AddAsync(customer);
+            var customerEntity = _mapper.Map<CustomerEntity>(customer);
+            await _customers.AddAsync(customerEntity);
             await _context.SaveChangesAsync();
         }
 
@@ -41,6 +48,7 @@ namespace Infrastructure.Persistence
             return await _customers
                 .Skip(limit * offset)
                 .Take(limit)
+                .Select(x => _mapper.Map<Customer>(x))
                 .ToListAsync();
         }
     }

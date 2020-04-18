@@ -8,79 +8,79 @@ namespace Infrastructure.Persistence.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "customers",
+                name: "customer",
                 columns: table => new
                 {
-                    id = table.Column<Guid>(nullable: false),
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
                     first_name = table.Column<string>(nullable: true),
                     last_name = table.Column<string>(nullable: true),
                     email_address = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("pk_customers", x => x.id);
+                    table.PrimaryKey("customer_id_pkey", x => x.id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "virtual_machines",
+                name: "virtual_machine",
                 columns: table => new
                 {
-                    id = table.Column<Guid>(nullable: false),
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
                     name = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("pk_virtual_machines", x => x.id);
+                    table.PrimaryKey("virtual_machine_id_pkey", x => x.id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "rentals",
+                name: "rental",
                 columns: table => new
                 {
-                    id = table.Column<Guid>(nullable: false),
-                    customer_id = table.Column<Guid>(nullable: true),
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
+                    customer_id = table.Column<Guid>(nullable: false),
                     virtual_machine_id = table.Column<Guid>(nullable: true),
                     start_time = table.Column<DateTime>(nullable: false),
                     end_time = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("pk_rentals", x => x.id);
+                    table.PrimaryKey("rental_id_pkey", x => x.id);
                     table.ForeignKey(
-                        name: "fk_rentals_customers_customer_id",
+                        name: "customer_id_fkey",
                         column: x => x.customer_id,
-                        principalTable: "customers",
+                        principalTable: "customer",
                         principalColumn: "id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "fk_rentals_virtual_machines_virtual_machine_id",
+                        name: "virtual_machine_id_fkey",
                         column: x => x.virtual_machine_id,
-                        principalTable: "virtual_machines",
+                        principalTable: "virtual_machine",
                         principalColumn: "id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.SetNull);
                 });
 
             migrationBuilder.CreateIndex(
                 name: "ix_rentals_customer_id",
-                table: "rentals",
+                table: "rental",
                 column: "customer_id");
 
             migrationBuilder.CreateIndex(
                 name: "ix_rentals_virtual_machine_id",
-                table: "rentals",
+                table: "rental",
                 column: "virtual_machine_id");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "rentals");
+                name: "rental");
 
             migrationBuilder.DropTable(
-                name: "customers");
+                name: "customer");
 
             migrationBuilder.DropTable(
-                name: "virtual_machines");
+                name: "virtual_machine");
         }
     }
 }

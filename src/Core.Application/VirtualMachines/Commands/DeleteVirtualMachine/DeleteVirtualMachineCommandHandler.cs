@@ -1,6 +1,5 @@
 using System.Threading;
 using System.Threading.Tasks;
-using Core.Application.VirtualMachines.Events.DeleteVirtualMachine;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
@@ -25,10 +24,6 @@ namespace Core.Application.VirtualMachines.Commands.DeleteVirtualMachine
         {
             var virtualMachine = await _virtualMachines.GetVirtualMachineByIdAsync(request.Id);
             await _virtualMachines.DeleteVirtualMachineAsync(virtualMachine);
-            await _mediator.Publish(new DeletedVirtualMachineEvent
-            {
-                VirtualMachineId = request.Id
-            }, cancellationToken);
             _logger.LogInformation($"Deleted virtual machine ({virtualMachine.Id}).");
             return Unit.Value;
         }

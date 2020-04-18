@@ -19,7 +19,7 @@ namespace Infrastructure.Persistence.Migrations
                 .HasAnnotation("ProductVersion", "3.1.3")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
-            modelBuilder.Entity("Core.Domain.Customers.Customer", b =>
+            modelBuilder.Entity("Infrastructure.Persistence.Entities.CustomerEntity", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -39,19 +39,19 @@ namespace Infrastructure.Persistence.Migrations
                         .HasColumnType("text");
 
                     b.HasKey("Id")
-                        .HasName("pk_customers");
+                        .HasName("customer_id_pkey");
 
-                    b.ToTable("customers");
+                    b.ToTable("customer");
                 });
 
-            modelBuilder.Entity("Core.Domain.Rentals.Rental", b =>
+            modelBuilder.Entity("Infrastructure.Persistence.Entities.RentalEntity", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("id")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid?>("CustomerId")
+                    b.Property<Guid>("CustomerId")
                         .HasColumnName("customer_id")
                         .HasColumnType("uuid");
 
@@ -68,7 +68,7 @@ namespace Infrastructure.Persistence.Migrations
                         .HasColumnType("uuid");
 
                     b.HasKey("Id")
-                        .HasName("pk_rentals");
+                        .HasName("rental_id_pkey");
 
                     b.HasIndex("CustomerId")
                         .HasName("ix_rentals_customer_id");
@@ -76,10 +76,10 @@ namespace Infrastructure.Persistence.Migrations
                     b.HasIndex("VirtualMachineId")
                         .HasName("ix_rentals_virtual_machine_id");
 
-                    b.ToTable("rentals");
+                    b.ToTable("rental");
                 });
 
-            modelBuilder.Entity("Core.Domain.VirtualMachines.VirtualMachine", b =>
+            modelBuilder.Entity("Infrastructure.Persistence.Entities.VirtualMachineEntity", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -91,22 +91,25 @@ namespace Infrastructure.Persistence.Migrations
                         .HasColumnType("text");
 
                     b.HasKey("Id")
-                        .HasName("pk_virtual_machines");
+                        .HasName("virtual_machine_id_pkey");
 
-                    b.ToTable("virtual_machines");
+                    b.ToTable("virtual_machine");
                 });
 
-            modelBuilder.Entity("Core.Domain.Rentals.Rental", b =>
+            modelBuilder.Entity("Infrastructure.Persistence.Entities.RentalEntity", b =>
                 {
-                    b.HasOne("Core.Domain.Customers.Customer", "Customer")
-                        .WithMany()
+                    b.HasOne("Infrastructure.Persistence.Entities.CustomerEntity", "Customer")
+                        .WithMany("Rentals")
                         .HasForeignKey("CustomerId")
-                        .HasConstraintName("fk_rentals_customers_customer_id");
+                        .HasConstraintName("customer_id_fkey")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.HasOne("Core.Domain.VirtualMachines.VirtualMachine", "VirtualMachine")
-                        .WithMany()
+                    b.HasOne("Infrastructure.Persistence.Entities.VirtualMachineEntity", "VirtualMachine")
+                        .WithMany("Rentals")
                         .HasForeignKey("VirtualMachineId")
-                        .HasConstraintName("fk_rentals_virtual_machines_virtual_machine_id");
+                        .HasConstraintName("virtual_machine_id_fkey")
+                        .OnDelete(DeleteBehavior.SetNull);
                 });
 #pragma warning restore 612, 618
         }

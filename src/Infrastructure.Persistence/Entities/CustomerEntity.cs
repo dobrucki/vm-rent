@@ -1,4 +1,8 @@
 using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using Castle.Components.DictionaryAdapter;
+using Core.Domain.Rentals;
 using Core.Domain.SharedKernel;
 
 namespace Infrastructure.Persistence.Entities
@@ -9,5 +13,6 @@ namespace Infrastructure.Persistence.Entities
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string EmailAddress { get; set; }
+        public IList<RentalEntity> Rentals { get; set; }
     }
 }

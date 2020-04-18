@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200414095216_Init")]
+    [Migration("20200418022618_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,36 +24,36 @@ namespace Infrastructure.Persistence.Migrations
             modelBuilder.Entity("Core.Domain.Customers.Customer", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnName("id")
                         .HasColumnType("uuid");
 
                     b.Property<string>("EmailAddress")
                         .HasColumnName("email_address")
-                        .HasColumnType("character varying(60)")
-                        .HasMaxLength(60);
+                        .HasColumnType("text");
 
                     b.Property<string>("FirstName")
                         .HasColumnName("first_name")
-                        .HasColumnType("character varying(40)")
-                        .HasMaxLength(40);
+                        .HasColumnType("text");
 
                     b.Property<string>("LastName")
                         .HasColumnName("last_name")
-                        .HasColumnType("character varying(40)")
-                        .HasMaxLength(40);
+                        .HasColumnType("text");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasName("pk_customers");
 
-                    b.ToTable("customer");
+                    b.ToTable("customers");
                 });
 
             modelBuilder.Entity("Core.Domain.Rentals.Rental", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnName("id")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("CustomerId")
+                    b.Property<Guid?>("CustomerId")
                         .HasColumnName("customer_id")
                         .HasColumnType("uuid");
 
@@ -65,29 +65,50 @@ namespace Infrastructure.Persistence.Migrations
                         .HasColumnName("start_time")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<Guid>("VirtualMachineId")
+                    b.Property<Guid?>("VirtualMachineId")
                         .HasColumnName("virtual_machine_id")
                         .HasColumnType("uuid");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasName("pk_rentals");
 
-                    b.ToTable("rental");
+                    b.HasIndex("CustomerId")
+                        .HasName("ix_rentals_customer_id");
+
+                    b.HasIndex("VirtualMachineId")
+                        .HasName("ix_rentals_virtual_machine_id");
+
+                    b.ToTable("rentals");
                 });
 
             modelBuilder.Entity("Core.Domain.VirtualMachines.VirtualMachine", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnName("id")
                         .HasColumnType("uuid");
 
                     b.Property<string>("Name")
                         .HasColumnName("name")
-                        .HasColumnType("character varying(50)")
-                        .HasMaxLength(50);
+                        .HasColumnType("text");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasName("pk_virtual_machines");
 
-                    b.ToTable("virtual_machine");
+                    b.ToTable("virtual_machines");
+                });
+
+            modelBuilder.Entity("Core.Domain.Rentals.Rental", b =>
+                {
+                    b.HasOne("Core.Domain.Customers.Customer", "Customer")
+                        .WithMany()
+                        .HasForeignKey("CustomerId")
+                        .HasConstraintName("fk_rentals_customers_customer_id");
+
+                    b.HasOne("Core.Domain.VirtualMachines.VirtualMachine", "VirtualMachine")
+                        .WithMany()
+                        .HasForeignKey("VirtualMachineId")
+                        .HasConstraintName("fk_rentals_virtual_machines_virtual_machine_id");
                 });
 #pragma warning restore 612, 618
         }

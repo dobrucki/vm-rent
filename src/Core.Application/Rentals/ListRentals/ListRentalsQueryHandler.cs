@@ -38,8 +38,8 @@ namespace Core.Application.Rentals.ListRentals
             var result = rentals.Select(rental => new RentalDto
             {
                 Id = rental.Id,
-                CustomerId = rental.CustomerId,
-                VirtualMachineId = rental.VirtualMachineId,
+                CustomerId = rental.Customer.Id,
+                VirtualMachineId = rental.VirtualMachine.Id,
                 StartTime = rental.StartTime,
                 EndTime = rental.EndTime
             });

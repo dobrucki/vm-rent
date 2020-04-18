@@ -27,12 +27,17 @@ namespace Infrastructure.Persistence
 
         public async Task<Rental> GetRentalByIdAsync(Guid rentalId)
         {
-            return await _rentals.SingleOrDefaultAsync(x => x.Id == rentalId);
+            return await _rentals
+                .Include(x => x.Customer)
+                .Include(x => x.VirtualMachine)
+                .SingleOrDefaultAsync(x => x.Id == rentalId);
         }    
 
         public async Task InsertRentalAsync(Rental rental)
         {
             await _rentals.AddAsync(rental);
+            _context.Entry(rental.VirtualMachine).State = EntityState.Unchanged;
+            _context.Entry(rental.Customer).State = EntityState.Unchanged;
             await _context.SaveChangesAsync();
         }
 
@@ -41,6 +46,8 @@ namespace Infrastructure.Persistence
             return await _rentals
                 .Skip(limit * offset)
                 .Take(limit)
+                .Include(x => x.Customer)
+                .Include(x => x.VirtualMachine)
                 .ToListAsync();
         }
 

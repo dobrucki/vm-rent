@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using Core.Domain.Rentals;
 using Core.Domain.SharedKernel;
 
 namespace Core.Domain.VirtualMachines

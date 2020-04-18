@@ -7,8 +7,8 @@ namespace Core.Domain.Rentals
 {
     public class Rental : ModelBase
     {
-        public Guid CustomerId { get; set; }
-        public Guid VirtualMachineId { get; set; }
+        public virtual Customer Customer { get; set; }
+        public virtual VirtualMachine VirtualMachine { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
     }

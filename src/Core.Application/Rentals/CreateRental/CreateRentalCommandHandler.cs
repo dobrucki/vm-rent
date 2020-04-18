@@ -10,7 +10,9 @@ using Core.Application.SharedKernel;
 using Core.Application.SharedKernel.Exceptions;
 using Core.Application.VirtualMachines;
 using Core.Application.VirtualMachines.GetVirtualMachine;
+using Core.Domain.Customers;
 using Core.Domain.Rentals;
+using Core.Domain.VirtualMachines;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
@@ -45,7 +47,7 @@ namespace Core.Application.Rentals.CreateRental
             var virtualMachine = await _mediator.Send(virtualMachineQuery, cancellationToken);
 
             Expression<Func<Rental, bool>> filter = x =>
-                x.VirtualMachineId == request.VirtualMachineId
+                x.VirtualMachine.Id == request.VirtualMachineId
                 && x.StartTime < request.EndTime
                 && request.StartTime < x.EndTime;
 
@@ -61,11 +63,21 @@ namespace Core.Application.Rentals.CreateRental
 
             var rental = new Rental
             {
-                Id = request.CustomerId,
-                CustomerId = request.CustomerId,
+                Id = request.Id,
+                Customer = new Customer
+                {
+                    Id = customer.CustomerId,
+                    EmailAddress = customer.EmailAddress,
+                    FirstName = customer.FirstName,
+                    LastName = customer.LastName
+                },
                 StartTime = request.StartTime,
                 EndTime = request.EndTime,
-                VirtualMachineId = request.VirtualMachineId
+                VirtualMachine = new VirtualMachine
+                {
+                    Id = virtualMachine.Id,
+                    Name = virtualMachine.Name
+                }
             };
 
             await _rentals.InsertRentalAsync(rental);

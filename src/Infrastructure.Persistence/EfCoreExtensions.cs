@@ -13,7 +13,8 @@ namespace Infrastructure.Persistence
         {
             services.AddDbContextPool<ApplicationDbContext>(options =>
             {
-                options.UseNpgsql(connectionString);
+                options.UseNpgsql(connectionString).UseSnakeCaseNamingConvention();
+                options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
             });
             services.AddTransient<ICustomersRepository, CustomersRepository>();
             services.AddTransient<IVirtualMachinesRepository, VirtualMachinesRepository>();

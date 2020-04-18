@@ -24,11 +24,11 @@ namespace Core.Application.Rentals
         {
             _logger.LogDebug("Handling event");
             var rentals = (await _rentals
-                    .GetRentalsAsync(x => x.VirtualMachineId == notification.VirtualMachineId))
+                    .GetRentalsAsync(x => x.VirtualMachine.Id == notification.VirtualMachineId))
                     .ToList();
             foreach (var rental in rentals)
             {
-                rental.VirtualMachineId = Guid.Empty;
+                rental.VirtualMachine = null;
             }
 
             await _rentals.UpdateRangeAsync(rentals);

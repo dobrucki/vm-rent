@@ -1,8 +1,9 @@
 using System;
+using MediatR;
 
-namespace Core.Application.Customers
+namespace Core.Application.Customers.Commands.CreateCustomer
 {
-    public class CustomerDto
+    public class CreateCustomerCommand : IRequest
     {
         public Guid Id { get; set; }
         public string FirstName { get; set; }

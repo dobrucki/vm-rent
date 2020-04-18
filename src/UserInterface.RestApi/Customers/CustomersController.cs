@@ -2,11 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Core.Application.Customers;
-using Core.Application.Customers.CreateCustomer;
-using Core.Application.Customers.EditCustomerDetails;
-using Core.Application.Customers.GetCustomer;
-using Core.Application.Customers.ListCustomers;
-using Core.Application.Rentals.ListRentals;
+using Core.Application.Customers.Commands.CreateCustomer;
+using Core.Application.Customers.Commands.EditCustomerDetails;
+using Core.Application.Customers.Queries.GetCustomer;
+using Core.Application.Customers.Queries.ListCustomers;
 using Core.Application.SharedKernel;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -51,7 +50,7 @@ namespace UserInterface.RestApi.Customers
 
             return CreatedAtRoute(
                 "GetCustomer",
-                new {id = customer.CustomerId},
+                new {id = customer.Id},
                 customer);
         }
         

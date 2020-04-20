@@ -4,6 +4,7 @@ using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Core.Application.Customers.Queries.GetCustomer;
+using Core.Application.SharedKernel;
 using Core.Application.SharedKernel.Exceptions;
 using Core.Application.VirtualMachines.Queries.GetVirtualMachine;
 using Core.Domain.Customers;
@@ -14,7 +15,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Core.Application.Rentals.Commands.CreateRental
 {
-    public class CreateRentalCommandHandler : IRequestHandler<CreateRentalCommand>
+    public class CreateRentalCommandHandler : ICommandHandler<CreateRentalCommand>
     {
         private readonly IRentalsRepository _rentals;
         private readonly ILogger<CreateRentalCommandHandler> _logger;

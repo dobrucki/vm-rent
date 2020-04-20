@@ -1,11 +1,12 @@
 using System.Threading;
 using System.Threading.Tasks;
+using Core.Application.SharedKernel;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
 namespace Core.Application.Customers.Commands.EditCustomerDetails
 {
-    public class EditCustomerDetailsCommandHandler : IRequestHandler<EditCustomerDetailsCommand>
+    public class EditCustomerDetailsCommandHandler : ICommandHandler<EditCustomerDetailsCommand>
     {
         private readonly ICustomersRepository _customers;
         private readonly ILogger<EditCustomerDetailsCommandHandler> _logger;

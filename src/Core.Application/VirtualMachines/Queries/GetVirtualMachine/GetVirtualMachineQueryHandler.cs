@@ -1,11 +1,12 @@
 using System.Threading;
 using System.Threading.Tasks;
+using Core.Application.SharedKernel;
 using Core.Application.SharedKernel.Exceptions;
 using MediatR;
 
 namespace Core.Application.VirtualMachines.Queries.GetVirtualMachine
 {
-    public class GetVirtualMachineQueryHandler : IRequestHandler<GetVirtualMachineQuery, VirtualMachineDto>
+    public class GetVirtualMachineQueryHandler : IQueryHandler<GetVirtualMachineQuery, VirtualMachineDto>
     {
         private readonly IVirtualMachinesRepository _virtualMachines;
     

@@ -1,11 +1,12 @@
 using System.Threading;
 using System.Threading.Tasks;
+using Core.Application.SharedKernel;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
 namespace Core.Application.VirtualMachines.Commands.DeleteVirtualMachine
 {
-    public class DeleteVirtualMachineCommandHandler : IRequestHandler<DeleteVirtualMachineCommand>
+    public class DeleteVirtualMachineCommandHandler : ICommandHandler<DeleteVirtualMachineCommand>
     {
         private readonly IVirtualMachinesRepository _virtualMachines;
         private readonly ILogger<DeleteVirtualMachineCommandHandler> _logger;

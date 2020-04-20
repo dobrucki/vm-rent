@@ -1,12 +1,13 @@
 using System.Threading;
 using System.Threading.Tasks;
+using Core.Application.SharedKernel;
 using Core.Domain.VirtualMachines;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
 namespace Core.Application.VirtualMachines.Commands.CreateVirtualMachine
 {
-    public class CreateVirtualMachineCommandHandler : IRequestHandler<CreateVirtualMachineCommand>
+    public class CreateVirtualMachineCommandHandler : ICommandHandler<CreateVirtualMachineCommand>
     {
         private readonly IVirtualMachinesRepository _virtualMachines;
         private readonly ILogger<CreateVirtualMachineCommandHandler> _logger;

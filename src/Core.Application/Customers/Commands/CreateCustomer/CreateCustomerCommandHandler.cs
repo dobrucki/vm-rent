@@ -1,17 +1,19 @@
 using System.Threading;
 using System.Threading.Tasks;
+using Core.Application.SharedKernel;
 using Core.Domain.Customers;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
 namespace Core.Application.Customers.Commands.CreateCustomer
 {
-    public class CreateCustomerCommandHandler : IRequestHandler<CreateCustomerCommand>
+    public class CreateCustomerCommandHandler : ICommandHandler<CreateCustomerCommand>
     {
         private readonly ILogger<CreateCustomerCommandHandler> _logger;
         private readonly ICustomersRepository _customers;
 
-        public CreateCustomerCommandHandler(ILogger<CreateCustomerCommandHandler> logger, ICustomersRepository customers)
+        public CreateCustomerCommandHandler(
+            ILogger<CreateCustomerCommandHandler> logger, ICustomersRepository customers)
         {
             _logger = logger;
             _customers = customers;

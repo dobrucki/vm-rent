@@ -1,11 +1,12 @@
 using System.Threading;
 using System.Threading.Tasks;
+using Core.Application.SharedKernel;
 using Core.Application.SharedKernel.Exceptions;
 using MediatR;
 
 namespace Core.Application.Customers.Queries.GetCustomer
 {
-    public class GetCustomerQueryHandler : IRequestHandler<GetCustomerQuery, CustomerDto>
+    public class GetCustomerQueryHandler : IQueryHandler<GetCustomerQuery, CustomerDto>
     {
         private readonly ICustomersRepository _customers;
 

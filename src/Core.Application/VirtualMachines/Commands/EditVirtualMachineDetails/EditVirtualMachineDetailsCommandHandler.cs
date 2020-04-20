@@ -1,11 +1,12 @@
 using System.Threading;
 using System.Threading.Tasks;
+using Core.Application.SharedKernel;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
 namespace Core.Application.VirtualMachines.Commands.EditVirtualMachineDetails
 {
-    public class EditVirtualMachineDetailsCommandHandler : IRequestHandler<EditVirtualMachineDetailsCommand>
+    public class EditVirtualMachineDetailsCommandHandler : ICommandHandler<EditVirtualMachineDetailsCommand>
     {
         private readonly IVirtualMachinesRepository _virtualMachines;
         private readonly ILogger<EditVirtualMachineDetailsCommandHandler> _logger;

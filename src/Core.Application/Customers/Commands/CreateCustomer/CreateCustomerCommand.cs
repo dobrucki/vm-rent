@@ -1,9 +1,10 @@
 using System;
+using Core.Application.SharedKernel;
 using MediatR;
 
 namespace Core.Application.Customers.Commands.CreateCustomer
 {
-    public class CreateCustomerCommand : IRequest
+    public class CreateCustomerCommand : ICommand
     {
         public Guid Id { get; set; }
         public string FirstName { get; set; }

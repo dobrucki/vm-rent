@@ -1,9 +1,10 @@
 using System;
+using Core.Application.SharedKernel;
 using MediatR;
 
 namespace Core.Application.Rentals.Queries.GetRental
 {
-    public class GetRentalQuery : IRequest<RentalDto>
+    public class GetRentalQuery : IQuery<RentalDto>
     {
         public Guid RentalId { get; set; }
     }

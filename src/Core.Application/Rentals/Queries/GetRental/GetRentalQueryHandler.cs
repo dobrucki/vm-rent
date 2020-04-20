@@ -1,10 +1,11 @@
 using System.Threading;
 using System.Threading.Tasks;
+using Core.Application.SharedKernel;
 using MediatR;
 
 namespace Core.Application.Rentals.Queries.GetRental
 {
-    public class GetRentalQueryHandler : IRequestHandler<GetRentalQuery, RentalDto>
+    public class GetRentalQueryHandler : IQueryHandler<GetRentalQuery, RentalDto>
     {
         private readonly IRentalsRepository _rentals;
 

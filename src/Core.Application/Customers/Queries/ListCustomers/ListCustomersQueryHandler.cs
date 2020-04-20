@@ -2,12 +2,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Core.Application.SharedKernel;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
 namespace Core.Application.Customers.Queries.ListCustomers
 {
-    public class ListCustomersQueryHandler : IRequestHandler<ListCustomersQuery, IEnumerable<CustomerDto>>
+    public class ListCustomersQueryHandler : IQueryHandler<ListCustomersQuery, IEnumerable<CustomerDto>>
     {
         private readonly ILogger<ListCustomersQueryHandler> _logger;
         private readonly ICustomersRepository _customers;

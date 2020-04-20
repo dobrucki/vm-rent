@@ -2,11 +2,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Core.Application.SharedKernel;
 using MediatR;
 
 namespace Core.Application.VirtualMachines.Queries.ListVirtualMachines
 {
-    public class ListVirtualMachinesQueryHandler : IRequestHandler<ListVirtualMachinesQuery, IEnumerable<VirtualMachineDto>>
+    public class ListVirtualMachinesQueryHandler : IQueryHandler<ListVirtualMachinesQuery, IEnumerable<VirtualMachineDto>>
     {
         private readonly IVirtualMachinesRepository _virtualMachines;
 

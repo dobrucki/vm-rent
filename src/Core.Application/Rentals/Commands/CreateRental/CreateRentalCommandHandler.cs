@@ -3,7 +3,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
-using Core.Application.Customers.Queries.GetCustomer;
+using Core.Application.QueryModel.Customers.Queries;
 using Core.Application.SharedKernel;
 using Core.Application.SharedKernel.Exceptions;
 using Core.Application.VirtualMachines.Queries.GetVirtualMachine;
@@ -63,7 +63,7 @@ namespace Core.Application.Rentals.Commands.CreateRental
                 Id = request.Id,
                 Customer = new Customer
                 {
-                    Id = customer.Id,
+                    Id = Guid.Parse(customer.Id),
                     EmailAddress = customer.EmailAddress,
                     FirstName = customer.FirstName,
                     LastName = customer.LastName

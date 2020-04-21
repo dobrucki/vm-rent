@@ -19,8 +19,10 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Folder Include="CommandService" />
       <Folder Include="Customers\Commands" />
-      <Folder Include="Customers\Queries" />
+      <Folder Include="QueryModel\Rentals" />
+      <Folder Include="QueryModel\VirtualMachines" />
       <Folder Include="Rentals\Commands" />
       <Folder Include="Rentals\Queries" />
       <Folder Include="VirtualMachines\Commands" />

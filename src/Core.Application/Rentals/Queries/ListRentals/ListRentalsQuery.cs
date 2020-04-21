@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Core.Application.QueryModel;
 using Core.Application.SharedKernel;
 using MediatR;
 

@@ -1,5 +1,6 @@
 using AutoMapper;
 using Core.Application.Customers;
+using Core.Application.QueryModel.Customers;
 using Core.Application.Rentals;
 using Core.Application.SharedKernel;
 using Core.Application.VirtualMachines;
@@ -31,7 +32,7 @@ namespace Infrastructure.Persistence
             string connectionString)
         {
             services.AddSingleton<IMongoClient>(new MongoClient(connectionString));
-            services.AddTransient<IReadCustomersRepository, ReadCustomersRepository>();
+            services.AddTransient<ICustomersQueryRepository, ReadCustomersRepository>();
             services.AddMediatR(typeof(PersistenceExtensions));
             return services;
         }

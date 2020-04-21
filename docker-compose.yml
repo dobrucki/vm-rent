@@ -7,6 +7,7 @@ services:
       dockerfile: Dockerfile
     depends_on:
       - db
+      - rodb
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://*:5000
@@ -21,5 +22,13 @@ services:
       - POSTGRES_PASSWORD=vm_rent
     expose:
       - 5432
+  rodb:
+    image: mongo:latest
+    environment: 
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=rootpassword
+    expose: 
+      - 27017
+    
     
     

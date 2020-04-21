@@ -28,6 +28,7 @@ namespace UserInterface.RestApi
                 .AddNewtonsoftJson();
             
             services.AddApplicationDatabase(Configuration.GetConnectionString("PostgresContext"));
+            services.AddApplicationReadDatabase("mongodb://root:rootpassword@rodb:27017");
             
             services.AddApplicationServices();
             //DependencyInjection.RegisterApplication(_container);

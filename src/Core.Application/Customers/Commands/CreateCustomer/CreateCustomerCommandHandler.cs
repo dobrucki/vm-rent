@@ -1,6 +1,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Core.Application.SharedKernel;
+using Core.Application.SharedKernel.Events;
 using Core.Domain.Customers;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -11,12 +12,14 @@ namespace Core.Application.Customers.Commands.CreateCustomer
     {
         private readonly ILogger<CreateCustomerCommandHandler> _logger;
         private readonly ICustomersRepository _customers;
+        private readonly IMediator _mediator;
 
         public CreateCustomerCommandHandler(
-            ILogger<CreateCustomerCommandHandler> logger, ICustomersRepository customers)
+            ILogger<CreateCustomerCommandHandler> logger, ICustomersRepository customers, IMediator mediator)
         {
             _logger = logger;
             _customers = customers;
+            _mediator = mediator;
         }
 
         public async Task<Unit> Handle(CreateCustomerCommand request, CancellationToken cancellationToken)
@@ -29,6 +32,10 @@ namespace Core.Application.Customers.Commands.CreateCustomer
                 EmailAddress = request.EmailAddress
             };
             await _customers.InsertCustomerAsync(customer);
+            await _mediator.Publish(new CustomerCreatedEvent
+            {
+                Customer = customer
+            }, cancellationToken);
 
             _logger.LogInformation($"Created customer ({customer.Id}).");
             

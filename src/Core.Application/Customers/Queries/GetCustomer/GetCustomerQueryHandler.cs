@@ -8,9 +8,9 @@ namespace Core.Application.Customers.Queries.GetCustomer
 {
     public class GetCustomerQueryHandler : IQueryHandler<GetCustomerQuery, CustomerDto>
     {
-        private readonly ICustomersRepository _customers;
+        private readonly IReadCustomersRepository _customers;
 
-        public GetCustomerQueryHandler(ICustomersRepository customers)
+        public GetCustomerQueryHandler(IReadCustomersRepository customers)
         {
             _customers = customers;
         }
@@ -22,15 +22,7 @@ namespace Core.Application.Customers.Queries.GetCustomer
             {
                 throw new NotFoundException("customer", request.CustomerId);
             }
-
-            var customerDto = new CustomerDto
-            {
-                Id = customer.Id,
-                EmailAddress = customer.EmailAddress,
-                FirstName = customer.FirstName,
-                LastName = customer.LastName
-            };
-            return customerDto;
+            return customer;
         }
     }
 }

@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure.Persistence"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserInterface.RestApi", "src\UserInterface.RestApi\UserInterface.RestApi.csproj", "{A86C015C-A792-4352-85FE-0174F576B5E1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure.Persistence.Query", "src\Infrastructure.Persistence.Query\Infrastructure.Persistence.Query.csproj", "{985DFB01-2418-4C7A-9D75-AF79C71AB242}"
+EndProject
 Global
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{AEAA2AB7-B733-44E9-9866-C70F8D51A9FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -29,6 +31,10 @@ Global
 		{A86C015C-A792-4352-85FE-0174F576B5E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A86C015C-A792-4352-85FE-0174F576B5E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A86C015C-A792-4352-85FE-0174F576B5E1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{985DFB01-2418-4C7A-9D75-AF79C71AB242}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{985DFB01-2418-4C7A-9D75-AF79C71AB242}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{985DFB01-2418-4C7A-9D75-AF79C71AB242}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{985DFB01-2418-4C7A-9D75-AF79C71AB242}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

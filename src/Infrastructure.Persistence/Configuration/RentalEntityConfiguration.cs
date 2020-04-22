@@ -19,10 +19,12 @@ namespace Infrastructure.Persistence.Configuration
 
             builder.HasOne(x => x.Customer)
                 .WithMany(x => x.Rentals)
+                .HasForeignKey(x => x.CustomerId)
                 .HasConstraintName("customer_id_fkey");
 
             builder.HasOne(x => x.VirtualMachine)
                 .WithMany(x => x.Rentals)
+                .HasForeignKey(x => x.VirtualMachineId)
                 .OnDelete(DeleteBehavior.SetNull)
                 .HasConstraintName("virtual_machine_id_fkey");
         }

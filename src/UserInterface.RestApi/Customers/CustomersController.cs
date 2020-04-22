@@ -1,9 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Core.Application.Customers;
-using Core.Application.Customers.Commands.CreateCustomer;
-using Core.Application.Customers.Commands.EditCustomerDetails;
+using Core.Application.CommandModel.Customers.Commands;
+using Core.Application.QueryModel.Customers;
 using Core.Application.QueryModel.Customers.Queries;
 using Core.Application.SharedKernel;
 using MediatR;
@@ -29,7 +28,7 @@ namespace UserInterface.RestApi.Customers
         }
 
         [HttpPost(Name = "CreateCustomer")]
-        public async Task<ActionResult<CustomerDto>> PostAsync(
+        public async Task<ActionResult<CustomerQueryEntity>> PostAsync(
             [FromBody] CreateCustomerRequest request)
         {
             var command = new CreateCustomerCommand
@@ -54,7 +53,7 @@ namespace UserInterface.RestApi.Customers
         }
         
         [HttpGet(Name = "ListCustomers")]
-        public async Task<ActionResult<IEnumerable<CustomerDto>>> GetAsync([FromQuery] ListCustomersRequest request)
+        public async Task<ActionResult<IEnumerable<CustomerQueryEntity>>> GetAsync([FromQuery] ListCustomersRequest request)
         {
             var query = new ListCustomersQuery
             {
@@ -66,7 +65,7 @@ namespace UserInterface.RestApi.Customers
         }
 
         [HttpGet("{id}", Name = "GetCustomer")]
-        public async Task<ActionResult<CustomerDto>> GetAsync(
+        public async Task<ActionResult<CustomerQueryEntity>> GetAsync(
             [FromRoute] Guid id)
         {
             var query = new GetCustomerQuery
@@ -83,7 +82,7 @@ namespace UserInterface.RestApi.Customers
         {
             var command = new EditCustomerDetailsCommand
             {
-                CustomerId = id,
+                Id = id,
                 FirstName = request.FirstName,
                 LastName = request.LastName
             };

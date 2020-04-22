@@ -2,6 +2,7 @@ using Core.Application.SharedKernel;
 using Core.Application.SharedKernel.Exceptions;
 using Hellang.Middleware.ProblemDetails;
 using Infrastructure.Persistence;
+using Infrastructure.Persistence.Query;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;

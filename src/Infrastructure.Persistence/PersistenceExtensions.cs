@@ -1,13 +1,9 @@
 using AutoMapper;
-using Core.Application.Customers;
-using Core.Application.QueryModel.Customers;
-using Core.Application.Rentals;
-using Core.Application.SharedKernel;
-using Core.Application.VirtualMachines;
-using MediatR;
+using Core.Application.CommandModel.Customers;
+using Core.Application.CommandModel.Rentals;
+using Core.Application.CommandModel.VirtualMachines;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using MongoDB.Driver;
 
 namespace Infrastructure.Persistence
 {
@@ -20,21 +16,21 @@ namespace Infrastructure.Persistence
                 options.UseNpgsql(connectionString).UseSnakeCaseNamingConvention();
                 options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
             });
-            services.AddTransient<ICustomersRepository, CustomersRepository>();
-            services.AddTransient<IVirtualMachinesRepository, VirtualMachinesRepository>();
-            services.AddTransient<IRentalsRepository, RentalsRepository>();
+            services.AddTransient<ICustomerRepository, CustomerRepository>();
+            services.AddTransient<IVirtualMachineRepository, VirtualMachineRepository>();
+            services.AddTransient<IRentalRepository, RentalRepository>();
 
             services.AddAutoMapper(typeof(PersistenceExtensions));
             return services;
         }
 
-        public static IServiceCollection AddApplicationReadDatabase(this IServiceCollection services,
-            string connectionString)
-        {
-            services.AddSingleton<IMongoClient>(new MongoClient(connectionString));
-            services.AddTransient<ICustomersQueryRepository, ReadCustomersRepository>();
-            services.AddMediatR(typeof(PersistenceExtensions));
-            return services;
-        }
+        // public static IServiceCollection AddApplicationReadDatabase(this IServiceCollection services,
+        //     string connectionString)
+        // {
+        //     services.AddSingleton<IMongoClient>(new MongoClient(connectionString));
+        //     services.AddTransient<ICustomersQueryRepository, ReadCustomersRepository>();
+        //     services.AddMediatR(typeof(PersistenceExtensions));
+        //     return services;
+        // }
     }
 }

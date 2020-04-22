@@ -6,6 +6,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
       <PackageReference Include="FluentValidation" Version="8.6.2" />
       <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="8.6.2" />
       <PackageReference Include="MediatR" Version="8.0.1" />
@@ -19,14 +20,11 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="CommandService" />
-      <Folder Include="Customers\Commands" />
-      <Folder Include="QueryModel\Rentals" />
-      <Folder Include="QueryModel\VirtualMachines" />
-      <Folder Include="Rentals\Commands" />
-      <Folder Include="Rentals\Queries" />
-      <Folder Include="VirtualMachines\Commands" />
-      <Folder Include="VirtualMachines\Queries" />
+      <Folder Include="CommandModel\Customers\Validators" />
+      <Folder Include="CommandModel\Rentals\Events" />
+      <Folder Include="CommandModel\Rentals\Validators" />
+      <Folder Include="CommandModel\VirtualMachines\Events" />
+      <Folder Include="CommandModel\VirtualMachines\Validators" />
     </ItemGroup>
 
 </Project>

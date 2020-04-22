@@ -13,6 +13,11 @@ namespace Infrastructure.Persistence.Configuration
             builder.Property(x => x.Id).HasColumnType("uuid").HasColumnName("id");
             builder.HasKey(x => x.Id).HasName("customer_id_pkey");
 
+            builder
+                .HasMany(x => x.Rentals)
+                .WithOne(x => x.Customer)
+                .HasForeignKey(x => x.CustomerId);
+
             builder.Property(x => x.EmailAddress).HasColumnName("email_address");
 
             builder.Property(x => x.FirstName).HasColumnName("first_name");

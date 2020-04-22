@@ -9,4 +9,4 @@ namespace Core.Application.QueryModel.Customers
         Task<CustomerQueryEntity> GetCustomerByIdAsync(Guid customerId);
         Task<IList<CustomerQueryEntity>> ListCustomersAsync(int limit, int offset);
     }
-}    
+}            

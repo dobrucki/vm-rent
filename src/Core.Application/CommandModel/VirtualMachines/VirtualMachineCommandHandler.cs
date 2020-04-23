@@ -51,6 +51,10 @@ namespace Core.Application.CommandModel.VirtualMachines
                 Name = request.Name
             };
             await _virtualMachines.UpdateOneAsync(virtualMachine);
+            await _mediator.Publish(new VirtualMachineDetailsEditedEvent
+            {
+                VirtualMachine = virtualMachine
+            }, cancellationToken);
             return Unit.Value;
         }
     }

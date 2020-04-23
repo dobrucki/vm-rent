@@ -11,7 +11,8 @@ using MongoDB.Driver;
 namespace Infrastructure.Persistence.Query.VirtualMachines
 {
     public class VirtualMachineRepository : IVirtualMachinesQueryRepository,
-        IEventHandler<VirtualMachineCreatedEvent>
+        IEventHandler<VirtualMachineCreatedEvent>,
+        IEventHandler<VirtualMachineDetailsEditedEvent>
     {
         private readonly IMongoCollection<VirtualMachineEntity> _virtualMachines;
 
@@ -54,6 +55,17 @@ namespace Infrastructure.Persistence.Query.VirtualMachines
                 Name = notification.VirtualMachine.Name,
             };
             await _virtualMachines.InsertOneAsync(customerEntity, cancellationToken);
+        }
+
+        public async Task Handle(VirtualMachineDetailsEditedEvent notification, CancellationToken cancellationToken)
+        {
+            var filter = Builders<VirtualMachineEntity>.Filter
+                .Eq(x => x.Id, notification.VirtualMachine.Id.ToString());
+
+            var update = Builders<VirtualMachineEntity>.Update
+                .Set(x => x.Name, notification.VirtualMachine.Name);
+
+            await _virtualMachines.UpdateOneAsync(filter, update, cancellationToken: cancellationToken);
         }
     }
 }

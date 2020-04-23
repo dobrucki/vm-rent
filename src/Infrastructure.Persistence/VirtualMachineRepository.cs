@@ -76,7 +76,8 @@ namespace Infrastructure.Persistence
 
         public async Task UpdateOneAsync(VirtualMachine virtualMachine)
         {
-            _context.Attach(virtualMachine);
+            var virtualMachineEntity = _mapper.Map<VirtualMachineEntity>(virtualMachine);
+            _context.Attach(virtualMachineEntity);
             await _context.SaveChangesAsync();
         }
 

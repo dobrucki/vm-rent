@@ -46,6 +46,10 @@ namespace Core.Application.CommandModel.Customers
                 LastName = request.LastName
             };
             await _customers.UpdateOneAsync(customer);
+            await _mediator.Publish(new CustomerDetailsEditedEvent
+            {
+                Customer = customer
+            }, cancellationToken);
             return Unit.Value;
         }
     }

@@ -12,7 +12,8 @@ using MongoDB.Driver;
 namespace Infrastructure.Persistence.Query.Customers
 {
     public class CustomerRepository : ICustomersQueryRepository,
-        IEventHandler<CustomerCreatedEvent>
+        IEventHandler<CustomerCreatedEvent>,
+        IEventHandler<CustomerDetailsEditedEvent>
     {
         private readonly IMongoCollection<CustomerEntity> _customers;
         private readonly IMapper _mapper;
@@ -64,6 +65,18 @@ namespace Infrastructure.Persistence.Query.Customers
                 LastName = notification.Customer.LastName
             };
             await _customers.InsertOneAsync(customerEntity, cancellationToken);
+        }
+
+        public async Task Handle(CustomerDetailsEditedEvent notification, CancellationToken cancellationToken)
+        {
+            var filter = Builders<CustomerEntity>.Filter
+                .Eq(x => x.Id, notification.Customer.Id.ToString());
+
+            var update = Builders<CustomerEntity>.Update
+                .Set(x => x.FirstName, notification.Customer.FirstName)
+                .Set(x => x.LastName, notification.Customer.LastName);
+
+            await _customers.UpdateOneAsync(filter, update, cancellationToken: cancellationToken);
         }
     }
 }

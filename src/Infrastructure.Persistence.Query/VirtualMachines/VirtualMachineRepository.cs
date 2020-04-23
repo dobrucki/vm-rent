@@ -1,20 +1,59 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
+using Core.Application.CommandModel;
+using Core.Application.CommandModel.VirtualMachines.Events;
 using Core.Application.QueryModel.VirtualMachines;
+using MongoDB.Driver;
 
 namespace Infrastructure.Persistence.Query.VirtualMachines
 {
-    public class VirtualMachineRepository : IVirtualMachinesQueryRepository
+    public class VirtualMachineRepository : IVirtualMachinesQueryRepository,
+        IEventHandler<VirtualMachineCreatedEvent>
     {
-        public Task<VirtualMachineQueryEntity> GetVirtualMachineByIdAsync(Guid virtualMachineId)
+        private readonly IMongoCollection<VirtualMachineEntity> _virtualMachines;
+
+        public VirtualMachineRepository(IMongoClient client)
         {
-            throw new NotImplementedException();
+            var database = client.GetDatabase("vm_rent");
+            _virtualMachines = database.GetCollection<VirtualMachineEntity>("VirtualMachines");
+        }
+        public async Task<VirtualMachineQueryEntity> GetVirtualMachineByIdAsync(Guid virtualMachineId)
+        {
+            var virtualMachine = await _virtualMachines
+                .Find(x => x.Id.Equals(virtualMachineId.ToString()))
+                .SingleOrDefaultAsync();
+            return new VirtualMachineQueryEntity
+            {
+                Id = virtualMachine.Id,
+                Name = virtualMachine.Name
+            };    
         }
 
-        public Task<IList<VirtualMachineQueryEntity>> ListVirtualMachinesAsync(int limit, int offset)
+        public async Task<IList<VirtualMachineQueryEntity>> ListVirtualMachinesAsync(int limit, int offset)
         {
-            throw new NotImplementedException();
+            var virtualMachines = await _virtualMachines
+                .Find(_ => true)
+                .Skip(offset * limit)
+                .Limit(limit)
+                .ToListAsync();
+            return virtualMachines.Select(x => new VirtualMachineQueryEntity
+            {
+                Id = x.Id,
+                Name = x.Name
+            }).ToList();
+        }
+
+        public async Task Handle(VirtualMachineCreatedEvent notification, CancellationToken cancellationToken)
+        {
+            var customerEntity = new VirtualMachineEntity
+            {
+                Id = notification.VirtualMachine.Id.ToString(),
+                Name = notification.VirtualMachine.Name,
+            };
+            await _virtualMachines.InsertOneAsync(customerEntity, cancellationToken);
         }
     }
 }

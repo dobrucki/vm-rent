@@ -1,6 +1,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Core.Application.CommandModel.VirtualMachines.Commands;
+using Core.Application.CommandModel.VirtualMachines.Events;
 using Core.Domain.VirtualMachines;
 using MediatR;
 
@@ -12,10 +13,12 @@ namespace Core.Application.CommandModel.VirtualMachines
         ICommandHandler<EditVirtualMachineDetailsCommand>
     {
         private readonly IVirtualMachineRepository _virtualMachines;
+        private readonly IMediator _mediator;
 
-        public VirtualMachineCommandHandler(IVirtualMachineRepository virtualMachines)
+        public VirtualMachineCommandHandler(IVirtualMachineRepository virtualMachines, IMediator mediator)
         {
             _virtualMachines = virtualMachines;
+            _mediator = mediator;
         }
 
         public async Task<Unit> Handle(CreateVirtualMachineCommand request, CancellationToken cancellationToken)
@@ -26,6 +29,10 @@ namespace Core.Application.CommandModel.VirtualMachines
                 Name = request.Name
             };
             await _virtualMachines.InsertOneAsync(virtualMachine);
+            await _mediator.Publish(new VirtualMachineCreatedEvent
+            {
+                VirtualMachine = virtualMachine
+            }, cancellationToken);
             return Unit.Value;
         }
 

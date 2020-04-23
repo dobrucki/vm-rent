@@ -23,7 +23,6 @@
       <Folder Include="CommandModel\Customers\Validators" />
       <Folder Include="CommandModel\Rentals\Events" />
       <Folder Include="CommandModel\Rentals\Validators" />
-      <Folder Include="CommandModel\VirtualMachines\Events" />
       <Folder Include="CommandModel\VirtualMachines\Validators" />
     </ItemGroup>
 

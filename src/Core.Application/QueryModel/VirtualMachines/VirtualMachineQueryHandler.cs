@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Core.Application.QueryModel.VirtualMachines.Queries;
+using Core.Application.SharedKernel.Exceptions;
 
 namespace Core.Application.QueryModel.VirtualMachines
 {
@@ -9,16 +10,25 @@ namespace Core.Application.QueryModel.VirtualMachines
         IQueryHandler<GetVirtualMachineQuery, VirtualMachineQueryEntity>,
         IQueryHandler<ListVirtualMachinesQuery, IList<VirtualMachineQueryEntity>>
     {
-        public Task<VirtualMachineQueryEntity> Handle(
-            GetVirtualMachineQuery request, CancellationToken cancellationToken)
+        private readonly IVirtualMachinesQueryRepository _virtualMachines;
+
+        public VirtualMachineQueryHandler(IVirtualMachinesQueryRepository virtualMachines)
         {
-            throw new System.NotImplementedException();
+            _virtualMachines = virtualMachines;
         }
 
-        public Task<IList<VirtualMachineQueryEntity>> Handle(
+        public async Task<VirtualMachineQueryEntity> Handle(
+            GetVirtualMachineQuery request, CancellationToken cancellationToken)
+        {
+            var virtualMachine = await _virtualMachines.GetVirtualMachineByIdAsync(request.VirtualMachineId);
+            return virtualMachine ?? throw new NotFoundException("Customer", request.VirtualMachineId);
+        }
+
+        public async Task<IList<VirtualMachineQueryEntity>> Handle(
             ListVirtualMachinesQuery request, CancellationToken cancellationToken)
         {
-            throw new System.NotImplementedException();
+            return await _virtualMachines.ListVirtualMachinesAsync(request.Limit, request.Offset) 
+                   ?? new List<VirtualMachineQueryEntity>(0);
         }
     }
 }

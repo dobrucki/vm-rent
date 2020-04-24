@@ -6,6 +6,7 @@ using Core.Application.QueryModel.Rentals;
 using Core.Application.QueryModel.Rentals.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using UserInterface.RestApi.Customers.ListCustomerRentals;
 using UserInterface.RestApi.Rentals.CreateRental;
 using UserInterface.RestApi.Rentals.ListRentals;
 
@@ -23,7 +24,8 @@ namespace UserInterface.RestApi.Rentals
         }
 
         [HttpGet(Name = "ListRentals")]
-        public async Task<ActionResult<IEnumerable<RentalQueryEntity>>> GetAsync([FromQuery] ListRentalsRequest request)
+        public async Task<ActionResult<IEnumerable<RentalQueryEntity>>> GetAsync(
+            [FromQuery] ListRentalsRequest request)
         {
             var query = new ListRentalsQuery
             {
@@ -35,7 +37,8 @@ namespace UserInterface.RestApi.Rentals
         }
 
         [HttpGet("{id}", Name = "GetRental")]
-        public async Task<ActionResult<RentalQueryEntity>> GetAsync([FromRoute] Guid id)
+        public async Task<ActionResult<RentalQueryEntity>> GetAsync(
+            [FromRoute] Guid id)
         {
             var query = new GetRentalQuery
             {
@@ -48,7 +51,8 @@ namespace UserInterface.RestApi.Rentals
         
 
         [HttpPost(Name = "CreateRental")]
-        public async Task<ActionResult<RentalQueryEntity>> PostAsync([FromBody] CreateRentalRequest request)
+        public async Task<ActionResult<RentalQueryEntity>> PostAsync(
+            [FromBody] CreateRentalRequest request)
         {
             var command = new CreateRentalCommand
             {

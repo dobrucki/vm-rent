@@ -4,12 +4,15 @@ using System.Threading.Tasks;
 using Core.Application.CommandModel.Customers.Commands;
 using Core.Application.QueryModel.Customers;
 using Core.Application.QueryModel.Customers.Queries;
+using Core.Application.QueryModel.Rentals;
+using Core.Application.QueryModel.Rentals.Queries;
 using Core.Application.SharedKernel;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using UserInterface.RestApi.Customers.CreateCustomer;
 using UserInterface.RestApi.Customers.EditCustomerDetails;
+using UserInterface.RestApi.Customers.ListCustomerRentals;
 using UserInterface.RestApi.Customers.ListCustomers;
 using UserInterface.RestApi.SharedKernel;
 
@@ -59,6 +62,21 @@ namespace UserInterface.RestApi.Customers
             {
                 Limit = request.Limit,
                 Offset = request.Offset
+            };
+            var rentals = await _mediator.Send(query);
+            return Ok(rentals);
+        }
+        
+        [HttpGet("{customerId}/Rentals", Name = "ListCustomerRentals")]
+        public async Task<ActionResult<IEnumerable<RentalQueryEntity>>> GetAsync(
+            [FromQuery] ListCustomerRentalsRequest request,
+            [FromRoute] Guid customerId)
+        {
+            var query = new ListCustomerRentalsQuery
+            {
+                Limit = request.Limit,
+                Offset = request.Offset,
+                CustomerId = customerId
             };
             var rentals = await _mediator.Send(query);
             return Ok(rentals);

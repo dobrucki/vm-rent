@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Core.Application.CommandModel;
 using Core.Application.CommandModel.Rentals.Events;
 using Core.Application.QueryModel.Rentals;
+using Microsoft.Extensions.Logging;
 using MongoDB.Driver;
 
 namespace Infrastructure.Persistence.Query.Rentals
@@ -15,9 +16,11 @@ namespace Infrastructure.Persistence.Query.Rentals
         IEventHandler<RentalCreatedEvent>
     {
         private readonly IMongoCollection<RentalEntity> _rentals;
+        private readonly ILogger<RentalRepository> _logger;
 
-        public RentalRepository(IMongoClient client)
+        public RentalRepository(IMongoClient client, ILogger<RentalRepository> logger)
         {
+            _logger = logger;
             var database = client.GetDatabase("vm_rent");
             _rentals = database.GetCollection<RentalEntity>("Rentals");
         }
@@ -26,6 +29,25 @@ namespace Infrastructure.Persistence.Query.Rentals
         {
             var rentals = await _rentals
                 .Find(_ => true)
+                .Skip(offset * limit)
+                .Limit(limit)
+                .ToListAsync();
+            return rentals.Select(x => new RentalQueryEntity
+            {
+                Id = x.Id,
+                VirtualMachineId = x.VirtualMachineId,
+                CustomerId = x.CustomerId,
+                StartTime = x.StartTime,
+                EndTime = x.EndTime
+            }).ToList();
+        }
+
+        public async Task<List<RentalQueryEntity>> ListCustomerRentalsAsync(int limit, int offset, Guid customerId)
+        {
+            var filter = Builders<RentalEntity>.Filter
+                .Eq(x => x.CustomerId, customerId.ToString());
+            var rentals = await _rentals
+                .Find(filter)
                 .Skip(offset * limit)
                 .Limit(limit)
                 .ToListAsync();

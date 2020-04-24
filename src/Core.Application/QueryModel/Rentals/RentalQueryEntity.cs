@@ -4,10 +4,10 @@ namespace Core.Application.QueryModel.Rentals
 {
     public sealed class RentalQueryEntity
     {
-        public Guid Id { get; set; }
-        public Guid CustomerId { get; set; }
-        public Guid VirtualMachineId { get; set; }
-        public DateTime StartTime { get; set; }
-        public DateTime EndTime { get; set; }
+        public string Id { get; set; }
+        public string CustomerId { get; set; }
+        public string VirtualMachineId { get; set; }
+        public string StartTime { get; set; }
+        public string EndTime { get; set; }
     }
 }

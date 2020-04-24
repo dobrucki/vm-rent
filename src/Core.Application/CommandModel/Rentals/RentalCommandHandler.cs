@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Core.Application.CommandModel.Customers;
 using Core.Application.CommandModel.Rentals.Commands;
+using Core.Application.CommandModel.Rentals.Events;
 using Core.Application.CommandModel.VirtualMachines;
 using Core.Application.SharedKernel.Exceptions;
 using Core.Domain.Rentals;
@@ -16,13 +17,15 @@ namespace Core.Application.CommandModel.Rentals
         private readonly IRentalRepository _rentals;
         private readonly ICustomerRepository _customers;
         private readonly IVirtualMachineRepository _virtualMachines;
+        private readonly IMediator _mediator;
 
         public RentalCommandHandler(IRentalRepository rentals, ICustomerRepository customers, 
-            IVirtualMachineRepository virtualMachines)
+            IVirtualMachineRepository virtualMachines, IMediator mediator)
         {
             _rentals = rentals;
             _customers = customers;
             _virtualMachines = virtualMachines;
+            _mediator = mediator;
         }
 
         public async Task<Unit> Handle(CreateRentalCommand request, CancellationToken cancellationToken)
@@ -44,6 +47,10 @@ namespace Core.Application.CommandModel.Rentals
                 EndTime = request.EndTime
             };
             await _rentals.InsertOneAsync(rental);
+            await _mediator.Publish(new RentalCreatedEvent
+            {
+                Rental = rental
+            }, cancellationToken);
             return Unit.Value;
         }
     }

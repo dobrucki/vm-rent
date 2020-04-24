@@ -1,7 +1,9 @@
 using AutoMapper;
 using Core.Application.QueryModel.Customers;
+using Core.Application.QueryModel.Rentals;
 using Core.Application.QueryModel.VirtualMachines;
 using Infrastructure.Persistence.Query.Customers;
+using Infrastructure.Persistence.Query.Rentals;
 using Infrastructure.Persistence.Query.VirtualMachines;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
@@ -18,6 +20,7 @@ namespace Infrastructure.Persistence.Query
             services.AddSingleton<IMongoClient>(new MongoClient(connectionString));
             services.AddTransient<ICustomersQueryRepository, CustomerRepository>();
             services.AddTransient<IVirtualMachinesQueryRepository, VirtualMachineRepository>();
+            services.AddTransient<IRentalsQueryRepository, RentalRepository>();
             services.AddMediatR(typeof(DependencyInjection));
             return services;
         }

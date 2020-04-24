@@ -9,14 +9,21 @@ namespace Core.Application.QueryModel.Rentals
         IQueryHandler<GetRentalQuery, RentalQueryEntity>,
         IQueryHandler<ListRentalsQuery, IList<RentalQueryEntity>>
     {
-        public Task<RentalQueryEntity> Handle(GetRentalQuery request, CancellationToken cancellationToken)
+        private readonly IRentalsQueryRepository _rentals;
+
+        public RentalsQueryHandler(IRentalsQueryRepository rentals)
         {
-            throw new System.NotImplementedException();
+            _rentals = rentals;
         }
 
-        public Task<IList<RentalQueryEntity>> Handle(ListRentalsQuery request, CancellationToken cancellationToken)
+        public async Task<RentalQueryEntity> Handle(GetRentalQuery request, CancellationToken cancellationToken)
         {
-            throw new System.NotImplementedException();
+            return await _rentals.GetRentalByIdAsync(request.RentalId.ToString());
+        }
+
+        public async Task<IList<RentalQueryEntity>> Handle(ListRentalsQuery request, CancellationToken cancellationToken)
+        {
+            return await _rentals.ListRentalsAsync(request.Limit, request.Offset);
         }
     }
 }

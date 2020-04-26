@@ -61,6 +61,26 @@ namespace Infrastructure.Persistence.Query.Rentals
             }).ToList();
         }
 
+        public async Task<List<RentalQueryEntity>> ListVirtualMachineRentalsAsync(
+            int limit, int offset, Guid virtualMachineId)
+        {
+            var filter = Builders<RentalEntity>.Filter
+                .Eq(x => x.VirtualMachineId, virtualMachineId.ToString());
+            var rentals = await _rentals
+                .Find(filter)
+                .Skip(offset * limit)
+                .Limit(limit)
+                .ToListAsync();
+            return rentals.Select(x => new RentalQueryEntity
+            {
+                Id = x.Id,
+                VirtualMachineId = x.VirtualMachineId,
+                CustomerId = x.CustomerId,
+                StartTime = x.StartTime,
+                EndTime = x.EndTime
+            }).ToList();
+        }
+
         public async Task<RentalQueryEntity> GetRentalByIdAsync(string id)
         {
             var rental = await _rentals

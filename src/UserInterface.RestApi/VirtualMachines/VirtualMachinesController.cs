@@ -2,10 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Core.Application.CommandModel.VirtualMachines.Commands;
+using Core.Application.QueryModel.Rentals;
+using Core.Application.QueryModel.Rentals.Queries;
 using Core.Application.QueryModel.VirtualMachines;
 using Core.Application.QueryModel.VirtualMachines.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using UserInterface.RestApi.Customers.ListCustomerRentals;
 using UserInterface.RestApi.VirtualMachines.CreateVirtualMachine;
 using UserInterface.RestApi.VirtualMachines.EditVirtualMachineDetails;
 using UserInterface.RestApi.VirtualMachines.ListVirtualMachines;
@@ -79,6 +82,21 @@ namespace UserInterface.RestApi.VirtualMachines
             };
             await _mediator.Send(command);
             return Ok();
+        }
+        
+        [HttpGet("{virtualMachineId}/Rentals", Name = "ListVirtualMachineRentals")]
+        public async Task<ActionResult<IEnumerable<RentalQueryEntity>>> GetAsync(
+            [FromQuery] ListCustomerRentalsRequest request,
+            [FromRoute] Guid virtualMachineId)
+        {
+            var query = new ListVirtualMachineRentalsQuery
+            {
+                Limit = request.Limit,
+                Offset = request.Offset,
+                VirtualMachineId = virtualMachineId
+            };
+            var rentals = await _mediator.Send(query);
+            return Ok(rentals);
         }
     }
 }

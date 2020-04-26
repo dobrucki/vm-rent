@@ -2,13 +2,15 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Core.Application.QueryModel.Rentals.Queries;
+using Core.Application.QueryModel.VirtualMachines;
 
 namespace Core.Application.QueryModel.Rentals
 {
     internal sealed class RentalsQueryHandler : 
         IQueryHandler<GetRentalQuery, RentalQueryEntity>,
         IQueryHandler<ListRentalsQuery, IList<RentalQueryEntity>>,
-        IQueryHandler<ListCustomerRentalsQuery, IList<RentalQueryEntity>>
+        IQueryHandler<ListCustomerRentalsQuery, IList<RentalQueryEntity>>,
+        IQueryHandler<ListVirtualMachineRentalsQuery, IList<RentalQueryEntity>>
     {
         private readonly IRentalsQueryRepository _rentals;
 
@@ -33,6 +35,13 @@ namespace Core.Application.QueryModel.Rentals
             ListCustomerRentalsQuery request, CancellationToken cancellationToken)
         {
             return await _rentals.ListCustomerRentalsAsync(request.Limit, request.Offset, request.CustomerId);
+        }
+
+        public async Task<IList<RentalQueryEntity>> Handle(
+            ListVirtualMachineRentalsQuery request, CancellationToken cancellationToken)
+        {
+            return await _rentals.ListVirtualMachineRentalsAsync(
+                request.Limit, request.Offset, request.VirtualMachineId);
         }
     }
 }

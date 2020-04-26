@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Core.Application.CommandModel;
 using Core.Application.CommandModel.Rentals.Events;
+using Core.Application.CommandModel.VirtualMachines.Events;
 using Core.Application.QueryModel.Rentals;
 using Microsoft.Extensions.Logging;
 using MongoDB.Driver;
@@ -13,7 +14,8 @@ using MongoDB.Driver;
 namespace Infrastructure.Persistence.Query.Rentals
 {
     public class RentalRepository : IRentalsQueryRepository,
-        IEventHandler<RentalCreatedEvent>
+        IEventHandler<RentalCreatedEvent>,
+        IEventHandler<VirtualMachineDeletedEvent>
     {
         private readonly IMongoCollection<RentalEntity> _rentals;
         private readonly ILogger<RentalRepository> _logger;
@@ -108,6 +110,16 @@ namespace Infrastructure.Persistence.Query.Rentals
             };
             await _rentals.InsertOneAsync(rentalEntity, cancellationToken);
         }
-        
+
+        public async Task Handle(VirtualMachineDeletedEvent notification, CancellationToken cancellationToken)
+        {
+            var rentalFilter = Builders<RentalEntity>.Filter
+                .Eq(x => x.VirtualMachineId, notification.VirtualMachine.Id.ToString());
+
+            var rentalUpdate = Builders<RentalEntity>.Update
+                .Set(x => x.VirtualMachineId, string.Empty);
+
+            await _rentals.UpdateManyAsync(rentalFilter, rentalUpdate, cancellationToken: cancellationToken);
+        }
     }
 }

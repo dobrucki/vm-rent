@@ -6,13 +6,15 @@ using System.Threading.Tasks;
 using Core.Application.CommandModel;
 using Core.Application.CommandModel.VirtualMachines.Events;
 using Core.Application.QueryModel.VirtualMachines;
+using Infrastructure.Persistence.Query.Rentals;
 using MongoDB.Driver;
 
 namespace Infrastructure.Persistence.Query.VirtualMachines
 {
     public class VirtualMachineRepository : IVirtualMachinesQueryRepository,
         IEventHandler<VirtualMachineCreatedEvent>,
-        IEventHandler<VirtualMachineDetailsEditedEvent>
+        IEventHandler<VirtualMachineDetailsEditedEvent>,
+        IEventHandler<VirtualMachineDeletedEvent>
     {
         private readonly IMongoCollection<VirtualMachineEntity> _virtualMachines;
 
@@ -66,6 +68,13 @@ namespace Infrastructure.Persistence.Query.VirtualMachines
                 .Set(x => x.Name, notification.VirtualMachine.Name);
 
             await _virtualMachines.UpdateOneAsync(filter, update, cancellationToken: cancellationToken);
+        }
+
+        public async Task Handle(VirtualMachineDeletedEvent notification, CancellationToken cancellationToken)
+        {
+            var virtualMachineFilter = Builders<VirtualMachineEntity>.Filter
+                .Eq(x => x.Id, notification.VirtualMachine.Id.ToString());
+            await _virtualMachines.DeleteOneAsync(virtualMachineFilter, cancellationToken);
         }
     }
 }

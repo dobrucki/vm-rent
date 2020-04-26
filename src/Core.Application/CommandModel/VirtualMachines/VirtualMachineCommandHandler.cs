@@ -40,6 +40,10 @@ namespace Core.Application.CommandModel.VirtualMachines
         {
             var virtualMachine = await _virtualMachines.GetByIdAsync(request.Id);
             await _virtualMachines.DeleteOneAsync(virtualMachine);
+            await _mediator.Publish(new VirtualMachineDeletedEvent
+            {
+                VirtualMachine = virtualMachine
+            }, cancellationToken);
             return Unit.Value;
         }
 

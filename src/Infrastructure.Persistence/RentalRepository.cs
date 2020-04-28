@@ -36,5 +36,19 @@ namespace Infrastructure.Persistence
             _context.Entry(rentalEntity.Customer).State = EntityState.Unchanged;
             await _context.SaveChangesAsync();
         }
+
+        public async Task<Rental> GetOneByIdAsync(Guid id)
+        {
+            var rentalEntity = await _rentals
+                .SingleOrDefaultAsync(x => x.Id.Equals(id));
+            return _mapper.Map<Rental>(rentalEntity);
+        }
+
+        public async Task DeleteOneAsync(Rental rental)
+        {
+            var rentalEntity = _mapper.Map<RentalEntity>(rental);
+            _rentals.Remove(rentalEntity);
+            await _context.SaveChangesAsync();
+        }
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -12,7 +13,8 @@ using MediatR;
 namespace Core.Application.CommandModel.Rentals
 {
     public class RentalCommandHandler :
-        ICommandHandler<CreateRentalCommand>
+        ICommandHandler<CreateRentalCommand>,
+        ICommandHandler<DeleteUnfinishedRentalCommand>
     {
         private readonly IRentalRepository _rentals;
         private readonly ICustomerRepository _customers;
@@ -50,6 +52,20 @@ namespace Core.Application.CommandModel.Rentals
             await _mediator.Publish(new RentalCreatedEvent
             {
                 Rental = rental
+            }, cancellationToken);
+            return Unit.Value;
+        }
+
+        public async Task<Unit> Handle(DeleteUnfinishedRentalCommand request, CancellationToken cancellationToken)
+        {
+            var rental = await _rentals.GetOneByIdAsync(request.Id);
+            if (rental.EndTime < DateTime.UtcNow)
+                throw new InvalidCommandException($"Rental with id {rental.Id} " +
+                                                  $"can not be deleted because it is finished.");
+            await _rentals.DeleteOneAsync(rental);
+            await _mediator.Publish(new RentalDeletedEvent
+            {
+                RentalId = rental.Id
             }, cancellationToken);
             return Unit.Value;
         }

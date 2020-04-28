@@ -76,5 +76,19 @@ namespace UserInterface.RestApi.Rentals
                 new {id = rental.Id},
                 rental);
         }
+        
+        [HttpDelete("{id}", Name = "DeleteUnfinishedRental")]
+        public async Task<ActionResult<RentalQueryEntity>> DeleteAsync(
+            [FromRoute] Guid id)
+        {
+            var command = new DeleteUnfinishedRentalCommand
+            {
+                Id = id
+            };
+
+            await _mediator.Send(command);
+
+            return Ok();
+        }
     }
 }

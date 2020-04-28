@@ -15,7 +15,8 @@ namespace Infrastructure.Persistence.Query.Rentals
 {
     public class RentalRepository : IRentalsQueryRepository,
         IEventHandler<RentalCreatedEvent>,
-        IEventHandler<VirtualMachineDeletedEvent>
+        IEventHandler<VirtualMachineDeletedEvent>,
+        IEventHandler<RentalDeletedEvent>
     {
         private readonly IMongoCollection<RentalEntity> _rentals;
         private readonly ILogger<RentalRepository> _logger;
@@ -120,6 +121,13 @@ namespace Infrastructure.Persistence.Query.Rentals
                 .Set(x => x.VirtualMachineId, string.Empty);
 
             await _rentals.UpdateManyAsync(rentalFilter, rentalUpdate, cancellationToken: cancellationToken);
+        }
+
+        public async Task Handle(RentalDeletedEvent notification, CancellationToken cancellationToken)
+        {
+            var virtualMachineFilter = Builders<RentalEntity>.Filter
+                .Eq(x => x.Id, notification.RentalId.ToString());
+            await _rentals.DeleteOneAsync(virtualMachineFilter, cancellationToken);
         }
     }
 }

@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure.Persistence.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserInterface.SoapApi", "src\UserInterface.SoapApi\UserInterface.SoapApi.csproj", "{6AEF8DD9-6842-4E48-9E75-93F1B6A0DB8A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.Application.Test", "tests\Core.Application.Test\Core.Application.Test.csproj", "{23181C01-30B5-4517-9C8E-FB0CAB0F079A}"
+EndProject
 Global
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{AEAA2AB7-B733-44E9-9866-C70F8D51A9FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -41,6 +43,10 @@ Global
 		{6AEF8DD9-6842-4E48-9E75-93F1B6A0DB8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6AEF8DD9-6842-4E48-9E75-93F1B6A0DB8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6AEF8DD9-6842-4E48-9E75-93F1B6A0DB8A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{23181C01-30B5-4517-9C8E-FB0CAB0F079A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{23181C01-30B5-4517-9C8E-FB0CAB0F079A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{23181C01-30B5-4517-9C8E-FB0CAB0F079A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{23181C01-30B5-4517-9C8E-FB0CAB0F079A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

@@ -14,18 +14,15 @@ namespace Core.Application.CommandModel.Customers
     {
         private readonly ICustomerRepository _customers;
         private readonly IMediator _mediator;
-        private readonly ILogger<CustomerCommandHandler> _logger;
 
-        public CustomerCommandHandler(ICustomerRepository customers, IMediator mediator, ILogger<CustomerCommandHandler> logger)
+        public CustomerCommandHandler(ICustomerRepository customers, IMediator mediator)
         {
             _customers = customers;
             _mediator = mediator;
-            _logger = logger;
         }
 
         public async Task<Unit> Handle(CreateCustomerCommand request, CancellationToken cancellationToken)
         {
-            _logger.LogError("Created customer");
             var customer = new Customer
             {
                 Id = request.Id,

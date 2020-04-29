@@ -1,3 +1,4 @@
+using System.ServiceModel;
 using Core.Application.SharedKernel;
 using Core.Application.SharedKernel.Exceptions;
 using Hellang.Middleware.ProblemDetails;
@@ -9,7 +10,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
+using SoapCore;
 using UserInterface.RestApi.SharedKernel;
+using UserInterface.SoapApi.Services;
 
 namespace UserInterface.RestApi
 {
@@ -27,7 +30,7 @@ namespace UserInterface.RestApi
         {
             services.AddControllers()
                 .AddNewtonsoftJson();
-            
+
             services.AddApplicationDatabase(Configuration.GetConnectionString("PostgresContext"));
             services.AddApplicationReadDatabase("mongodb://root:rootpassword@rodb:27017");
             

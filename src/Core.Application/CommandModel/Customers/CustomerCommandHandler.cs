@@ -4,6 +4,7 @@ using Core.Application.CommandModel.Customers.Commands;
 using Core.Application.CommandModel.Customers.Events;
 using Core.Domain.Customers;
 using MediatR;
+using Microsoft.Extensions.Logging;
 
 namespace Core.Application.CommandModel.Customers
 {
@@ -13,15 +14,18 @@ namespace Core.Application.CommandModel.Customers
     {
         private readonly ICustomerRepository _customers;
         private readonly IMediator _mediator;
+        private readonly ILogger<CustomerCommandHandler> _logger;
 
-        public CustomerCommandHandler(ICustomerRepository customers, IMediator mediator)
+        public CustomerCommandHandler(ICustomerRepository customers, IMediator mediator, ILogger<CustomerCommandHandler> logger)
         {
             _customers = customers;
             _mediator = mediator;
+            _logger = logger;
         }
 
         public async Task<Unit> Handle(CreateCustomerCommand request, CancellationToken cancellationToken)
         {
+            _logger.LogError("Created customer");
             var customer = new Customer
             {
                 Id = request.Id,

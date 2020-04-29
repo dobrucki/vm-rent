@@ -33,7 +33,14 @@ namespace Infrastructure.Persistence
 
         public async Task InsertOneAsync(Customer customer)
         {
-            var customerEntity = _mapper.Map<CustomerEntity>(customer);
+            // var customerEntity = _mapper.Map<CustomerEntity>(customer);
+            var customerEntity = new CustomerEntity
+            {
+                Id = customer.Id,
+                FirstName = customer.FirstName,
+                LastName = customer.LastName,
+                EmailAddress = customer.EmailAddress
+            };
             await _customers.AddAsync(customerEntity);
             await _context.SaveChangesAsync();
         }

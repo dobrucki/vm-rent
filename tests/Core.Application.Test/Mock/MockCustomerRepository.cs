@@ -51,7 +51,12 @@ namespace Core.Application.Test.Mock
 
         public Task UpdateOneAsync(Customer customer)
         {
-            throw new NotImplementedException();
+            var customerEntity = _customers
+                .SingleOrDefault(x => x.Id == customer.Id);
+            if (customerEntity is null) throw new NotFoundException("Customer", customer.Id);
+            customerEntity.FirstName = customer.FirstName;
+            customerEntity.LastName = customer.LastName;
+            return Task.CompletedTask;
         }
 
         public Task<CustomerQueryEntity> GetCustomerByIdAsync(Guid customerId)
@@ -69,7 +74,14 @@ namespace Core.Application.Test.Mock
 
         public Task<IList<CustomerQueryEntity>> ListCustomersAsync(int limit, int offset)
         {
-            throw new NotImplementedException();
+            IList<CustomerQueryEntity> list = _customers.Select(x => new CustomerQueryEntity
+            {
+                Id = x.Id.ToString(),
+                FirstName = x.FirstName,
+                LastName = x.LastName,
+                EmailAddress = x.EmailAddress
+            }).ToList();
+            return Task.FromResult(list);
         }
     }
 }

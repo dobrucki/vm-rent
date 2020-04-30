@@ -9,8 +9,6 @@ using Core.Application.Test.Mock;
 using Core.Domain.Customers;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using MongoDB.Bson;
 using NUnit.Framework;
 
 namespace Core.Application.Test.Tests
@@ -39,18 +37,17 @@ namespace Core.Application.Test.Tests
         public void SetUp()
         {
         }
-        
+
         [Test]
-        public async Task CreateCustomerTest()
+        public async Task CreateCustomer_ValidCustomerProvided_CustomerCreated()
         {
             var customer = new Customer
             {
-                Id = Guid.Parse("5772c3c7-f2a0-468e-a054-6a75aba262e2"),
+                Id = Guid.NewGuid(),
                 EmailAddress = "mirek@mirek.pl",
                 FirstName = "Wiktor",
                 LastName = "Trzmiel"
             };
-            Console.WriteLine($"{customer.Id}");
             await _mediator.Send(new CreateCustomerCommand
             {
                 Id = customer.Id,
@@ -60,12 +57,43 @@ namespace Core.Application.Test.Tests
             });
             var customerEntity = await _mediator.Send(new GetCustomerQuery
             {
-                CustomerId = customer.Id
+                CustomerId = customer.Id    
             });
             Assert.AreEqual(customer.Id.ToString(), customerEntity.Id.ToString());
             Assert.AreEqual(customer.EmailAddress, customerEntity.EmailAddress);
             Assert.AreEqual(customer.FirstName, customerEntity.FirstName);
             Assert.AreEqual(customer.LastName, customerEntity.LastName);
+        }
+
+        [Test]
+        public async Task EditCustomerDetails_DifferentDetails_FirstNameAndLastNameChanged()
+        {
+            var customer = new Customer
+            {
+                Id = Guid.NewGuid(),    
+                EmailAddress = "mirek@mirek.pl",
+                FirstName = "Wiktor",    
+                LastName = "Trzmiel"
+            };
+            await _mediator.Send(new CreateCustomerCommand
+            {
+                Id = customer.Id,
+                EmailAddress = customer.EmailAddress,
+                FirstName = customer.FirstName,
+                LastName = customer.LastName
+            });
+            await _mediator.Send(new EditCustomerDetailsCommand
+            {
+                Id = customer.Id,
+                FirstName = "Kasia",
+                LastName = "Kudra"
+            });
+            var customerEntity = await _mediator.Send(new GetCustomerQuery
+            {
+                CustomerId = customer.Id
+            });
+            Assert.AreEqual("Kasia", customerEntity.FirstName);
+            Assert.AreEqual("Kudra", customerEntity.LastName);
         }
     }
 }

@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+        <RootNamespace>Infrastructure.Persistence.Query</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="MongoDB.Bson" Version="2.10.3" />
+      <PackageReference Include="MongoDB.Driver" Version="2.10.3" />
+      <PackageReference Include="MongoDB.Driver.Core" Version="2.10.3" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\RentService.Core.Application\RentService.Core.Application.csproj" />
+    </ItemGroup>
+
+</Project>

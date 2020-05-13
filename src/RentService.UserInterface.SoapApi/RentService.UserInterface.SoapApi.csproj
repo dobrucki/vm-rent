@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+        <RootNamespace>UserInterface.SoapApi</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="SoapCore" Version="1.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\RentService.Core.Application\RentService.Core.Application.csproj" />
+      <ProjectReference Include="..\RentService.Infrastructure.Persistence.Query\RentService.Infrastructure.Persistence.Query.csproj" />
+      <ProjectReference Include="..\RentService.Infrastructure.Persistence\RentService.Infrastructure.Persistence.csproj" />
+    </ItemGroup>
+
+
+</Project>

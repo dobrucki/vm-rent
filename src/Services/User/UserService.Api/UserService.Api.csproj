@@ -5,7 +5,16 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <Folder Include="Application\Queries" />
       <Folder Include="Controllers" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\UserService.Domain\UserService.Domain.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Konscious.Security.Cryptography.Argon2" Version="1.2.1" />
     </ItemGroup>
 
 

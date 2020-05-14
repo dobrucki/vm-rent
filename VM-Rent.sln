@@ -17,6 +17,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RentService.UserInterface.S
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RentService.Core.Application.Test", "tests\RentService.Core.Application.Test\RentService.Core.Application.Test.csproj", "{23181C01-30B5-4517-9C8E-FB0CAB0F079A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserService.Core.Domain", "UserService.Core.Domain\UserService.Core.Domain.csproj", "{345A6F7D-6B0A-49B8-B1F1-DCD1E9F1F151}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserService.Core.Application", "UserService.Core.Application\UserService.Core.Application.csproj", "{ED409C0A-E9FD-42FC-A512-7826BCFFCDB8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserService.Infrastructure.Persistence", "UserService.Infrastructure.Persistence\UserService.Infrastructure.Persistence.csproj", "{2E2666F0-B2EA-46F9-88C8-AAE6C08065F7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserService.Infrastructure.Persistence.Query", "UserService.Infrastructure.Persistence.Query\UserService.Infrastructure.Persistence.Query.csproj", "{599F65C3-7245-435D-B8E9-70CE79F37702}"
+EndProject
 Global
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{AEAA2AB7-B733-44E9-9866-C70F8D51A9FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -47,6 +55,22 @@ Global
 		{23181C01-30B5-4517-9C8E-FB0CAB0F079A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{23181C01-30B5-4517-9C8E-FB0CAB0F079A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{23181C01-30B5-4517-9C8E-FB0CAB0F079A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{345A6F7D-6B0A-49B8-B1F1-DCD1E9F1F151}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{345A6F7D-6B0A-49B8-B1F1-DCD1E9F1F151}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{345A6F7D-6B0A-49B8-B1F1-DCD1E9F1F151}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{345A6F7D-6B0A-49B8-B1F1-DCD1E9F1F151}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED409C0A-E9FD-42FC-A512-7826BCFFCDB8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED409C0A-E9FD-42FC-A512-7826BCFFCDB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED409C0A-E9FD-42FC-A512-7826BCFFCDB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED409C0A-E9FD-42FC-A512-7826BCFFCDB8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E2666F0-B2EA-46F9-88C8-AAE6C08065F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E2666F0-B2EA-46F9-88C8-AAE6C08065F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E2666F0-B2EA-46F9-88C8-AAE6C08065F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E2666F0-B2EA-46F9-88C8-AAE6C08065F7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{599F65C3-7245-435D-B8E9-70CE79F37702}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{599F65C3-7245-435D-B8E9-70CE79F37702}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{599F65C3-7245-435D-B8E9-70CE79F37702}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{599F65C3-7245-435D-B8E9-70CE79F37702}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

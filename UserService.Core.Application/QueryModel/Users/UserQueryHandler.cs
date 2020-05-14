@@ -1,12 +1,14 @@
 using System.Threading;
 using System.Threading.Tasks;
 using UserService.Core.Application.QueryModel.Users.Queries;
+using UserService.Core.Application.SharedKernel;
 using UserService.Core.Application.SharedKernel.Exceptions;
 
 namespace UserService.Core.Application.QueryModel.Users
 {
     internal sealed class UserQueryHandler : 
-        IQueryHandler<GetUserQuery, UserQueryEntity>
+        IQueryHandler<GetUserQuery, UserQueryEntity>,
+        IQueryHandler<CheckUserCredentialsQuery, bool>
     {
         private readonly IUsersQueryRepository _users;
 
@@ -25,6 +27,14 @@ namespace UserService.Core.Application.QueryModel.Users
                 throw new NotFoundException("User", request.CustomerId);
             }
             return customer;
+        }
+
+        public async Task<bool> Handle(
+            CheckUserCredentialsQuery request, CancellationToken cancellationToken)
+        {
+            var user = await _users.GetUserByEmail(request.Email);
+            var hash = Hashing.HashPassword(request.Password);
+            return hash.Equals(user.PasswordHash);
         }
 
     }

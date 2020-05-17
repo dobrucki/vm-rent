@@ -1,18 +1,25 @@
 using System;
+using System.Collections.Generic;
 using UserService.Domain.SeedWork;
 
 namespace UserService.Domain.Models.UserAggregate
 {
-    public class UserRole : Entity
+    public class UserRole : ValueObject
     {
-        public string RoleName { get; private set; }
-        
-        public Guid RoleId { get; private set; }
-        
-        public UserRole(Guid id, Guid roleId, string roleName) : base(id)
+        public string RoleName { get; }
+
+        private UserRole(string roleName)
         {
-            RoleId = roleId;
             RoleName = roleName;
         }
+
+        protected override IEnumerable<object> GetAtomicValues()
+        {
+            yield return RoleName;
+        }
+        
+        public static UserRole Client => new UserRole("Client");
+        public static UserRole Manager => new UserRole("Manager");
+        public static UserRole Administrator => new UserRole("Administrator");
     }
 }

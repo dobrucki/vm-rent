@@ -11,6 +11,8 @@ namespace UserService.Domain.Models.UserAggregate
         public string LastName { get; }
         public string EmailAddress { get; }
         public string Password { get; private set; }
+        
+        public bool IsActive { get; private set; }
 
         private List<UserRole> _roles;
         public IEnumerable<UserRole> Roles => _roles.AsReadOnly();
@@ -18,12 +20,13 @@ namespace UserService.Domain.Models.UserAggregate
         
         public User(Guid id, string firstName, string lastName, string emailAddress, string password) : base(id)
         {
-            _roles = new List<UserRole>();
+            _roles = new List<UserRole> { UserRole.Client };
             FirstName = firstName;
             LastName = lastName;
-            EmailAddress = emailAddress;
+            EmailAddress = emailAddress;    
             Password = password;
-            
+            IsActive = false;
+                    
             var @event = new UserCreatedDomainEvent(this);
             AddDomainEvent(@event);
         }    
@@ -50,6 +53,16 @@ namespace UserService.Domain.Models.UserAggregate
             
             var @event = new UserPasswordUpdated(this, password);
             AddDomainEvent(@event);
+        }
+
+        public void ActivateUser()
+        {
+            IsActive = true;
+        }
+
+        public void DeactivateUser()
+        {
+            IsActive = false;
         }
 
     }

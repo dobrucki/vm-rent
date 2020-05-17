@@ -1,9 +1,9 @@
 using System;
-using Konscious.Security.Cryptography;
 using System.Security.Cryptography;
 using System.Text;
+using Konscious.Security.Cryptography;
 
-namespace UserService.Api.Application.Helpers
+namespace UserService.Application.Helpers
 {
     public static class Hashing
     {

@@ -1,6 +1,6 @@
 using System;
 
-namespace UserService.Api.Application.Commands
+namespace UserService.Application.Commands
 {
     public class RegisterUserCommand : ICommand
     {

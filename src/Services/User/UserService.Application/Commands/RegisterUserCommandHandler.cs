@@ -2,10 +2,10 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using UserService.Api.Application.Helpers;
+using UserService.Application.Helpers;
 using UserService.Domain.Models.UserAggregate;
 
-namespace UserService.Api.Application.Commands
+namespace UserService.Application.Commands
 {
     public class RegisterUserCommandHandler : ICommandHandler<RegisterUserCommand>
     {

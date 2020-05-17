@@ -1,8 +1,6 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 
-namespace UserService.Api.Application.Queries
+namespace UserService.Application.Queries
 {
     public class OffsetPagination
     {

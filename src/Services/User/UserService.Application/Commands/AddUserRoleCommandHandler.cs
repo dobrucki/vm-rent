@@ -21,13 +21,13 @@ namespace UserService.Application.Commands
             switch (request.RoleName)
             {
                 case "Administrator":
-                    user.AddRole(UserRole.Administrator);
+                    user.AddRole(Role.Administrator);
                     break;
                 case "Manager":
-                    user.AddRole(UserRole.Manager);
+                    user.AddRole(Role.Manager);
                     break;
                 case "Client":
-                    user.AddRole(UserRole.Client);
+                    user.AddRole(Role.Client);
                     break;
                 default:
                     throw new Exception();

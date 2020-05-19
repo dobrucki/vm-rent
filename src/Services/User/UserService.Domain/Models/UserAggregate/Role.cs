@@ -4,11 +4,11 @@ using UserService.Domain.SeedWork;
 
 namespace UserService.Domain.Models.UserAggregate
 {
-    public class UserRole : ValueObject
+    public class Role : ValueObject
     {
         public string RoleName { get; }
 
-        private UserRole(string roleName)
+        private Role(string roleName)
         {
             RoleName = roleName;
         }
@@ -18,8 +18,8 @@ namespace UserService.Domain.Models.UserAggregate
             yield return RoleName;
         }
         
-        public static UserRole Client => new UserRole("Client");
-        public static UserRole Manager => new UserRole("Manager");
-        public static UserRole Administrator => new UserRole("Administrator");
+        public static Role Client => new Role("Client");
+        public static Role Manager => new Role("Manager");
+        public static Role Administrator => new Role("Administrator");
     }
 }

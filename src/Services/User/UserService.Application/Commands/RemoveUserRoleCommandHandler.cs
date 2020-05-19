@@ -21,13 +21,13 @@ namespace UserService.Application.Commands
             switch (request.RoleName)
             {
                 case "Administrator":
-                    user.RemoveRole(UserRole.Administrator);
+                    user.RemoveRole(Role.Administrator);
                     break;
                 case "Manager":
-                    user.RemoveRole(UserRole.Manager);
+                    user.RemoveRole(Role.Manager);
                     break;
                 case "Client":
-                    user.RemoveRole(UserRole.Client);
+                    user.RemoveRole(Role.Client);
                     break;
                 default:
                     throw new Exception();

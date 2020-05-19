@@ -2,14 +2,20 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using UserService.Application.Commands;
+using UserService.Domain.Models.UserAggregate;
+using UserService.Infrastructure;
+using UserService.Infrastructure.Repositories;
 
 namespace UserService.Api
 {
@@ -26,6 +32,11 @@ namespace UserService.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddTransient(typeof(IUserRepository), typeof(UserRepository));
+            services.AddMediatR(typeof(ActivateUserCommandHandler).Assembly);
+            
+            services.AddDbContext<UserServiceContext>(options =>
+                options.UseNpgsql(Configuration.GetConnectionString("UserServiceContext")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -40,7 +51,7 @@ namespace UserService.Api
 
             app.UseRouting();
 
-            app.UseAuthorization();
+            // app.UseAuthorization();
 
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }

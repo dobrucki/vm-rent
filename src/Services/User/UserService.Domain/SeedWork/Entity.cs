@@ -30,7 +30,7 @@ namespace UserService.Domain.SeedWork
             _domainEvents.Remove(@event);
         }
 
-        public void ClearDomainEvent()
+        public void ClearDomainEvents()
         {
             _domainEvents.Clear();
         }

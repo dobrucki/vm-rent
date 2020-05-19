@@ -16,7 +16,8 @@ namespace UserService.Application.Helpers
             {
                 Salt = salt,
                 Iterations = 4, 
-                MemorySize = 8192
+                MemorySize = 8192,
+                DegreeOfParallelism = 2
             };
             var hash = argon2Id.GetBytes(128);
             return Convert.ToBase64String(hash);

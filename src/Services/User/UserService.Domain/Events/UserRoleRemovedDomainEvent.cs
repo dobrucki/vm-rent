@@ -6,12 +6,12 @@ namespace UserService.Domain.Events
     public class UserRoleRemovedDomainEvent : IDomainEvent
     {
         public User User { get; }
-        public UserRole UserRole { get; }
+        public Role Role { get; }
         
-        public UserRoleRemovedDomainEvent(User user, UserRole userRole)
+        public UserRoleRemovedDomainEvent(User user, Role role)
         {
             User = user;
-            UserRole = userRole;
+            Role = role;
         }
     }
 }

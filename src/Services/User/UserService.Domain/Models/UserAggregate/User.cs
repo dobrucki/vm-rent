@@ -14,13 +14,13 @@ namespace UserService.Domain.Models.UserAggregate
         
         public bool IsActive { get; private set; }
 
-        private List<UserRole> _roles;
-        public IEnumerable<UserRole> Roles => _roles.AsReadOnly();
+        private List<Role> _roles;
+        public IEnumerable<Role> Roles => _roles.AsReadOnly();
         
         
         public User(Guid id, string firstName, string lastName, string emailAddress, string password) : base(id)
         {
-            _roles = new List<UserRole> { UserRole.Client };
+            _roles = new List<Role> { Role.Client };
             FirstName = firstName;
             LastName = lastName;
             EmailAddress = emailAddress;    
@@ -31,19 +31,19 @@ namespace UserService.Domain.Models.UserAggregate
             AddDomainEvent(@event);
         }    
 
-        public void AddRole(UserRole userRole)
+        public void AddRole(Role role)
         {
-            _roles.Add(userRole);
+            _roles.Add(role);
             
-            var @event = new UserRoleAddedDomainEvent(this, userRole);
+            var @event = new UserRoleAddedDomainEvent(this, role);
             AddDomainEvent(@event);
         }
 
-        public void RemoveRole(UserRole userRole)
+        public void RemoveRole(Role role)
         {
-            _roles.Remove(userRole);
+            _roles.Remove(role);
             
-            var @event = new UserRoleRemovedDomainEvent(this, userRole);
+            var @event = new UserRoleRemovedDomainEvent(this, role);
             AddDomainEvent(@event);
         }
 

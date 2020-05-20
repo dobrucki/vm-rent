@@ -29,7 +29,7 @@ namespace UserService.Api.Controllers
         public async Task<ActionResult> PostAsync()
         {
             var command = new RegisterUserCommand(
-                Guid.NewGuid(), "Test", "Test",
+                Guid.NewGuid(), "test", "Test", "Test",
                 "test@example.com", "test");
             await _mediator.Send(command);
             return Ok();

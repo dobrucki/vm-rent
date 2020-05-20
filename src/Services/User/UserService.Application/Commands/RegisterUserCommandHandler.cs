@@ -19,7 +19,7 @@ namespace UserService.Application.Commands
         public async Task<Unit> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
         {
             var passwordHash = Hashing.HashPassword(request.Password);
-            var user = new User(request.Id, request.FirstName, request.LastName, request.EmailAddress, passwordHash);
+            var user = new User(request.Id, request.Login, request.FirstName, request.LastName, request.EmailAddress, passwordHash);
             await _userRepository.InsertAsync(user);
             var result = await _userRepository.UnitOfWork.SaveEntitiesAsync(cancellationToken);
             if (!result) throw new Exception();

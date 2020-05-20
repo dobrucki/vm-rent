@@ -16,11 +16,11 @@ namespace UserService.Application.Queries
             _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
         }
 
-        public async Task<User> AuthenticateUserQuery(string emailAddress, string password)
+        public async Task<User> AuthenticateUserQuery(string login, string password)
         {
             var passwordHash = Hashing.HashPassword(password);
             var user = (await _userRepository
-                .GetUsersWhereAsync(x => emailAddress == x.EmailAddress && passwordHash == x.Password))
+                .GetUsersWhereAsync(x => login == x.Login && passwordHash == x.Password))
                 .FirstOrDefault() ?? throw new Exception();
             return user;
         }

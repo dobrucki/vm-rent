@@ -5,7 +5,12 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="Controllers" />
+      <ProjectReference Include="..\RentingService.Application\RentingService.Application.csproj" />
+      <ProjectReference Include="..\RentingService.Infrastructure\RentingService.Infrastructure.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="8.0.0" />
     </ItemGroup>
 
 

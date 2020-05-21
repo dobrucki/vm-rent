@@ -2,14 +2,20 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using RentingService.Application.Commands;
+using RentingService.Domain.Models.RentalAggregate;
+using RentingService.Infrastructure;
+using RentingService.Infrastructure.Repositories;
 
 namespace RentingService.Api
 {
@@ -26,6 +32,11 @@ namespace RentingService.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddTransient(typeof(IRentalRepository), typeof(RentalRepository));
+            services.AddMediatR(typeof(CreateRentalCommandHandler).Assembly);
+            
+            services.AddDbContext<RentingServiceContext>(options =>
+                options.UseNpgsql(Configuration.GetConnectionString("RentingServiceContext")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

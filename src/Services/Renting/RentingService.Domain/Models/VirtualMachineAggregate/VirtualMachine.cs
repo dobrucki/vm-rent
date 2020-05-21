@@ -5,7 +5,7 @@ namespace RentingService.Domain.Models.VirtualMachineAggregate
 {
     public class VirtualMachine : Entity, IAggregateRoot
     {
-        public string Name { get; }
+        public string Name { get; set; }
         
         public VirtualMachine(Guid id, string name) : base(id)
         {

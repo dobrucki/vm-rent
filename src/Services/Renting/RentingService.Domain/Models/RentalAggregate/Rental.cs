@@ -5,16 +5,22 @@ namespace RentingService.Domain.Models.RentalAggregate
 {
     public class Rental : Entity, IAggregateRoot
     {
-        public Customer Customer { get; }
-        public Guid VirtualMachineId { get; }
-        public RentalStatus RentalStatus { get; }
+        public Customer Customer { get; set; }
+        public Guid VirtualMachineId { get; set; }
+        public DateTime RentalTime { get; set; }
+        public DateTime? ReturnTime { get; set; }
+
+        protected Rental(Guid id) : base(id)
+        {
+            
+        }
         
-        public Rental(Guid id, Guid customerId, string firstName, string lastName, string emailAddress, Guid virtualMachineId) : base(id)
+        public Rental(Guid id, Customer customer, Guid virtualMachineId) : base(id)
         {
             VirtualMachineId = virtualMachineId;
-            var customer = new Customer(customerId, firstName, lastName, emailAddress);
             Customer = customer;
-            RentalStatus = RentalStatus.Started;
-        }
-    }
+            RentalTime = DateTime.UtcNow;
+            ReturnTime = null;
+        }    
+    }    
 }    

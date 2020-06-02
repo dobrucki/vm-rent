@@ -21,10 +21,9 @@ namespace RentingService.Application.Queries
             return rental;
         }
 
-        public async Task<IEnumerable<Rental>> GetRentalsQuery(OffsetPagination pagination)
+        public async Task<IEnumerable<Rental>> GetRentalsQuery()
         {
-            var rentals = await _userRepository.GetRentalsWhereAsync(x => true);
-            return rentals.Paginate(pagination);
+            return await _userRepository.GetRentalsAsync();
         }
         
     }    

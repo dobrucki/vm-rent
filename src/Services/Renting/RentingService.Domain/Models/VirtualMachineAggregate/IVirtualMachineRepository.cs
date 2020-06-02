@@ -5,5 +5,6 @@ namespace RentingService.Domain.Models.VirtualMachineAggregate
 {
     public interface IVirtualMachineRepository : IRepository<VirtualMachine>
     {
+        Task InsertVirtualMachineAsync(VirtualMachine virtualMachine);
     }
 }

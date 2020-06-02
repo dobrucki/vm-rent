@@ -19,7 +19,8 @@ namespace RentingService.Application.Commands
         public async Task<Unit> Handle(CreateVirtualMachineCommand request, CancellationToken cancellationToken)
         {
             var virtualMachine = new VirtualMachine(request.Id, request.Name);
-            await _virtualMachineRepository.UnitOfWork.SaveEntitiesAsync(cancellationToken);
+            await _virtualMachineRepository.InsertVirtualMachineAsync(virtualMachine);
+            await _virtualMachineRepository.UnitOfWork.CommitAsync(cancellationToken);
             return Unit.Value;
         }
     }

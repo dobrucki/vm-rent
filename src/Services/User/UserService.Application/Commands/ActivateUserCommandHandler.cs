@@ -19,8 +19,7 @@ namespace UserService.Application.Commands
         {
             var user = await _userRepository.GetUserByIdAsync(request.Id);
             user.ActivateUser();
-            var result = await _userRepository.UnitOfWork.SaveEntitiesAsync(cancellationToken);
-            if (!result) throw new Exception();
+            await _userRepository.UnitOfWork.CommitAsync(cancellationToken);
             return Unit.Value;
         }
     }

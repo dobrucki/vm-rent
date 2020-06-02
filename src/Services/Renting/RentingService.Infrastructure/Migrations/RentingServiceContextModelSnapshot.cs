@@ -19,7 +19,7 @@ namespace RentingService.Infrastructure.Migrations
                 .HasAnnotation("ProductVersion", "3.1.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
-            modelBuilder.Entity("RentingService.Domain.Models.RentalAggregate.Customer", b =>
+            modelBuilder.Entity("RentingService.Infrastructure.Entities.CustomerEntity", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -39,7 +39,7 @@ namespace RentingService.Infrastructure.Migrations
                     b.ToTable("Customers");
                 });
 
-            modelBuilder.Entity("RentingService.Domain.Models.RentalAggregate.Rental", b =>
+            modelBuilder.Entity("RentingService.Infrastructure.Entities.RentalEntity", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -51,7 +51,7 @@ namespace RentingService.Infrastructure.Migrations
                     b.Property<DateTime>("RentalTime")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<DateTime?>("ReturnTime")
+                    b.Property<DateTime>("ReturnTime")
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<Guid>("VirtualMachineId")
@@ -59,12 +59,10 @@ namespace RentingService.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CustomerId");
-
                     b.ToTable("Rentals");
                 });
 
-            modelBuilder.Entity("RentingService.Domain.Models.VirtualMachineAggregate.VirtualMachine", b =>
+            modelBuilder.Entity("RentingService.Infrastructure.Entities.VirtualMachineEntity", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -76,15 +74,6 @@ namespace RentingService.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("VirtualMachines");
-                });
-
-            modelBuilder.Entity("RentingService.Domain.Models.RentalAggregate.Rental", b =>
-                {
-                    b.HasOne("RentingService.Domain.Models.RentalAggregate.Customer", "Customer")
-                        .WithMany()
-                        .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

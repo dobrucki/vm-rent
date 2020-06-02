@@ -1,4 +1,5 @@
 using System;
+using RentingService.Domain.Models.CustomerAggregate;
 using RentingService.Domain.SeedWork;
 
 namespace RentingService.Domain.Models.RentalAggregate

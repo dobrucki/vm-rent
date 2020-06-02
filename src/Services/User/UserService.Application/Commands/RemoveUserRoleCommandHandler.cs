@@ -33,8 +33,7 @@ namespace UserService.Application.Commands
                     throw new Exception();
             }
 
-            var result = await _userRepository.UnitOfWork.SaveEntitiesAsync(cancellationToken);
-            if (!result) throw new Exception();
+            await _userRepository.UnitOfWork.CommitAsync(cancellationToken);
             return Unit.Value;
         }
     }

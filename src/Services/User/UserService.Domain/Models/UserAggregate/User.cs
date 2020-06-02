@@ -19,7 +19,8 @@ namespace UserService.Domain.Models.UserAggregate
         public IEnumerable<Role> Roles => _roles.AsReadOnly();
         
         
-        public User(Guid id, string login, string firstName, string lastName, string emailAddress, string password) : base(id)
+        public User(Guid id, string login, string firstName, string lastName, string emailAddress, string password) 
+            : base(id)
         {
             _roles = new List<Role> { Role.Client };
             FirstName = firstName;
@@ -29,7 +30,7 @@ namespace UserService.Domain.Models.UserAggregate
             Login = login;
             IsActive = false;    
                     
-            var @event = new UserCreatedDomainEvent(this);
+            var @event = new UserCreatedDomainEvent(id, firstName, lastName, emailAddress);
             AddDomainEvent(@event);
         }    
 

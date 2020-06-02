@@ -2,6 +2,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
+using RentingService.Domain.Models.CustomerAggregate;
 using RentingService.Domain.Models.RentalAggregate;
 
 namespace RentingService.Application.Commands
@@ -21,7 +22,7 @@ namespace RentingService.Application.Commands
                 request.CustomerEmailAddress);
             var rental = new Rental(request.Id, customer, request.VirtualMachineId);
             await _rentalRepository.InsertRentalAsync(rental);
-            await _rentalRepository.UnitOfWork.SaveEntitiesAsync(cancellationToken);
+            await _rentalRepository.UnitOfWork.CommitAsync(cancellationToken);
             return Unit.Value;
         }
     }

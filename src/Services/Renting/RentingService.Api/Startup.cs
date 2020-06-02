@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
+using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -13,7 +15,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using RentingService.Application.Commands;
+using RentingService.Domain.Models.CustomerAggregate;
 using RentingService.Domain.Models.RentalAggregate;
+using RentingService.Domain.Models.VirtualMachineAggregate;
 using RentingService.Infrastructure;
 using RentingService.Infrastructure.Repositories;
 
@@ -33,7 +37,10 @@ namespace RentingService.Api
         {
             services.AddControllers();
             services.AddTransient(typeof(IRentalRepository), typeof(RentalRepository));
+            services.AddTransient(typeof(IVirtualMachineRepository), typeof(VirtualMachineRepository));
+            services.AddTransient(typeof(ICustomerRepository), typeof(CustomerRepository));
             services.AddMediatR(typeof(CreateRentalCommandHandler).Assembly);
+            services.AddAutoMapper(typeof(RentingServiceProfile).Assembly);
             
             services.AddDbContext<RentingServiceContext>(options =>
                 options.UseNpgsql(Configuration.GetConnectionString("RentingServiceContext")));

@@ -41,6 +41,10 @@ namespace UserService.Infrastructure.Migrations
                         .HasColumnName("last_name")
                         .HasColumnType("text");
 
+                    b.Property<string>("Login")
+                        .HasColumnName("login")
+                        .HasColumnType("text");
+
                     b.Property<string>("Password")
                         .HasColumnName("password")
                         .HasColumnType("text");

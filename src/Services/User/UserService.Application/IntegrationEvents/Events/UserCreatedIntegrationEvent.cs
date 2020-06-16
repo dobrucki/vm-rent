@@ -1,4 +1,5 @@
 using System;
+using UserService.Domain.Events;
 using UserService.Domain.Models.UserAggregate;
 
 namespace UserService.Application.IntegrationEvents.Events
@@ -24,6 +25,13 @@ namespace UserService.Application.IntegrationEvents.Events
             return new UserCreatedIntegrationEvent(
                 id: Guid.NewGuid(), userId: user.Id, firstName: user.FirstName, 
                 lastName: user.LastName, emailAddress: user.EmailAddress);
+        }
+
+        public static UserCreatedIntegrationEvent FromUserCreatedDomainEvent(UserCreatedDomainEvent domainEvent)
+        {
+            return new UserCreatedIntegrationEvent(
+                id: Guid.NewGuid(), domainEvent.UserId, domainEvent.FirstName, 
+                domainEvent.LastName, domainEvent.EmailAddress);
         }
     }
 }

@@ -10,6 +10,6 @@ namespace RentingService.Domain.Models.RentalAggregate
     {
         Task<Rental> GetRentalByIdAsync(Guid id);
         Task InsertRentalAsync(Rental rental);
-        Task<IEnumerable<Rental>> GetRentalsAsync();
+        Task<IEnumerable<Rental>> GetRentalsAsync(int limit, int offset);
     }
 }

@@ -23,8 +23,8 @@ namespace RentingService.Application.Queries
 
         public async Task<IEnumerable<Rental>> GetRentalsQuery()
         {
-            return await _userRepository.GetRentalsAsync();
+            return await _userRepository.GetRentalsAsync(50, 0);
         }
         
     }    
-}    
+}

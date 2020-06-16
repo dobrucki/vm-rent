@@ -6,11 +6,12 @@ using RentingService.Infrastructure.Entities;
 
 namespace RentingService.Infrastructure.EntityConfigurations
 {
-    public class CustomerEntityTypeConfiguration : IEntityTypeConfiguration<CustomerEntity>
+    public class CustomerEntityTypeConfiguration : IEntityTypeConfiguration<Customer>
     {
-        public void Configure(EntityTypeBuilder<CustomerEntity> builder)
+        public void Configure(EntityTypeBuilder<Customer> builder)
         {
+            builder.Ignore(x => x.DomainEvents);
             builder.HasKey(x => x.Id);
         }
     }
-}
+}    

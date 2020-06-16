@@ -13,8 +13,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using UserService.Application.Commands;
+using UserService.Application.IntegrationEvents;
 using UserService.Domain.Models.UserAggregate;
 using UserService.Infrastructure;
+using UserService.Infrastructure.EventBus;
 using UserService.Infrastructure.Repositories;
 
 namespace UserService.Api
@@ -33,6 +35,7 @@ namespace UserService.Api
         {
             services.AddControllers();
             services.AddTransient(typeof(IUserRepository), typeof(UserRepository));
+            services.AddTransient<IEventBus, EventBusRabbitMq>();
             services.AddMediatR(typeof(ActivateUserCommandHandler).Assembly);
             
             services.AddDbContext<UserServiceContext>(options =>

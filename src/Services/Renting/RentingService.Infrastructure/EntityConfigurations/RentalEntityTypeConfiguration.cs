@@ -7,10 +7,11 @@ using RentingService.Infrastructure.Entities;
 
 namespace RentingService.Infrastructure.EntityConfigurations
 {
-    public class RentalEntityTypeConfiguration : IEntityTypeConfiguration<RentalEntity>
+    public class RentalEntityTypeConfiguration : IEntityTypeConfiguration<Rental>
     {
-        public void Configure(EntityTypeBuilder<RentalEntity> builder)
+        public void Configure(EntityTypeBuilder<Rental> builder)
         {
+            builder.Ignore(x => x.DomainEvents);
             builder.HasKey(x => x.Id);
         }    
     }

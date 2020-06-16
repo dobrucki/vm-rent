@@ -35,14 +35,15 @@ namespace RentingService.Infrastructure.Repositories
 
         public async Task InsertRentalAsync(Rental rental)
         {
-            var rentalEntity = _mapper.Map<RentalEntity>(rental);
-            await _context.Rentals.AddAsync(rentalEntity);
+            await _context.Rentals.AddAsync(rental);
         }
 
-        public async Task<IEnumerable<Rental>> GetRentalsAsync()
+        public Task<IEnumerable<Rental>> GetRentalsAsync(int limit, int offset)
         {
-            var entities = _context.Rentals.AsEnumerable();
-            return _mapper.Map<IEnumerable<Rental>>(entities);
+            var entities = _context.Rentals
+                .Skip(limit * offset)
+                .Take(limit);
+            return Task.FromResult(entities.AsEnumerable());
         }
     }
 }

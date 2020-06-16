@@ -23,22 +23,20 @@ namespace RentingService.Infrastructure.Repositories
         
         public async Task<Customer> GetByIdAsync(Guid id)
         {
-            var entity = await _context.Customers
-                .AsNoTracking()
+            var customer = await _context.Customers
                 .FirstOrDefaultAsync(x => x.Id.Equals(id));
-            return _mapper.Map<Customer>(entity);
+            return customer;
         }
 
         public async Task InsertAsync(Customer customer)
         {
-            var entity = _mapper.Map<CustomerEntity>(customer);
-            await _context.Customers.AddAsync(entity);
+            await _context.Customers.AddAsync(customer);
         }
 
-        public async Task UpdateAsync(Customer customer)
+        public Task UpdateAsync(Customer customer)
         {
-            var entity = await _context.Customers.FindAsync(customer.Id);
-            _context.Customers.Update(entity);
+            _context.Entry(customer).State = EntityState.Modified;
+            return Task.CompletedTask;
         }
     }
 }

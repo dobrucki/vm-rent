@@ -15,9 +15,9 @@ namespace RentingService.Infrastructure
     public class RentingServiceContext : DbContext, IUnitOfWork
     {
         private readonly IMediator _mediator;
-        public DbSet<RentalEntity> Rentals { get; set; }
-        public DbSet<CustomerEntity> Customers { get; set; }
-        public DbSet<VirtualMachineEntity> VirtualMachines { get; set; }
+        public DbSet<Rental> Rentals { get; set; }
+        public DbSet<Customer> Customers { get; set; }
+        public DbSet<VirtualMachine> VirtualMachines { get; set; }
 
         public RentingServiceContext(DbContextOptions<RentingServiceContext> options, IMediator mediator) : base(options)
         {
@@ -26,9 +26,10 @@ namespace RentingService.Infrastructure
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfiguration(new RentalEntityTypeConfiguration());
-            modelBuilder.ApplyConfiguration(new CustomerEntityTypeConfiguration());
-            modelBuilder.ApplyConfiguration(new VirtualMachineEntityTypeConfiguration());
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(RentingServiceContext).Assembly);
+            // modelBuilder.ApplyConfiguration(new RentalEntityTypeConfiguration());
+            // modelBuilder.ApplyConfiguration(new CustomerEntityTypeConfiguration());
+            // modelBuilder.ApplyConfiguration(new VirtualMachineEntityTypeConfiguration());
         }
 
         public async Task CommitAsync(CancellationToken cancellationToken = default)

@@ -5,10 +5,11 @@ using RentingService.Infrastructure.Entities;
 
 namespace RentingService.Infrastructure.EntityConfigurations
 {
-    public class VirtualMachineEntityTypeConfiguration : IEntityTypeConfiguration<VirtualMachineEntity>
+    public class VirtualMachineEntityTypeConfiguration : IEntityTypeConfiguration<VirtualMachine>
     {
-        public void Configure(EntityTypeBuilder<VirtualMachineEntity> builder)
+        public void Configure(EntityTypeBuilder<VirtualMachine> builder)
         {
+            builder.Ignore(x => x.DomainEvents);
             builder.HasKey(x => x.Id);
         }
     }

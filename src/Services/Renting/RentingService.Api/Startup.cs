@@ -15,6 +15,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using RentingService.Application.Commands;
+using RentingService.Application.Queries;
 using RentingService.Domain.Models.CustomerAggregate;
 using RentingService.Domain.Models.RentalAggregate;
 using RentingService.Domain.Models.VirtualMachineAggregate;
@@ -35,12 +36,13 @@ namespace RentingService.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson();
             services.AddTransient(typeof(IRentalRepository), typeof(RentalRepository));
             services.AddTransient(typeof(IVirtualMachineRepository), typeof(VirtualMachineRepository));
             services.AddTransient(typeof(ICustomerRepository), typeof(CustomerRepository));
             services.AddMediatR(typeof(CreateRentalCommandHandler).Assembly);
-            services.AddAutoMapper(typeof(RentingServiceProfile).Assembly);
+            services.AddAutoMapper(typeof(Startup).Assembly);
+            services.AddScoped<VirtualMachineQueries>();
             
             services.AddDbContext<RentingServiceContext>(options =>
                 options.UseNpgsql(Configuration.GetConnectionString("RentingServiceContext")));

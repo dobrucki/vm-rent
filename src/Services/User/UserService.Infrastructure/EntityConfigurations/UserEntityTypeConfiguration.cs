@@ -17,6 +17,8 @@ namespace UserService.Infrastructure.EntityConfigurations
             builder.Property(x => x.Id)
                 .ValueGeneratedNever()
                 .HasColumnName("id");
+            builder.Property(x => x.Login)
+                .HasColumnName("login");
             builder.Property(x => x.Password)
                 .HasColumnName("password");
             builder.Property(x => x.EmailAddress)

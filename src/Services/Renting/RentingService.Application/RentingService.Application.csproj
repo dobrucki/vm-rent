@@ -8,4 +8,8 @@
       <ProjectReference Include="..\RentingService.Domain\RentingService.Domain.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="AutoMapper" Version="9.0.0" />
+    </ItemGroup>
+
 </Project>

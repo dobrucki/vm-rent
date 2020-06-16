@@ -1,4 +1,5 @@
 using System;
+using UserService.Domain.Events;
 using UserService.Domain.Models.UserAggregate;
 
 namespace UserService.Application.IntegrationEvents.Events

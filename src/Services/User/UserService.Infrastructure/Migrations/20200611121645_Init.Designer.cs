@@ -10,7 +10,7 @@ using UserService.Infrastructure;
 namespace UserService.Infrastructure.Migrations
 {
     [DbContext(typeof(UserServiceContext))]
-    [Migration("20200518124228_Init")]
+    [Migration("20200611121645_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -41,6 +41,10 @@ namespace UserService.Infrastructure.Migrations
 
                     b.Property<string>("LastName")
                         .HasColumnName("last_name")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Login")
+                        .HasColumnName("login")
                         .HasColumnType("text");
 
                     b.Property<string>("Password")

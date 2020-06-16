@@ -1,0 +1,57 @@
+version: '3.7'
+
+services: 
+    renting_app:
+        build:
+            context: ../src/Services/Renting
+            dockerfile: ../../../docker/RentingService/Dockerfile
+        depends_on: 
+            - db
+            - rabbitMQ
+        environment: 
+            - ASPNETCORE_ENVIRONMENT=Development
+            - ASPNETCORE_URLS=http://*:5000
+        ports:
+            - 9000:5000
+            - 9090:5001
+        networks: 
+            - common_network
+    user_app:
+        build: 
+            context: ../src/Services/User
+            dockerfile: ../../../docker/UserService/Dockerfile
+        depends_on: 
+            - db
+            - rabbitMQ
+        environment: 
+            - ASPNETCORE_ENVIRONMENT=Development
+            - ASPNETCORE_URLS=http://*:5000
+        ports:
+            - 9001:5000
+            - 9091:5001
+        networks: 
+            - common_network
+    rabbitMQ:
+        hostname: 'rabbitmq'
+        image: 'rabbitmq:3-management-alpine'
+        ports:
+            - 15672:15672
+        expose: 
+            - 5672
+        environment: 
+            - RABBITMQ_ERLANG_COOKIE='cookie'
+        networks: 
+            - common_network
+    db:
+        image: postgres
+        environment: 
+            - POSTGRES_DB=vm_rent
+            - POSTGRES_USER=vm_rent
+            - POSTGRES_PASSWORD=vm_rent
+        expose: 
+            - 5432
+        networks: 
+            - common_network
+
+networks: 
+    common_network: {}

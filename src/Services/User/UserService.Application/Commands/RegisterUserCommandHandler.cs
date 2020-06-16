@@ -27,7 +27,6 @@ namespace UserService.Application.Commands
                 request.LastName, request.EmailAddress, passwordHash);
             await _userRepository.InsertAsync(user);
             await _userRepository.UnitOfWork.CommitAsync(cancellationToken);
-            _eventBus.Publish(UserCreatedIntegrationEvent.FromUser(user));
             return Unit.Value;
         }
     }

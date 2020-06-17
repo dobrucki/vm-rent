@@ -16,6 +16,7 @@ services:
             - 9090:5001
         networks: 
             - common_network
+            - db_network
     user_app:
         build: 
             context: ../src/Services/User
@@ -31,8 +32,9 @@ services:
             - 9091:5001
         networks: 
             - common_network
+            - db_network
     rabbitMQ:
-        hostname: 'rabbitmq'
+        hostname: 'rabbitMQ'
         image: 'rabbitmq:3-management-alpine'
         ports:
             - 15672:15672
@@ -45,13 +47,14 @@ services:
     db:
         image: postgres
         environment: 
-            - POSTGRES_DB=vm_rent
+            - POSTGRES_MULTIPLE_DATABASES=user_service,renting_service
             - POSTGRES_USER=vm_rent
             - POSTGRES_PASSWORD=vm_rent
         expose: 
             - 5432
         networks: 
-            - common_network
+            - db_network
 
 networks: 
     common_network: {}
+    db_network: {}

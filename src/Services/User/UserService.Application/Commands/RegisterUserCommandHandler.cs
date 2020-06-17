@@ -25,6 +25,7 @@ namespace UserService.Application.Commands
             var passwordHash = Hashing.HashPassword(request.Password);
             var user = new User(request.Id, request.Login, request.FirstName, 
                 request.LastName, request.EmailAddress, passwordHash);
+            // _eventBus.Publish(UserCreatedIntegrationEvent.FromUser(user));
             await _userRepository.InsertAsync(user);
             await _userRepository.UnitOfWork.CommitAsync(cancellationToken);
             return Unit.Value;

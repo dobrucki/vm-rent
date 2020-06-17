@@ -10,7 +10,7 @@ using UserService.Infrastructure;
 namespace UserService.Infrastructure.Migrations
 {
     [DbContext(typeof(UserServiceContext))]
-    [Migration("20200611121645_Init")]
+    [Migration("20200617141704_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

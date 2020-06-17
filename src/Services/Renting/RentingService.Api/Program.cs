@@ -13,6 +13,7 @@ namespace RentingService.Api
     {
         public static void Main(string[] args)
         {
+            Task.Delay(37000).Wait();
             CreateHostBuilder(args).Build().Run();
         }
 

@@ -13,6 +13,7 @@ namespace UserService.Api
     {
         public static void Main(string[] args)
         {
+            Task.Delay(30000).Wait();
             CreateHostBuilder(args).Build().Run();
         }
 

@@ -19,7 +19,7 @@ namespace RentingService.Infrastructure.Migrations
                 .HasAnnotation("ProductVersion", "3.1.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
-            modelBuilder.Entity("RentingService.Infrastructure.Entities.CustomerEntity", b =>
+            modelBuilder.Entity("RentingService.Domain.Models.CustomerAggregate.Customer", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -39,19 +39,19 @@ namespace RentingService.Infrastructure.Migrations
                     b.ToTable("Customers");
                 });
 
-            modelBuilder.Entity("RentingService.Infrastructure.Entities.RentalEntity", b =>
+            modelBuilder.Entity("RentingService.Domain.Models.RentalAggregate.Rental", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("CustomerId")
+                    b.Property<Guid?>("CustomerId")
                         .HasColumnType("uuid");
 
                     b.Property<DateTime>("RentalTime")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<DateTime>("ReturnTime")
+                    b.Property<DateTime?>("ReturnTime")
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<Guid>("VirtualMachineId")
@@ -59,10 +59,12 @@ namespace RentingService.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CustomerId");
+
                     b.ToTable("Rentals");
                 });
 
-            modelBuilder.Entity("RentingService.Infrastructure.Entities.VirtualMachineEntity", b =>
+            modelBuilder.Entity("RentingService.Domain.Models.VirtualMachineAggregate.VirtualMachine", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -74,6 +76,13 @@ namespace RentingService.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("VirtualMachines");
+                });
+
+            modelBuilder.Entity("RentingService.Domain.Models.RentalAggregate.Rental", b =>
+                {
+                    b.HasOne("RentingService.Domain.Models.CustomerAggregate.Customer", "Customer")
+                        .WithMany()
+                        .HasForeignKey("CustomerId");
                 });
 #pragma warning restore 612, 618
         }

@@ -16,7 +16,6 @@ using UserService.Application.Commands;
 using UserService.Application.IntegrationEvents;
 using UserService.Domain.Models.UserAggregate;
 using UserService.Infrastructure;
-using UserService.Infrastructure.EventBus;
 using UserService.Infrastructure.Repositories;
 
 namespace UserService.Api
@@ -40,8 +39,28 @@ namespace UserService.Api
             
             services.AddDbContext<UserServiceContext>(options =>
                 options.UseNpgsql(Configuration.GetConnectionString("UserServiceContext")));
+            
+            services.AddSingleton<IEventBusSubscriptionsManager, EventBusSubscriptionsManager>();
+            services.AddSingleton<IEventBus, EventBusRabbitMq>(sp =>
+            {
+                // var rabbitMQPersistentConnection = sp.GetRequiredService<IRabbitMQPersistentConnection>();
+                // var iLifetimeScope = sp.GetRequiredService<ILifetimeScope>();
+                // var logger = sp.GetRequiredService<ILogger<EventBusRabbitMQ>>();
+                var eventBusSubcriptionsManager = sp.GetRequiredService<IEventBusSubscriptionsManager>();
+                
+                return new EventBusRabbitMq(eventBusSubcriptionsManager, 
+                    sp.GetRequiredService<ILogger<EventBusRabbitMq>>());
+            });
+            
+            
         }
 
+        private void InitializeDb(IApplicationBuilder app)
+        {
+            using var scope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope();
+            scope.ServiceProvider.GetRequiredService<UserServiceContext>().Database.Migrate();
+        }
+        
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
@@ -57,6 +76,7 @@ namespace UserService.Api
             // app.UseAuthorization();
 
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+            InitializeDb(app);
         }
     }
 }
